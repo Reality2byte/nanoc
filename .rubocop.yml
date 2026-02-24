@@ -133,9 +133,6 @@ Naming/HeredocDelimiterNaming:
 Style/EvalWithLocation:
   Enabled: false
 
-Layout/LineLength:
-  Enabled: false
-
 Lint/MixedRegexpCaptureTypes:
   Enabled: false
 
