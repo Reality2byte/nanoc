@@ -10,7 +10,8 @@ EOS
 
 option :H, :handler,       'specify the handler to use (webrick/puma/...)', argument: :required
 option :o, :host,          'specify the host to listen on', default: '127.0.0.1', argument: :required
-option :p, :port,          'specify the port to listen on', transform: Nanoc::CLI::Transform::Port, default: 3000, argument: :required
+option :p, :port,          'specify the port to listen on', transform: Nanoc::CLI::Transform::Port, default: 3000,
+                                                            argument: :required
 flag   :L, :'live-reload', 'reload on changes'
 
 module Guard
@@ -23,7 +24,8 @@ module Guard
         if defined?(Nanoc::Live)
           $stderr.puts '-' * 40
           $stderr.puts 'NOTE:'
-          $stderr.puts 'You are using the `nanoc live` command provided by `guard-nanoc`, but the `nanoc-live` gem is also installed, which also provides a `nanoc live` command.'
+          $stderr.puts 'You are using the `nanoc live` command provided by `guard-nanoc`, ' \
+                       'but the `nanoc-live` gem is also installed, which also provides a `nanoc live` command.'
           if defined?(Bundler)
             $stderr.puts 'Recommendation: Remove `guard-nanoc` from your Gemfile.'
           else

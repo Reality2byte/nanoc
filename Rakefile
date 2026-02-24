@@ -63,7 +63,9 @@ desc 'Print overview of which packages need a release'
 task :needs_release do
   tags = `git tags`.lines.map(&:chomp).map { |t| t.match?(/\A\d/) ? 'nanoc-v' + t : t }
   tags_by_base_name = tags.group_by { |t| t[/\A.*(?=-v\d)/] }.select { |(base_name, _tags)| base_name }
-  versions_by_base_name = tags_by_base_name.transform_values { |list| list.map { |nv| nv.match(/\A.*-v(\d.*)/) }.compact.map { |m| Gem::Version.new(m[1]) } }
+  versions_by_base_name = tags_by_base_name.transform_values do |list|
+    list.map { |nv| nv.match(/\A.*-v(\d.*)/) }.compact.map { |m| Gem::Version.new(m[1]) }
+  end
   last_version_by_base_name = versions_by_base_name.transform_values(&:max)
 
   name_length = name_sets(packages).flatten.map(&:size).max

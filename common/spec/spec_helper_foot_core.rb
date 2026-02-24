@@ -107,7 +107,8 @@ RSpec::Matchers.define :send_notification do |name, *expected_args|
   failure_message do |_actual|
     s = "expected that proc would send notification #{name.inspect} with args #{expected_args.inspect}"
     unless @actual_notifications.empty?
-      s << " (received #{@actual_notifications.size} times with other arguments: #{@actual_notifications.map(&:inspect).join(', ')})"
+      s << " (received #{@actual_notifications.size} times with other arguments: " \
+           "#{@actual_notifications.map(&:inspect).join(', ')})"
     end
     s
   end
@@ -385,7 +386,8 @@ RSpec::Matchers.define :create_dependency_from do |expected|
   end
 
   failure_message do |_actual|
-    "expected a dependency to be created from #{expected.inspect}#{" onto #{@onto.inspect}" if @onto}, but generated #{@actual.inspect}"
+    "expected a dependency to be created from #{expected.inspect}#{" onto #{@onto.inspect}" if @onto}, " \
+      "but generated #{@actual.inspect}"
   end
 
   failure_message_when_negated do |_actual|

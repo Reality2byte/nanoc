@@ -1047,9 +1047,6 @@ Style/StringConcatenation:
 # URISchemes: http, https
 Layout/LineLength:
   Exclude:
-    - 'Rakefile'
-    - 'common/spec/spec_helper_foot_core.rb'
-    - 'guard-nanoc/lib/guard/nanoc/live_command.rb'
     - 'nanoc-checking/lib/nanoc/checking/checks/internal_links.rb'
     - 'nanoc-checking/lib/nanoc/checking/commands/check.rb'
     - 'nanoc-checking/lib/nanoc/checking/runner.rb'
