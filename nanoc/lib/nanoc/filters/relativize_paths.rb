@@ -115,10 +115,7 @@ module Nanoc::Filters
       when :html5
         require 'nokogiri'
         ::Nokogiri::HTML5
-      when :xml
-        require 'nokogiri'
-        ::Nokogiri::XML
-      when :xhtml
+      when :xml, :xhtml
         require 'nokogiri'
         ::Nokogiri::XML
       end

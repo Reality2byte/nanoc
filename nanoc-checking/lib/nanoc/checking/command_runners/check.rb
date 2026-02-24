@@ -17,12 +17,10 @@ module Nanoc
           success =
             if options[:all]
               runner.run_all
-            elsif options[:deploy]
+            elsif options[:deploy] || arguments.empty?
               runner.run_for_deploy
-            elsif !arguments.empty?
-              runner.run_specific(arguments)
             else
-              runner.run_for_deploy
+              runner.run_specific(arguments)
             end
 
           unless success

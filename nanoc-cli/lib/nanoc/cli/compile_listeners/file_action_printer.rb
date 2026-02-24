@@ -47,9 +47,7 @@ module Nanoc::CLI::CompileListeners
             :identical
           end
         level =
-          if is_created
-            :high
-          elsif is_modified
+          if is_created || is_modified
             :high
           else
             :low
