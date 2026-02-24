@@ -358,3 +358,11 @@ RSpec/SpecFilePathFormat: # new in 2.24
   Enabled: true
 RSpec/SubjectDeclaration: # new in 2.5
   Enabled: true
+Style/EmptyClassDefinition: # new in 1.84
+  Enabled: true
+Style/NegativeArrayIndex: # new in 1.84
+  Enabled: true
+Style/ReverseFind: # new in 1.84
+  Enabled: true
+RSpec/Output: # new in 3.9
+  Enabled: true
