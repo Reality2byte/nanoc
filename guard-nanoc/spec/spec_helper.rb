@@ -6,7 +6,7 @@ module Guard
   # `guard-compat` defines `Notifier` as a module rather than a class. We define
   # `Notifier` as a class here, before requiring guard-compat and guard, so that
   # `guard` does not break.
-  class Notifier
+  class Notifier # rubocop:disable Lint/EmptyClass
   end
 end
 

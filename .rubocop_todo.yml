@@ -22,12 +22,6 @@ Lint/EmptyBlock:
     - 'nanoc/test/rule_dsl/test_compiler_dsl.rb'
 
 # Offense count: 1
-# Configuration parameters: AllowComments.
-Lint/EmptyClass:
-  Exclude:
-    - 'guard-nanoc/spec/spec_helper.rb'
-
-# Offense count: 1
 Lint/HashCompareByIdentity:
   Exclude:
     - 'nanoc/lib/nanoc/filters/sass/importer.rb'
