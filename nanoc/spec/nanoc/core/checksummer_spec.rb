@@ -37,9 +37,18 @@ describe Nanoc::Core::Checksummer do
     let(:recorder) { Nanoc::RuleDSL::ActionRecorder.new(rep) }
     let(:view_context) { Nanoc::Core::ViewContextForPreCompilation.new(items:) }
 
-    let(:expected_item_checksum) { 'Nanoc::Core::Item#2<content=Nanoc::Core::TextualContent#3<String#4<stuff>>,attributes=Hash#5<>,identifier=Nanoc::Core::Identifier#6<String#7</stuff.md>>>' }
+    let(:expected_item_checksum) do
+      'Nanoc::Core::Item#2<content=Nanoc::Core::TextualContent#3<String#4' \
+        '<stuff>>,attributes=Hash#5<>,identifier=Nanoc::Core::Identifier#6<String#7</stuff.md>>>'
+    end
+
     let(:expected_item_rep_checksum) { 'Nanoc::Core::ItemRep#9<item=@2,name=Symbol#10<pdf>>' }
-    let(:expected_layout_checksum) { 'Nanoc::Core::Layout#15<content=Nanoc::Core::TextualContent#16<String#17<asdf>>,attributes=@5,identifier=Nanoc::Core::Identifier#18<String#19</foo.md>>>' }
+
+    let(:expected_layout_checksum) do
+      'Nanoc::Core::Layout#15<content=Nanoc::Core::TextualContent#16<String#17<asdf>>,' \
+        'attributes=@5,identifier=Nanoc::Core::Identifier#18<String#19</foo.md>>>'
+    end
+
     let(:expected_config_checksum) { 'Nanoc::Core::Configuration#21<Symbol#22<foo>=String#23<bar>,>' }
 
     let(:expected_checksum) do

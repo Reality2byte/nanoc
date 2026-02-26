@@ -73,7 +73,10 @@ describe Nanoc::DataSources::Filesystem::Parser do
 
         it 'raises' do
           expect { subject }
-            .to raise_error(Nanoc::DataSources::Filesystem::Errors::InvalidMetadata, /has invalid metadata \(expected key-value pairs, found Array instead\)/)
+            .to raise_error(
+              Nanoc::DataSources::Filesystem::Errors::InvalidMetadata,
+              /has invalid metadata \(expected key-value pairs, found Array instead\)/,
+            )
         end
       end
     end
@@ -201,7 +204,9 @@ describe Nanoc::DataSources::Filesystem::Parser do
           let(:content) { "---\ntitle: Welcome\n" }
 
           it 'raises' do
-            expect { subject }.to raise_error(Nanoc::DataSources::Filesystem::Errors::InvalidFormat)
+            expect { subject }.to raise_error(
+              Nanoc::DataSources::Filesystem::Errors::InvalidFormat,
+            )
           end
         end
 
@@ -209,7 +214,9 @@ describe Nanoc::DataSources::Filesystem::Parser do
           let(:content) { "---\nWelcome\n---\nHello!\n" }
 
           it 'raises' do
-            expect { subject }.to raise_error(Nanoc::DataSources::Filesystem::Errors::InvalidMetadata)
+            expect { subject }.to raise_error(
+              Nanoc::DataSources::Filesystem::Errors::InvalidMetadata,
+            )
           end
         end
 
@@ -269,7 +276,8 @@ describe Nanoc::DataSources::Filesystem::Parser do
           let(:content) { "---\ncreated_at: 2022-01-01T14:05:00+04:00\n---" }
 
           it 'has attributes' do
-            expect(subject.attributes).to eq('created_at' => Time.new(2022, 1, 1, 14, 5, 0, '+04:00'))
+            expect(subject.attributes)
+              .to eq('created_at' => Time.new(2022, 1, 1, 14, 5, 0, '+04:00'))
           end
         end
 
@@ -286,7 +294,9 @@ describe Nanoc::DataSources::Filesystem::Parser do
         end
 
         context 'UTF-8 bom' do
-          let(:content) { [0xEF, 0xBB, 0xBF].map(&:chr).join + "---\ntitle: Welcome\n---\nHello!\n" }
+          let(:content) do
+            [0xEF, 0xBB, 0xBF].map(&:chr).join + "---\ntitle: Welcome\n---\nHello!\n"
+          end
 
           it 'has attributes' do
             expect(subject.attributes).to eq('title' => 'Welcome')

@@ -122,7 +122,8 @@ describe Nanoc::DataSources::Filesystem, :site do
           expect { subject }
             .to raise_error(
               Nanoc::DataSources::Filesystem::AmbiguousMetadataAssociationError,
-              'There are multiple content files (foo/a.md, foo/a.txt) that could match the file containing metadata (foo/a.yaml).',
+              'There are multiple content files (foo/a.md, foo/a.txt) that ' \
+              'could match the file containing metadata (foo/a.yaml).',
             )
         end
       end
@@ -166,7 +167,8 @@ describe Nanoc::DataSources::Filesystem, :site do
           expect { subject }
             .to raise_error(
               Nanoc::DataSources::Filesystem::AmbiguousMetadataAssociationError,
-              'There are multiple content files (foo/a.md, foo/a.txt) that could match the file containing metadata (foo/a.yaml).',
+              'There are multiple content files (foo/a.md, foo/a.txt) that ' \
+              'could match the file containing metadata (foo/a.yaml).',
             )
         end
       end

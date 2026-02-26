@@ -138,7 +138,13 @@ class Nanoc::Core::CompilerTest < Nanoc::TestCase
         Nanoc::Core::Compiler.compile(site)
       end
 
-      assert_match(/^The path returned for the.*does not start with a slash. Please ensure that all routing rules return a path that starts with a slash./, error.message)
+      assert_match(
+        /
+        ^The\ path\ returned\ for\ the.*does\ not\ start\ with\ a\ slash.
+        \ Please\ ensure\ that\ all\ routing\ rules\ return\ a\ path\ that\ starts\ with\ a\ slash.
+        /x,
+        error.message,
+      )
     end
   end
 
@@ -174,7 +180,8 @@ class Nanoc::Core::CompilerTest < Nanoc::TestCase
   def test_mutually_include_compiled_content_at_previous_snapshot
     with_site do |_site|
       # Create items
-      File.write('content/a.html', '[<%= @items.find { |i| i.identifier == "/z/" }.compiled_content(:snapshot => :guts) %>]')
+      File.write('content/a.html',
+                 '[<%= @items.find { |i| i.identifier == "/z/" }.compiled_content(:snapshot => :guts) %>]')
       File.write('content/z.html', 'stuff')
 
       # Create routes

@@ -63,10 +63,14 @@ class Nanoc::RuleDSL::RulesCollectionTest < Nanoc::TestCase
 
   def test_filter_for_layout_with_many_layouts
     rules_collection = Nanoc::RuleDSL::RulesCollection.new
-    rules_collection.layout_filter_mapping[Nanoc::Core::Pattern.from(%r{^/a/b/c/.*/$})] = [:erb, { char: 'd' }]
-    rules_collection.layout_filter_mapping[Nanoc::Core::Pattern.from(%r{^/a/.*/$})]     = [:erb, { char: 'b' }]
-    rules_collection.layout_filter_mapping[Nanoc::Core::Pattern.from(%r{^/a/b/.*/$})]   = [:erb, { char: 'c' }] # never used!
-    rules_collection.layout_filter_mapping[Nanoc::Core::Pattern.from(%r{^/.*/$})]       = [:erb, { char: 'a' }]
+    rules_collection.layout_filter_mapping[Nanoc::Core::Pattern.from(%r{^/a/b/c/.*/$})] =
+      [:erb, { char: 'd' }]
+    rules_collection.layout_filter_mapping[Nanoc::Core::Pattern.from(%r{^/a/.*/$})] =
+      [:erb, { char: 'b' }]
+    rules_collection.layout_filter_mapping[Nanoc::Core::Pattern.from(%r{^/a/b/.*/$})] =
+      [:erb, { char: 'c' }] # never used!
+    rules_collection.layout_filter_mapping[Nanoc::Core::Pattern.from(%r{^/.*/$})] =
+      [:erb, { char: 'a' }]
 
     # Mock layout
     layouts = [mock, mock, mock, mock]

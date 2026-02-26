@@ -68,7 +68,8 @@ class Nanoc::Helpers::CapturingTest < Nanoc::TestCase
     with_site do |_site|
       # Prepare
       File.write('lib/helpers.rb', 'include Nanoc::Helpers::Capturing')
-      File.write('content/includer.erb', '[<%= content_for(@items.find { |i| i.identifier == \'/includee/\' }, :blah) %>]')
+      File.write('content/includer.erb',
+                 '[<%= content_for(@items.find { |i| i.identifier == \'/includee/\' }, :blah) %>]')
       File.open('Rules', 'w') do |io|
         io.write "compile '*' do ; filter :erb ; end\n"
         io.write "route '*' do ; item.identifier + 'index.html' ; end\n"
@@ -129,7 +130,8 @@ class Nanoc::Helpers::CapturingTest < Nanoc::TestCase
         io.write "include Nanoc::Helpers::Rendering\n"
       end
       File.write('content/includer.erb', '{<%= render \'partial\', :item => nil %>}')
-      File.write('layouts/partial.erb', '[<%= @item.inspect %>-<%= content_for(@items.find { |i| i.identifier == \'/includee/\' }, :blah) %>]')
+      File.write('layouts/partial.erb',
+                 '[<%= @item.inspect %>-<%= content_for(@items.find { |i| i.identifier == \'/includee/\' }, :blah) %>]')
       File.open('Rules', 'w') do |io|
         io.write "compile '*' do ; filter :erb ; end\n"
         io.write "route '*' do ; item.identifier + 'index.html' ; end\n"

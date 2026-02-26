@@ -29,7 +29,8 @@ class Nanoc::Filters::KramdownTest < Nanoc::TestCase
     end
 
     assert_empty io[:stdout]
-    assert_equal "kramdown warning(s) for #{item_rep_view.inspect}\n  Found span IAL after text - ignoring it\n", io[:stderr]
+    assert_equal "kramdown warning(s) for #{item_rep_view.inspect}\n  Found span IAL after text - ignoring it\n",
+                 io[:stderr]
   end
 
   def test_warning_filters
@@ -48,6 +49,7 @@ class Nanoc::Filters::KramdownTest < Nanoc::TestCase
     end
 
     assert_empty io[:stdout]
-    assert_equal "kramdown warning(s) for #{item_rep_view.inspect}\n  Found span IAL after text - ignoring it\n", io[:stderr]
+    assert_equal "kramdown warning(s) for #{item_rep_view.inspect}\n  Found span IAL after text - ignoring it\n",
+                 io[:stderr]
   end
 end

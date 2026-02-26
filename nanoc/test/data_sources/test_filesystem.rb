@@ -160,7 +160,8 @@ class Nanoc::DataSources::FilesystemTest < Nanoc::TestCase
 
       assert_equal(
         expected_output, actual_output,
-        "identifier_for_filename(#{input.inspect}) should equal #{expected_output.inspect}, not #{actual_output.inspect}"
+        "identifier_for_filename(#{input.inspect}) should equal " \
+        "#{expected_output.inspect}, not #{actual_output.inspect}"
       )
     end
   end
@@ -183,7 +184,8 @@ class Nanoc::DataSources::FilesystemTest < Nanoc::TestCase
 
       assert_equal(
         expected_output, actual_output,
-        "identifier_for_filename(#{input.inspect}) should equal #{expected_output.inspect}, not #{actual_output.inspect}"
+        "identifier_for_filename(#{input.inspect}) should equal " \
+        "#{expected_output.inspect}, not #{actual_output.inspect}"
       )
     end
   end
@@ -206,7 +208,8 @@ class Nanoc::DataSources::FilesystemTest < Nanoc::TestCase
 
       assert_equal(
         expected_output, actual_output,
-        "identifier_for_filename(#{input.inspect}) should equal #{expected_output.inspect}, not #{actual_output.inspect}"
+        "identifier_for_filename(#{input.inspect}) should equal " \
+        "#{expected_output.inspect}, not #{actual_output.inspect}"
       )
     end
   end
@@ -281,7 +284,8 @@ class Nanoc::DataSources::FilesystemTest < Nanoc::TestCase
 
       assert_equal(
         expected_output, actual_output,
-        "identifier_for_filename(#{input.inspect}) should equal #{expected_output.inspect}, not #{actual_output.inspect}"
+        "identifier_for_filename(#{input.inspect}) should equal " \
+        "#{expected_output.inspect}, not #{actual_output.inspect}"
       )
     end
   end
@@ -302,7 +306,8 @@ class Nanoc::DataSources::FilesystemTest < Nanoc::TestCase
 
       assert_equal(
         expected_output, actual_output,
-        "identifier_for_filename(#{input.inspect}) should equal #{expected_output.inspect}, not #{actual_output.inspect}"
+        "identifier_for_filename(#{input.inspect}) should equal " \
+        "#{expected_output.inspect}, not #{actual_output.inspect}"
       )
     end
   end

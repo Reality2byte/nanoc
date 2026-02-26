@@ -29,7 +29,15 @@ class Nanoc::Filters::XSLTest < Nanoc::TestCase
     </report>
   EOS
 
-  SAMPLE_XML_OUT = %r{\A<\?xml version="1.0" encoding="utf-8"\?>\s*<html>\s*<head>\s*<title>My Report</title>\s*</head>\s*<body>\s*<h1>My Report</h1>\s*</body>\s*</html>\s*\Z}m
+  SAMPLE_XML_OUT = %r{
+    \A
+    <\?xml\ version="1.0"\ encoding="utf-8"\?>\s*
+    <html>\s*
+    <head>\s*<title>My\ Report</title>\s*</head>\s*
+    <body>\s*<h1>My\ Report</h1>\s*</body>\s*
+    </html>\s*
+    \Z
+  }xm
 
   SAMPLE_XSL_WITH_PARAMS = <<~EOS
     <?xml version="1.0" encoding="utf-8"?>
@@ -56,7 +64,15 @@ class Nanoc::Filters::XSLTest < Nanoc::TestCase
     </report>
   EOS
 
-  SAMPLE_XML_OUT_WITH_PARAMS = %r{\A<\?xml version="1.0" encoding="utf-8"\?>\s*<html>\s*<head>\s*<title>My Report</title>\s*</head>\s*<body>\s*<h1>bar</h1>\s*</body>\s*</html>\s*\Z}m
+  SAMPLE_XML_OUT_WITH_PARAMS = %r{
+    \A
+    <\?xml\ version="1.0"\ encoding="utf-8"\?>\s*
+    <html>\s*
+    <head>\s*<title>My\ Report</title>\s*</head>\s*
+    <body>\s*<h1>bar</h1>\s*</body>\s*
+    </html>\s*
+    \Z
+  }xm
 
   SAMPLE_XSL_WITH_OMIT_XML_DECL = <<~EOS
     <?xml version="1.0" encoding="utf-8"?>
@@ -83,7 +99,14 @@ class Nanoc::Filters::XSLTest < Nanoc::TestCase
     </report>
   EOS
 
-  SAMPLE_XML_OUT_WITH_OMIT_XML_DECL = %r{\A<html>\s*<head>\s*<title>My Report</title>\s*</head>\s*<body>\s*<h1>My Report</h1>\s*</body>\s*</html>\s*\Z}m
+  SAMPLE_XML_OUT_WITH_OMIT_XML_DECL = %r{
+    \A
+    <html>\s*
+    <head>\s*<title>My\ Report</title>\s*</head>\s*
+    <body>\s*<h1>My\ Report</h1>\s*</body>\s*
+    </html>\s*
+    \Z
+  }xm
 
   def setup
     super

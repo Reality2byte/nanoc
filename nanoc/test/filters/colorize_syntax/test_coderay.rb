@@ -13,7 +13,10 @@ class Nanoc::Filters::ColorizeSyntax::CoderayTest < Nanoc::TestCase
 
       # Get input and expected output
       input = '<pre title="moo"><code class="language-ruby"># comment</code></pre>'
-      expected_output = CODERAY_PRE + '<pre title="moo"><code class="language-ruby"><span class="comment"># comment</span></code></pre>' + CODERAY_POST
+      expected_output =
+        CODERAY_PRE +
+        '<pre title="moo"><code class="language-ruby"><span class="comment"># comment</span></code></pre>' +
+        CODERAY_POST
 
       # Run filter
       actual_output = filter.setup_and_run(input)
@@ -30,7 +33,10 @@ class Nanoc::Filters::ColorizeSyntax::CoderayTest < Nanoc::TestCase
       # Get input and expected output
       input = %(<pre title="moo"><code>#!ruby
 # comment</code></pre>)
-      expected_output = CODERAY_PRE + '<pre title="moo"><code class="language-ruby"><span class="comment"># comment</span></code></pre>' + CODERAY_POST
+      expected_output =
+        CODERAY_PRE +
+        '<pre title="moo"><code class="language-ruby"><span class="comment"># comment</span></code></pre>' +
+        CODERAY_POST
 
       # Run filter
       actual_output = filter.setup_and_run(input)
@@ -65,8 +71,11 @@ class Nanoc::Filters::ColorizeSyntax::CoderayTest < Nanoc::TestCase
       # Get input and expected output
       input = %(<pre title="moo"><code class="language-ruby">#!ruby
 # comment</code></pre>)
-      expected_output = CODERAY_PRE + %(<pre title="moo"><code class="language-ruby"><span class="doctype">#!ruby</span>
-<span class="comment"># comment</span></code></pre>) + CODERAY_POST
+      expected_output =
+        CODERAY_PRE +
+        %(<pre title="moo"><code class="language-ruby"><span class="doctype">#!ruby</span>
+<span class="comment"># comment</span></code></pre>) +
+        CODERAY_POST
 
       # Run filter
       actual_output = filter.setup_and_run(input)
@@ -82,7 +91,10 @@ class Nanoc::Filters::ColorizeSyntax::CoderayTest < Nanoc::TestCase
 
       # Get input and expected output
       input = '<pre title="moo"><code class="abc language-ruby xyz"># comment</code></pre>'
-      expected_output = CODERAY_PRE + '<pre title="moo"><code class="abc language-ruby xyz"><span class="comment"># comment</span></code></pre>' + CODERAY_POST
+      expected_output =
+        CODERAY_PRE +
+        '<pre title="moo"><code class="abc language-ruby xyz"><span class="comment"># comment</span></code></pre>' +
+        CODERAY_POST
 
       # Run filter
       actual_output = filter.setup_and_run(input)

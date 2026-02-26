@@ -14,7 +14,8 @@ class Nanoc::Filters::ColorizeSyntax::SimonTest < Nanoc::TestCase
       input = %(<pre title="moo"><code class="language-ruby">
 # comment
 </code></pre>)
-      expected_output = '<pre title="moo"><code class="language-ruby"><span class="hl slc"># comment</span></code></pre>'
+      expected_output =
+        '<pre title="moo"><code class="language-ruby"><span class="hl slc"># comment</span></code></pre>'
 
       # Run filter
       actual_output = filter.setup_and_run(input, default_colorizer: :simon_highlight)
