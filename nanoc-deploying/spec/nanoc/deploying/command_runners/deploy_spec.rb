@@ -295,7 +295,7 @@ describe Nanoc::Deploying::CommandRunners::Deploy, :site, :stdio do
             include_examples 'attempted/effective deploy'
 
             context 'dry run' do
-              let(:command) { (super() + ['--dry-run']) }
+              let(:command) { super() + ['--dry-run'] }
 
               include_examples 'no effective deploy'
             end
@@ -316,7 +316,7 @@ describe Nanoc::Deploying::CommandRunners::Deploy, :site, :stdio do
             include_examples 'missing kind warning'
 
             context 'dry run' do
-              let(:command) { (super() + ['--dry-run']) }
+              let(:command) { super() + ['--dry-run'] }
 
               include_examples 'no effective deploy'
             end

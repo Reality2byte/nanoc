@@ -14,7 +14,7 @@ describe Nanoc::Core::PostCompileItemRepView do
           .to receive(:cp)
           .with(binary_content.filename, anything)
           .and_wrap_original do |_meth, _src, dst|
-            File.write(dst, '<fake data>')
+          File.write(dst, '<fake data>')
         end
       end
 
