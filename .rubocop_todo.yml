@@ -751,12 +751,6 @@ Style/OneClassPerFile:
 
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
-Style/PartitionInsteadOfDoubleSelect:
-  Exclude:
-    - 'nanoc/lib/nanoc/data_sources/filesystem.rb'
-
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
 Style/PredicateWithKind:
   Exclude:
     - 'nanoc/lib/nanoc/rule_dsl/action_sequence_calculator.rb'
