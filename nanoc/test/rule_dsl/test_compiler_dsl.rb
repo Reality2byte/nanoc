@@ -21,7 +21,9 @@ class Nanoc::RuleDSL::CompilerDSLTest < Nanoc::TestCase
 
     # first time
     io = capturing_stdio do
-      compiler_dsl.preprocess {}
+      compiler_dsl.preprocess do
+        # do nothing
+      end
     end
 
     assert_empty io[:stdout]
@@ -29,7 +31,9 @@ class Nanoc::RuleDSL::CompilerDSLTest < Nanoc::TestCase
 
     # second time
     io = capturing_stdio do
-      compiler_dsl.preprocess {}
+      compiler_dsl.preprocess do
+        # do nothing
+      end
     end
 
     assert_empty io[:stdout]
@@ -42,7 +46,9 @@ class Nanoc::RuleDSL::CompilerDSLTest < Nanoc::TestCase
 
     # first time
     io = capturing_stdio do
-      compiler_dsl.postprocess {}
+      compiler_dsl.postprocess do
+        # do nothing
+      end
     end
 
     assert_empty io[:stdout]
@@ -50,7 +56,9 @@ class Nanoc::RuleDSL::CompilerDSLTest < Nanoc::TestCase
 
     # second time
     io = capturing_stdio do
-      compiler_dsl.postprocess {}
+      compiler_dsl.postprocess do
+        # do nothing
+      end
     end
 
     assert_empty io[:stdout]

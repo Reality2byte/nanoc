@@ -180,6 +180,7 @@ RSpec::Matchers.define :finish_in_under do |expected|
   end
 
   chain :seconds do
+    # do nothing
   end
 
   failure_message do |_actual|

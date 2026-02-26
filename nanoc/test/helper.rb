@@ -219,7 +219,9 @@ module Nanoc::TestHelpers
   end
 
   def skip_unless_have(*libs)
-    if_have(*libs) {}
+    if_have(*libs) do
+      # do nothing
+    end
   end
 
   def root_dir

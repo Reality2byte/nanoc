@@ -4,7 +4,9 @@ describe Nanoc::Spec::HelperContext do
   subject(:ctx) { described_class.new(helper) }
 
   let(:helper) do
-    Module.new {}
+    Module.new do
+      # do nothing
+    end
   end
 
   it 'has no items by default' do
