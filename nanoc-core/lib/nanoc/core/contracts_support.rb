@@ -46,6 +46,8 @@ module Nanoc
 
         class Named < AbstractContract
           def initialize(name)
+            super()
+
             @name = name
           end
 
@@ -60,6 +62,8 @@ module Nanoc
 
         class IterOf < AbstractContract
           def initialize(contract)
+            super()
+
             @contract = contract
           end
 

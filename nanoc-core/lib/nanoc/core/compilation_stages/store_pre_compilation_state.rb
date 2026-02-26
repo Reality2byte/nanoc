@@ -7,6 +7,8 @@ module Nanoc
         include Nanoc::Core::ContractsSupport
 
         def initialize(reps:, layouts:, checksum_store:, action_sequence_store:, action_sequences:)
+          super()
+
           @reps = reps
           @layouts = layouts
           @checksum_store = checksum_store

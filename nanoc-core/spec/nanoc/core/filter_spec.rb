@@ -210,8 +210,6 @@ describe Nanoc::Core::Filter do
         def self.for(_context)
           raise NotImplementedError
         end
-
-        def initialize; end
       end.new
     end
 

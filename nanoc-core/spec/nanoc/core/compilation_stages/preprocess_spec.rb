@@ -15,8 +15,6 @@ describe Nanoc::Core::CompilationStages::Preprocess do
       def self.for(_context)
         raise NotImplementedError
       end
-
-      def initialize; end
     end.new
   end
 

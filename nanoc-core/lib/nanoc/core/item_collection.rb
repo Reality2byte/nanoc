@@ -2,7 +2,7 @@
 
 module Nanoc
   module Core
-    class ItemCollection < IdentifiableCollection
+    class ItemCollection < Nanoc::Core::IdentifiableCollection
       prepend MemoWise
 
       def initialize(config, objects = [])

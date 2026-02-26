@@ -23,6 +23,8 @@ describe(Nanoc::Core::ItemRepRouter) do
       end
 
       def initialize
+        super
+
         @map = {}
       end
 

@@ -13,6 +13,8 @@ module Nanoc
         attr_reader :params
 
         def initialize(filter_name, params)
+          super()
+
           @filter_name = filter_name
           @params      = params
         end

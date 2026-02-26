@@ -27,6 +27,8 @@ module Nanoc
 
         contract C::KeywordArgs[compiled_content_cache: C::Or[Nanoc::Core::CompiledContentCache, Nanoc::Core::TextualCompiledContentCache], item_reps: Nanoc::Core::ItemRepRepo] => C::Any
         def initialize(compiled_content_cache:, item_reps:)
+          super()
+
           @compiled_content_cache = compiled_content_cache
           @item_reps = item_reps
         end
@@ -44,6 +46,8 @@ module Nanoc
 
         contract C::KeywordArgs[path: String] => C::Any
         def initialize(path:)
+          super()
+
           @path = path
         end
 

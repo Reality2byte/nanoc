@@ -2,7 +2,7 @@
 
 module Nanoc
   module Core
-    class LayoutCollection < IdentifiableCollection
+    class LayoutCollection < Nanoc::Core::IdentifiableCollection
       prepend MemoWise
 
       def initialize(config, objects = [])

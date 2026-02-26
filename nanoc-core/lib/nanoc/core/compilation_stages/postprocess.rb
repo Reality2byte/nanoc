@@ -7,6 +7,8 @@ module Nanoc
         include Nanoc::Core::ContractsSupport
 
         def initialize(action_provider:, site:)
+          super()
+
           @action_provider = action_provider
           @site = site
         end

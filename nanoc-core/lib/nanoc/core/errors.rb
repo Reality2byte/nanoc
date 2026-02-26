@@ -30,6 +30,8 @@ module Nanoc
         attr_reader :item_rep
 
         def initialize(wrapped, item_rep)
+          super(wrapped.message)
+
           @wrapped = wrapped
           @item_rep = item_rep
         end

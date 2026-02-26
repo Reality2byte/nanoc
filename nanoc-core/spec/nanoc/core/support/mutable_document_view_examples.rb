@@ -51,8 +51,6 @@ shared_examples 'a mutable document view' do
       def self.for(_context)
         raise NotImplementedError
       end
-
-      def initialize; end
     end.new
   end
 

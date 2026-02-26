@@ -54,8 +54,6 @@ describe Nanoc::Core::CompilationItemRepView do
       def self.for(_context)
         raise NotImplementedError
       end
-
-      def initialize; end
     end.new
   end
 

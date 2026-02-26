@@ -5,6 +5,8 @@ module Nanoc
     module CompilationStages
       class Preprocess < Nanoc::Core::CompilationStage
         def initialize(action_provider:, site:, dependency_store:, checksum_store:)
+          super()
+
           @action_provider = action_provider
           @site = site
           @dependency_store = dependency_store

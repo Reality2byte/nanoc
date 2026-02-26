@@ -7,6 +7,8 @@ module Nanoc
         include Nanoc::Core::ContractsSupport
 
         def initialize(reps:, outdatedness_checker:, outdatedness_store:)
+          super()
+
           @reps = reps
           @outdatedness_checker = outdatedness_checker
           @outdatedness_store = outdatedness_store

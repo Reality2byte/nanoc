@@ -11,6 +11,8 @@ module Nanoc
         attr_reader :params
 
         def initialize(layout_identifier, params)
+          super()
+
           @layout_identifier = layout_identifier
           @params = params
         end

@@ -36,8 +36,6 @@ shared_examples 'an item rep view' do
       def self.for(_context)
         raise NotImplementedError
       end
-
-      def initialize; end
     end.new
   end
 

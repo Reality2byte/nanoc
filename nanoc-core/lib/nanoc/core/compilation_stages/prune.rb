@@ -5,6 +5,8 @@ module Nanoc
     module CompilationStages
       class Prune < Nanoc::Core::CompilationStage
         def initialize(config:, reps:)
+          super()
+
           @config = config
           @reps = reps
         end

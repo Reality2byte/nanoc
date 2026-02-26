@@ -8,6 +8,8 @@ module Nanoc
         include Nanoc::Core::Assertions::Mixin
 
         def initialize(reps:, outdatedness_store:, dependency_store:, action_sequences:, compilation_context:, compiled_content_cache:, focus:)
+          super()
+
           @reps = reps
           @outdatedness_store = outdatedness_store
           @dependency_store = dependency_store

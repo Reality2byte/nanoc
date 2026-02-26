@@ -33,8 +33,6 @@ describe Nanoc::Core::Executor do
       def self.for(_context)
         raise NotImplementedError
       end
-
-      def initialize; end
     end.new
   end
 

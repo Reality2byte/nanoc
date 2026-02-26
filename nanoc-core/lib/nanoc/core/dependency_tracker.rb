@@ -60,10 +60,14 @@ module Nanoc
       class Null < DependencyTracker
         include Nanoc::Core::ContractsSupport
 
-        def initialize; end
+        def initialize
+          super(nil, root: nil)
+        end
 
         contract C_OBJ, C_ARGS => C::Any
-        def bounce(_obj, raw_content: false, attributes: false, compiled_content: false, path: false); end
+        def bounce(_obj, raw_content: false, attributes: false, compiled_content: false, path: false)
+          # do nothing
+        end
       end
     end
   end

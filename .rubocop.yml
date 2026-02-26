@@ -60,6 +60,11 @@ RSpec/DescribeClass:
     - "nanoc/spec/nanoc/regressions/*_spec.rb"
     - "nanoc/spec/regression_filenames_spec.rb"
 
+Lint/MissingSuper:
+  AllowedParentClasses:
+    - Nanoc::Core::Pattern # abstract
+    - Nanoc::Core::IdentifiableCollection # abstract
+
 # ----- CONFIGURED (enabled non-default cops) -----
 
 Layout/ClassStructure:

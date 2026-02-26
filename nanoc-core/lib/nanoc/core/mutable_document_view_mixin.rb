@@ -8,11 +8,9 @@ module Nanoc
         attr_reader :value
 
         def initialize(value)
-          @value = value
-        end
+          super("The #{value.class} cannot be stored inside an attribute. Store its identifier instead.")
 
-        def message
-          "The #{value.class} cannot be stored inside an attribute. Store its identifier instead."
+          @value = value
         end
       end
 

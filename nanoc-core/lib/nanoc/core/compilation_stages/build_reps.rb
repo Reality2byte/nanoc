@@ -8,6 +8,8 @@ module Nanoc
 
         contract C::KeywordArgs[site: Nanoc::Core::Site, action_provider: Nanoc::Core::ActionProvider] => C::Any
         def initialize(site:, action_provider:)
+          super()
+
           @site = site
           @action_provider = action_provider
         end

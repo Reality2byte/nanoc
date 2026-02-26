@@ -14,6 +14,8 @@ module Nanoc
 
         contract C::IterOf[Symbol], C::IterOf[String] => C::Any
         def initialize(snapshot_names, paths)
+          super()
+
           @snapshot_names = snapshot_names
           @paths = paths
         end

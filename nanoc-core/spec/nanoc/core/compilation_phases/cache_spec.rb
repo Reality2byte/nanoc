@@ -18,6 +18,8 @@ describe Nanoc::Core::CompilationPhases::Cache do
   let(:wrapped_class) do
     Class.new(Nanoc::Core::CompilationPhases::Abstract) do
       def initialize(compiled_content_repo)
+        super(wrapped: nil)
+
         @compiled_content_repo = compiled_content_repo
       end
 

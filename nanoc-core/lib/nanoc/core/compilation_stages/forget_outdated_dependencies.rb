@@ -7,6 +7,8 @@ module Nanoc
         include Nanoc::Core::ContractsSupport
 
         def initialize(dependency_store:)
+          super()
+
           @dependency_store = dependency_store
         end
 

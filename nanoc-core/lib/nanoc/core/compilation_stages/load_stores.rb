@@ -7,6 +7,8 @@ module Nanoc
         include Nanoc::Core::ContractsSupport
 
         def initialize(checksum_store:, compiled_content_cache:, dependency_store:, action_sequence_store:, outdatedness_store:)
+          super()
+
           @checksum_store = checksum_store
           @compiled_content_cache = compiled_content_cache
           @dependency_store = dependency_store

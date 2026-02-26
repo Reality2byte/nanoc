@@ -5,6 +5,8 @@ module Nanoc
     module CompilationStages
       class CalculateChecksums < Nanoc::Core::CompilationStage
         def initialize(items:, layouts:, code_snippets:, config:)
+          super()
+
           @items = items
           @layouts = layouts
           @code_snippets = code_snippets

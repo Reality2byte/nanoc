@@ -5,6 +5,8 @@ module Nanoc
     module CompilationStages
       class Cleanup < Nanoc::Core::CompilationStage
         def initialize(output_dirs)
+          super()
+
           @output_dirs = output_dirs
         end
 

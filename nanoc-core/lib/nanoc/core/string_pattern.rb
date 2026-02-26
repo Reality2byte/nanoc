@@ -2,7 +2,7 @@
 
 module Nanoc
   module Core
-    class StringPattern < Pattern
+    class StringPattern < Nanoc::Core::Pattern
       MATCH_OPTS = File::FNM_PATHNAME | File::FNM_EXTGLOB
 
       contract String => C::Any

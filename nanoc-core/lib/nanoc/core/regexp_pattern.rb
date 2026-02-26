@@ -2,7 +2,7 @@
 
 module Nanoc
   module Core
-    class RegexpPattern < Pattern
+    class RegexpPattern < Nanoc::Core::Pattern
       contract Regexp => C::Any
       def initialize(regexp)
         @regexp = regexp
