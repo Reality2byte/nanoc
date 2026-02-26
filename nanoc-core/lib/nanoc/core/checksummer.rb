@@ -230,17 +230,17 @@ module Nanoc
       class DocumentUpdateBehavior < UpdateBehavior
         def self.update(obj, digest)
           if obj.checksum_data
-            digest.update('checksum_data=' + obj.checksum_data)
+            digest.update("checksum_data=#{obj.checksum_data}")
           else
             if obj.content_checksum_data
-              digest.update('content_checksum_data=' + obj.content_checksum_data)
+              digest.update("content_checksum_data=#{obj.content_checksum_data}")
             else
               digest.update('content=')
               yield(obj.content)
             end
 
             if obj.attributes_checksum_data
-              digest.update(',attributes_checksum_data=' + obj.attributes_checksum_data)
+              digest.update(",attributes_checksum_data=#{obj.attributes_checksum_data}")
             else
               digest.update(',attributes=')
               yield(obj.attributes)
@@ -266,7 +266,7 @@ module Nanoc
           filename = obj.to_s
           if File.exist?(filename)
             stat = File.stat(filename)
-            digest.update(stat.size.to_s + '-' + stat.mtime.to_i.to_s)
+            digest.update("#{stat.size}-#{stat.mtime.to_i}")
           else
             digest.update('???')
           end

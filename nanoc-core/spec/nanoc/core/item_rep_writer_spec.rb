@@ -4,7 +4,7 @@ describe Nanoc::Core::ItemRepWriter do
   describe '#write' do
     subject { described_class.new.write(item_rep, compiled_content_repo, snapshot_name, written_paths) }
 
-    let(:raw_path) { Dir.getwd + '/output/blah.dat' }
+    let(:raw_path) { "#{Dir.getwd}/output/blah.dat" }
 
     let(:item) { Nanoc::Core::Item.new(orig_content, {}, '/foo') }
 
@@ -56,9 +56,9 @@ describe Nanoc::Core::ItemRepWriter do
 
       it 'copies contents' do
         expect(Nanoc::Core::NotificationCenter).to receive(:post)
-          .with(:rep_write_started, item_rep, Dir.getwd + '/output/blah.dat')
+          .with(:rep_write_started, item_rep, "#{Dir.getwd}/output/blah.dat")
         expect(Nanoc::Core::NotificationCenter).to receive(:post)
-          .with(:rep_write_ended, item_rep, true, Dir.getwd + '/output/blah.dat', true, true)
+          .with(:rep_write_ended, item_rep, true, "#{Dir.getwd}/output/blah.dat", true, true)
 
         subject
 
@@ -99,9 +99,9 @@ describe Nanoc::Core::ItemRepWriter do
 
       it 'writes' do
         expect(Nanoc::Core::NotificationCenter).to receive(:post)
-          .with(:rep_write_started, item_rep, Dir.getwd + '/output/blah.dat')
+          .with(:rep_write_started, item_rep, "#{Dir.getwd}/output/blah.dat")
         expect(Nanoc::Core::NotificationCenter).to receive(:post)
-          .with(:rep_write_ended, item_rep, false, Dir.getwd + '/output/blah.dat', true, true)
+          .with(:rep_write_ended, item_rep, false, "#{Dir.getwd}/output/blah.dat", true, true)
 
         subject
 

@@ -298,6 +298,6 @@ shared_examples 'an item rep view' do
     let(:item) { Nanoc::Core::Item.new('asdf', {}, '/foo') }
     let(:view) { described_class.new(item_rep, view_context) }
 
-    it { is_expected.to eql('<' + described_class.to_s + ' item.identifier=/foo name=jacques>') }
+    it { is_expected.to eql("<#{described_class} item.identifier=/foo name=jacques>") }
   end
 end

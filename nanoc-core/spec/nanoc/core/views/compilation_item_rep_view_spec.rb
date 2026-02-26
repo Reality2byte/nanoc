@@ -67,7 +67,7 @@ describe Nanoc::Core::CompilationItemRepView do
     let(:rep) do
       Nanoc::Core::ItemRep.new(item, :default).tap do |ir|
         ir.raw_paths = {
-          last: [Dir.getwd + '/output/about/index.html'],
+          last: ["#{Dir.getwd}/output/about/index.html"],
         }
       end
     end
@@ -243,7 +243,7 @@ describe Nanoc::Core::CompilationItemRepView do
           expect(dep.props.path?).to be(false)
         end
 
-        it { is_expected.to eq(Dir.getwd + '/output/about/index.html') }
+        it { is_expected.to eq("#{Dir.getwd}/output/about/index.html") }
       end
     end
   end
@@ -259,7 +259,7 @@ describe Nanoc::Core::CompilationItemRepView do
           Nanoc::Core::SnapshotDef.new(:last, binary: false),
         ]
         ir.raw_paths = {
-          last: [Dir.getwd + '/output/about/index.html'],
+          last: ["#{Dir.getwd}/output/about/index.html"],
         }
       end
     end

@@ -122,7 +122,7 @@ describe Nanoc::Core::OutdatednessRules do
       end
 
       context 'path for last snapshot' do
-        let(:path) { Dir.getwd + '/output/foo.txt' }
+        let(:path) { "#{Dir.getwd}/output/foo.txt" }
 
         before { item_rep.raw_paths = { last: [path] } }
 
@@ -141,7 +141,7 @@ describe Nanoc::Core::OutdatednessRules do
       end
 
       context 'path for other snapshot' do
-        let(:path) { Dir.getwd + '/output/foo.txt' }
+        let(:path) { "#{Dir.getwd}/output/foo.txt" }
 
         before { item_rep.raw_paths = { donkey: [path] } }
 
@@ -160,7 +160,7 @@ describe Nanoc::Core::OutdatednessRules do
       end
 
       context 'path inside output dir not inside current directory' do
-        let(:path) { output_dir + '/foo.txt' }
+        let(:path) { "#{output_dir}/foo.txt" }
 
         let(:config) { super().merge(output_dir:) }
         let(:output_dir) { Dir.mktmpdir('nanoc-outdatendess-rules-spec') }

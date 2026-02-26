@@ -136,6 +136,6 @@ shared_examples 'an item rep collection view' do
   describe '#inspect' do
     subject { view.inspect }
 
-    it { is_expected.to eql('<' + described_class.name + '>') }
+    it { is_expected.to eql("<#{described_class.name}>") }
   end
 end

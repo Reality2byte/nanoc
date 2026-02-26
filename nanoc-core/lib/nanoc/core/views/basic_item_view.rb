@@ -14,7 +14,7 @@ module Nanoc
           raise Nanoc::Core::Errors::CannotGetParentOrChildrenOfNonLegacyItem.new(_unwrap.identifier)
         end
 
-        children_pattern = Nanoc::Core::Pattern.from(_unwrap.identifier.to_s + '*/')
+        children_pattern = Nanoc::Core::Pattern.from("#{_unwrap.identifier}*/")
         children = @context.items.select { |i| children_pattern.match?(i.identifier) }
 
         children.map { |i| self.class.new(i, @context) }.freeze
@@ -31,7 +31,7 @@ module Nanoc
           raise Nanoc::Core::Errors::CannotGetParentOrChildrenOfNonLegacyItem.new(_unwrap.identifier)
         end
 
-        parent_identifier = '/' + _unwrap.identifier.components[0..-2].join('/') + '/'
+        parent_identifier = "/#{_unwrap.identifier.components[0..-2].join('/')}/"
         parent_identifier = '/' if parent_identifier == '//'
 
         parent = @context.items.object_with_identifier(parent_identifier)

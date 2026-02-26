@@ -556,7 +556,7 @@ describe Nanoc::Core::Executor do
 
       context 'raw path' do
         before do
-          rep.raw_paths = { something: [Dir.getwd + '/output/donkey.md'] }
+          rep.raw_paths = { something: ["#{Dir.getwd}/output/donkey.md"] }
         end
 
         it 'does not write' do

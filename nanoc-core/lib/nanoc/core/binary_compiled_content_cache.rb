@@ -99,13 +99,11 @@ module Nanoc
       private
 
       def dirname
-        filename + '_data'
+        "#{filename}_data"
       end
 
       def string_to_path_component(string)
-        string.gsub(/[^a-zA-Z0-9]+/, '_') +
-          '-' +
-          Digest::SHA1.hexdigest(string)[0..9]
+        "#{string.gsub(/[^a-zA-Z0-9]+/, '_')}-#{Digest::SHA1.hexdigest(string)[0..9]}"
       end
 
       def dirname_for_item_identifier(item_identifier)

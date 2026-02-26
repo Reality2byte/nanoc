@@ -20,7 +20,7 @@ describe Nanoc::Core::TempFilenameFactory do
     end
 
     it 'creates the containing directory' do
-      expect(Dir[subject.root_dir + '/**/*']).to be_empty
+      expect(Dir["#{subject.root_dir}/**/*"]).to be_empty
 
       path = subject.create(prefix)
 
@@ -68,7 +68,7 @@ describe Nanoc::Core::TempFilenameFactory do
     before { File.write(path, 'hello') }
 
     def files
-      Dir[factory.root_dir + '/**/*'].select { |fn| File.file?(fn) }
+      Dir["#{factory.root_dir}/**/*"].select { |fn| File.file?(fn) }
     end
 
     it 'removes generated files' do

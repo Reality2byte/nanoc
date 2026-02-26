@@ -209,7 +209,7 @@ module Nanoc
 
       def validate
         dir = File.dirname(__FILE__)
-        schema_data = JSON.parse(File.read(dir + '/configuration-schema.json'))
+        schema_data = JSON.parse(File.read("#{dir}/configuration-schema.json"))
         schema = JsonSchema.parse!(schema_data)
         schema.expand_references!
         schema.validate!(@wrapped.__nanoc_stringify_keys_recursively)

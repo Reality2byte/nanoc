@@ -26,7 +26,7 @@ module Nanoc
       #     # => "I am Max Payne and I am hiding in a cheap motel."
       def initialize(hash)
         hash.each_pair do |key, value|
-          instance_variable_set('@' + key.to_s, value)
+          instance_variable_set("@#{key}", value)
         end
       end
 
@@ -40,7 +40,7 @@ module Nanoc
       # rubocop:enable Naming/AccessorMethodName
 
       def method_missing(method, *args, &)
-        ivar_name = '@' + method.to_s
+        ivar_name = "@#{method}"
         if instance_variable_defined?(ivar_name)
           instance_variable_get(ivar_name)
         else
@@ -49,7 +49,7 @@ module Nanoc
       end
 
       def respond_to_missing?(method, include_all)
-        ivar_name = '@' + method.to_s
+        ivar_name = "@#{method}"
 
         valid_ivar_name =
           if defined?(Contracts)

@@ -81,9 +81,9 @@ module Nanoc
           cycle.each.with_index do |r, i|
             msg_bits << "    (#{i + 1}) item #{r.item.identifier}, rep #{r.name.inspect}, uses compiled content of"
           end
-          msg_bits << (msg_bits.pop + ' (1)')
+          msg_bits << "#{msg_bits.pop} (1)"
 
-          super(msg_bits.map { |x| x + "\n" }.join)
+          super(msg_bits.map { |x| "#{x}\n" }.join)
         end
       end
 

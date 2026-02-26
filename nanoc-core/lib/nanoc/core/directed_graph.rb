@@ -58,11 +58,11 @@ module Nanoc
 
         @vertices.each_pair do |v2, _|
           direct_predecessors_of(v2).each do |v1|
-            s << [v1.inspect + ' -> ' + v2.inspect + ' props=' + @edge_props[[v1, v2]].inspect]
+            s << ["#{v1.inspect} -> #{v2.inspect} props=#{@edge_props[[v1, v2]].inspect}"]
           end
         end
 
-        self.class.to_s + '(' + s.join(', ') + ')'
+        "#{self.class}(#{s.join(', ')})"
       end
 
       # @group Modifying the graph

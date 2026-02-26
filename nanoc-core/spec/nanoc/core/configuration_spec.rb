@@ -44,13 +44,13 @@ describe Nanoc::Core::Configuration do
     context 'not explicitly defined' do
       let(:hash) { { foo: 'bar' } }
 
-      it { is_expected.to eql(Dir.getwd + '/output') }
+      it { is_expected.to eql("#{Dir.getwd}/output") }
     end
 
     context 'explicitly defined, top-level' do
       let(:hash) { { foo: 'bar', output_dir: 'build' } }
 
-      it { is_expected.to eql(Dir.getwd + '/build') }
+      it { is_expected.to eql("#{Dir.getwd}/build") }
     end
   end
 
@@ -76,8 +76,8 @@ describe Nanoc::Core::Configuration do
     end
 
     it 'contains both top-level and default output dir' do
-      expect(subject).to include(Dir.getwd + '/output_toplevel')
-      expect(subject).to include(Dir.getwd + '/output_default')
+      expect(subject).to include("#{Dir.getwd}/output_toplevel")
+      expect(subject).to include("#{Dir.getwd}/output_default")
     end
 
     it 'does not contain nil' do
@@ -85,8 +85,8 @@ describe Nanoc::Core::Configuration do
     end
 
     it 'contains all other output dirs' do
-      expect(subject).to include(Dir.getwd + '/output_staging')
-      expect(subject).to include(Dir.getwd + '/output_prod')
+      expect(subject).to include("#{Dir.getwd}/output_staging")
+      expect(subject).to include("#{Dir.getwd}/output_prod")
     end
   end
 

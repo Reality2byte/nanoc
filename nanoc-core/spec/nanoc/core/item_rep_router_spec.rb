@@ -94,10 +94,10 @@ describe(Nanoc::Core::ItemRepRouter) do
 
       subject
 
-      expect(reps[item][0].raw_paths).to eql(last: [Dir.getwd + '/output/foo/index.html'])
+      expect(reps[item][0].raw_paths).to eql(last: ["#{Dir.getwd}/output/foo/index.html"])
       expect(reps[item][0].paths).to eql(last: ['/foo/'])
 
-      expect(reps[item][1].raw_paths).to eql(last: [Dir.getwd + '/output/foo.csv'])
+      expect(reps[item][1].raw_paths).to eql(last: ["#{Dir.getwd}/output/foo.csv"])
       expect(reps[item][1].paths).to eql(last: ['/foo.csv'])
     end
 
@@ -107,10 +107,10 @@ describe(Nanoc::Core::ItemRepRouter) do
 
       subject
 
-      expect(reps[item][0].raw_paths).to eql(last: [Dir.getwd + '/output/foo/index.html'])
+      expect(reps[item][0].raw_paths).to eql(last: ["#{Dir.getwd}/output/foo/index.html"])
       expect(reps[item][0].paths).to eql(last: ['/foo/'])
 
-      expect(reps[item][1].raw_paths).to eql(last: [Dir.getwd + '/output/foo.csv'])
+      expect(reps[item][1].raw_paths).to eql(last: ["#{Dir.getwd}/output/foo.csv"])
       expect(reps[item][1].paths).to eql(last: ['/foo.csv'])
     end
   end
@@ -146,7 +146,7 @@ describe(Nanoc::Core::ItemRepRouter) do
         context 'single path' do
           it 'sets the raw path' do
             subject
-            expect(rep.raw_paths).to eql(foo: [Dir.getwd + '/output/foo/index.html'])
+            expect(rep.raw_paths).to eql(foo: ["#{Dir.getwd}/output/foo/index.html"])
           end
 
           it 'sets the path' do
@@ -178,7 +178,7 @@ describe(Nanoc::Core::ItemRepRouter) do
 
             it 'sets the raw path as UTF-8' do
               subject
-              expect(rep.raw_paths).to eql(foo: [Dir.getwd + '/output/foo/index.html'])
+              expect(rep.raw_paths).to eql(foo: ["#{Dir.getwd}/output/foo/index.html"])
               expect(rep.raw_paths[:foo].first.encoding.to_s).to eql('UTF-8')
             end
           end
@@ -189,7 +189,7 @@ describe(Nanoc::Core::ItemRepRouter) do
 
           it 'sets the raw paths' do
             subject
-            expect(rep.raw_paths).to eql(foo: [Dir.getwd + '/output/foo/index.html', Dir.getwd + '/output/bar/index.html'])
+            expect(rep.raw_paths).to eql(foo: ["#{Dir.getwd}/output/foo/index.html", "#{Dir.getwd}/output/bar/index.html"])
           end
 
           it 'sets the paths' do

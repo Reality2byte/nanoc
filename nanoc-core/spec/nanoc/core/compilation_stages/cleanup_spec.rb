@@ -35,10 +35,10 @@ describe Nanoc::Core::CompilationStages::Cleanup do
     shared_examples 'an old store' do
       it 'removes the old store' do
         FileUtils.mkdir_p('tmp')
-        File.write('tmp/' + store_name, 'stuff')
+        File.write("tmp/#{store_name}", 'stuff')
 
         expect { subject }
-          .to change { File.file?('tmp/' + store_name) }
+          .to change { File.file?("tmp/#{store_name}") }
           .from(true).to(false)
       end
     end
@@ -84,9 +84,9 @@ describe Nanoc::Core::CompilationStages::Cleanup do
     end
 
     it 'removes stores for unused output paths' do
-      default_dir = "tmp/nanoc/#{gen_hash(Dir.getwd + '/output')}"
-      prod_dir = "tmp/nanoc/#{gen_hash(Dir.getwd + '/output_production')}"
-      staging_dir = "tmp/nanoc/#{gen_hash(Dir.getwd + '/output_staging')}"
+      default_dir = "tmp/nanoc/#{gen_hash("#{Dir.getwd}/output")}"
+      prod_dir = "tmp/nanoc/#{gen_hash("#{Dir.getwd}/output_production")}"
+      staging_dir = "tmp/nanoc/#{gen_hash("#{Dir.getwd}/output_staging")}"
 
       FileUtils.mkdir_p(default_dir)
       FileUtils.mkdir_p(prod_dir)
