@@ -38,8 +38,8 @@ describe Nanoc::Core::ItemRepSelector do
   let(:outdated_reps) { reps_array }
 
   let(:names_to_reps) do
-    reps_array.each_with_object({}) do |rep, acc|
-      acc[rep.name] = rep
+    reps_array.to_h do |rep|
+      [rep.name, rep]
     end
   end
 

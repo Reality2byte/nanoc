@@ -28,10 +28,10 @@ module Nanoc::CLI::Commands
 
     def run
       # Get list of plugins (before and after)
-      plugins_before = PLUGIN_CLASSES.keys.each_with_object({}) { |c, acc| acc[c] = c.all }
+      plugins_before = PLUGIN_CLASSES.keys.to_h { |c| [c, c.all] }
       site = load_site
       site&.code_snippets
-      plugins_after = PLUGIN_CLASSES.keys.each_with_object({}) { |c, acc| acc[c] = c.all }
+      plugins_after = PLUGIN_CLASSES.keys.to_h { |c| [c, c.all] }
 
       # Divide list of plugins into builtin and custom
       plugins_builtin = plugins_before

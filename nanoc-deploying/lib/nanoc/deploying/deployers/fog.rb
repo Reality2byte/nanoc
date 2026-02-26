@@ -204,8 +204,8 @@ module Nanoc
         def read_etags(files)
           case config[:provider]
           when 'aws'
-            files.each_with_object({}) do |file, etags|
-              etags[file.key] = file.etag
+            files.to_h do |file|
+              [file.key, file.etag]
             end
           else
             {}
