@@ -12,11 +12,11 @@ describe 'GH-1248', :site, :stdio do
       passthrough '/**/*'
     EOS
 
-    Nanoc::CLI.run(%w[compile])
+    Nanoc::CLI.run(['compile'])
   end
 
   example do
-    expect { Nanoc::CLI.run(%w[compile --verbose]) }
+    expect { Nanoc::CLI.run(['compile', '--verbose']) }
       .not_to output(%r{identical .* ootpoot/stuff.html}).to_stdout
   end
 end

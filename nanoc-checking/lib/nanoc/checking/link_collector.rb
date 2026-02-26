@@ -5,22 +5,22 @@ module ::Nanoc
     class LinkCollector
       # HTML5 element attributes
       URI_ATTRS = {
-        'a' => %i[href ping],
-        'area' => %i[href ping],
-        'audio' => %i[src],
-        'base' => %i[href],
-        'blockquote' => %i[cite],
-        'form' => %i[action],
-        'iframe' => %i[src],
-        'img' => %i[src srcset],
-        'link' => %i[href],
-        'object' => %i[data],
-        'script' => %i[src],
-        'source' => %i[src srcset],
-        'video' => %i[poster src],
+        'a' => [:href, :ping],
+        'area' => [:href, :ping],
+        'audio' => [:src],
+        'base' => [:href],
+        'blockquote' => [:cite],
+        'form' => [:action],
+        'iframe' => [:src],
+        'img' => [:src, :srcset],
+        'link' => [:href],
+        'object' => [:data],
+        'script' => [:src],
+        'source' => [:src, :srcset],
+        'video' => [:poster, :src],
       }.freeze
       # HTML+RDFa global URI attributes
-      GLOBAL_ATTRS = %i[about resource].freeze
+      GLOBAL_ATTRS = [:about, :resource].freeze
 
       def initialize(filenames, mode = nil)
         @filenames = filenames
@@ -64,7 +64,7 @@ module ::Nanoc
 
       # embedded resources, used by the mixed-content checker
       def resource_uris_in_file(filename)
-        uris_in_file filename, %w[audio base form iframe img link object script source video]
+        uris_in_file filename, ['audio', 'base', 'form', 'iframe', 'img', 'link', 'object', 'script', 'source', 'video']
       end
 
       private
@@ -99,7 +99,7 @@ module ::Nanoc
 
             if attr_name == :srcset
               uris = uris.merge(tag[attr_name].split(',').map { |v| v.strip.split[0].strip }.compact)
-            elsif %i[about ping resource].include?(attr_name)
+            elsif [:about, :ping, :resource].include?(attr_name)
               uris = uris.merge(tag[attr_name].split.map(&:strip).compact)
             else
               uris << tag[attr_name.to_s]

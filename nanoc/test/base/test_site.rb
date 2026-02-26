@@ -88,7 +88,7 @@ class Nanoc::Core::SiteTest < Nanoc::TestCase
   end
 
   def test_identifier_classes
-    Nanoc::CLI.run %w[create_site bar]
+    Nanoc::CLI.run ['create_site', 'bar']
     FileUtils.cd('bar') do
       FileUtils.mkdir_p('content')
       FileUtils.mkdir_p('layouts')

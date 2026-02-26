@@ -181,8 +181,8 @@ describe Nanoc::Core::ItemRepSelector do
       end
 
       example do
-        expect(successfully_yielded).to eq %i[e d c b a]
-        expect(tentatively_yielded).to eq %i[a b c d e d c b a]
+        expect(successfully_yielded).to eq [:e, :d, :c, :b, :a]
+        expect(tentatively_yielded).to eq [:a, :b, :c, :d, :e, :d, :c, :b, :a]
       end
     end
 
@@ -192,21 +192,21 @@ describe Nanoc::Core::ItemRepSelector do
       end
 
       example do
-        expect(successfully_yielded).to eq %i[a b c d e]
-        expect(tentatively_yielded).to eq %i[a b c d e]
+        expect(successfully_yielded).to eq [:a, :b, :c, :d, :e]
+        expect(tentatively_yielded).to eq [:a, :b, :c, :d, :e]
       end
     end
 
     context 'star dependencies' do
       let(:dependencies) do
         {
-          a: %i[b c d e],
+          a: [:b, :c, :d, :e],
         }
       end
 
       example do
-        expect(successfully_yielded).to eq %i[b c d e a]
-        expect(tentatively_yielded).to eq %i[a b c d e a]
+        expect(successfully_yielded).to eq [:b, :c, :d, :e, :a]
+        expect(tentatively_yielded).to eq [:a, :b, :c, :d, :e, :a]
       end
     end
 
@@ -215,13 +215,13 @@ describe Nanoc::Core::ItemRepSelector do
 
       let(:dependencies) do
         {
-          a: %i[b c d e],
+          a: [:b, :c, :d, :e],
         }
       end
 
       example do
-        expect(successfully_yielded).to eq %i[b c d e a]
-        expect(tentatively_yielded).to eq %i[a b a c a d a e a]
+        expect(successfully_yielded).to eq [:b, :c, :d, :e, :a]
+        expect(tentatively_yielded).to eq [:a, :b, :a, :c, :a, :d, :a, :e, :a]
       end
     end
 
@@ -235,8 +235,8 @@ describe Nanoc::Core::ItemRepSelector do
       end
 
       it 'picks prioritised roots' do
-        expect(successfully_yielded).to eq %i[d e c b a]
-        expect(tentatively_yielded).to eq %i[a d b e c b a]
+        expect(successfully_yielded).to eq [:d, :e, :c, :b, :a]
+        expect(tentatively_yielded).to eq [:a, :d, :b, :e, :c, :b, :a]
       end
     end
   end

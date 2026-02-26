@@ -12,7 +12,7 @@ describe Nanoc::Core::AggregateDataSource, :stdio do
       end
 
       def item_changes
-        %i[one_foo one_bar]
+        [:one_foo, :one_bar]
       end
 
       def layouts
@@ -20,7 +20,7 @@ describe Nanoc::Core::AggregateDataSource, :stdio do
       end
 
       def layout_changes
-        %i[one_foo one_bar]
+        [:one_foo, :one_bar]
       end
     end
   end
@@ -32,7 +32,7 @@ describe Nanoc::Core::AggregateDataSource, :stdio do
       end
 
       def item_changes
-        %i[two_foo two_bar]
+        [:two_foo, :two_bar]
       end
 
       def layouts
@@ -40,7 +40,7 @@ describe Nanoc::Core::AggregateDataSource, :stdio do
       end
 
       def layout_changes
-        %i[two_foo two_bar]
+        [:two_foo, :two_bar]
       end
     end
   end

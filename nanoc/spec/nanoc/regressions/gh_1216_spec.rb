@@ -15,7 +15,7 @@ describe 'GH-1216', :site, :stdio do
       end
     EOS
 
-    Nanoc::CLI.run(%w[compile])
+    Nanoc::CLI.run(['compile'])
   end
 
   context 'attributes changed using #[]=' do
@@ -34,7 +34,7 @@ describe 'GH-1216', :site, :stdio do
     end
 
     it 'changes output file' do
-      expect { Nanoc::CLI.run(%w[compile]) }
+      expect { Nanoc::CLI.run(['compile']) }
         .to change { File.read('output/talks.html') }
         .from('A= B=')
         .to('A=archived B=archived')
@@ -57,7 +57,7 @@ describe 'GH-1216', :site, :stdio do
     end
 
     it 'changes output file' do
-      expect { Nanoc::CLI.run(%w[compile]) }
+      expect { Nanoc::CLI.run(['compile']) }
         .to change { File.read('output/talks.html') }
         .from('A= B=')
         .to('A=archived B=archived')
@@ -81,7 +81,7 @@ describe 'GH-1216', :site, :stdio do
     end
 
     it 'changes output file' do
-      expect { Nanoc::CLI.run(%w[compile]) }
+      expect { Nanoc::CLI.run(['compile']) }
         .to change { File.read('output/talks.html') }
         .from('A= B=')
         .to('AAH=archived B=current')

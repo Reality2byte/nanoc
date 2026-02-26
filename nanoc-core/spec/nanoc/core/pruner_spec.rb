@@ -317,7 +317,7 @@ describe Nanoc::Core::Pruner, :stdio do
     context 'regular path' do
       let(:pathname) { Pathname.new('/a/bb/ccc/dd/e') }
 
-      it { is_expected.to eql(%w[/ a bb ccc dd e]) }
+      it { is_expected.to eql(['/', 'a', 'bb', 'ccc', 'dd', 'e']) }
     end
   end
 

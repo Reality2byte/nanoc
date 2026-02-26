@@ -63,7 +63,7 @@ module Nanoc
     def self.enable_utf8?(io)
       return true unless io.tty?
 
-      %w[LC_ALL LC_CTYPE LANG].any? { |e| ENV.fetch(e, nil) =~ /UTF/i }
+      ['LC_ALL', 'LC_CTYPE', 'LANG'].any? { |e| ENV.fetch(e, nil) =~ /UTF/i }
     end
 
     # @return [Boolean] true if color support is present, false if not

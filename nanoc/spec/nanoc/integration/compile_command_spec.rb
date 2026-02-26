@@ -16,7 +16,7 @@ describe 'Compile command', :site, :stdio do
       FileUtils.mkdir_p('output')
       File.write('output/foo.html', "I am old foo!\n")
 
-      Nanoc::CLI.run(%w[compile])
+      Nanoc::CLI.run(['compile'])
 
       expect(File.file?('output.diff')).not_to be
     end
@@ -25,7 +25,7 @@ describe 'Compile command', :site, :stdio do
       FileUtils.mkdir_p('output')
       File.write('output/foo.html', "I am old foo!\n")
 
-      Nanoc::CLI.run(%w[compile --diff])
+      Nanoc::CLI.run(['compile', '--diff'])
 
       expect(File.file?('output.diff')).to be
     end
@@ -47,7 +47,7 @@ describe 'Compile command', :site, :stdio do
     end
 
     # Compile
-    Nanoc::CLI.run(%w[compile])
+    Nanoc::CLI.run(['compile'])
 
     # Check
     expect(File.read('output/index.html')).to eq('<h1>A</h1>')
@@ -63,7 +63,7 @@ describe 'Compile command', :site, :stdio do
     end
 
     # Compile
-    Nanoc::CLI.run(%w[compile])
+    Nanoc::CLI.run(['compile'])
 
     # Check
     expect(File.read('output/index.html')).to eq('<h1>B</h1>')
@@ -82,7 +82,7 @@ describe 'Compile command', :site, :stdio do
     RULES
 
     # Compile
-    Nanoc::CLI.run(%w[compile --focus /a.*])
+    Nanoc::CLI.run(['compile', '--focus', '/a.*'])
 
     # Check
     expect(File.read('output/a.html')).to eq('<h1>A</h1>')

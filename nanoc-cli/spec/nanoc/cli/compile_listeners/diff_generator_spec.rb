@@ -50,13 +50,13 @@ describe Nanoc::CLI::CompileListeners::DiffGenerator do
     let(:differ) { described_class.new('content/foo.md', str_a, str_b) }
 
     let(:str_a) do
-      %w[a b c d e f g h i j k l m n o p q r s].join("\n")
+      ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's'].join("\n")
     end
 
     let(:str_b) do
       # remove c, d
       # add !!!
-      %w[a b e f g h i j k l m !!! n o p q r s].join("\n")
+      ['a', 'b', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', '!!!', 'n', 'o', 'p', 'q', 'r', 's'].join("\n")
     end
 
     it 'generates the proper diff' do

@@ -65,7 +65,7 @@ module Nanoc
             # Verify existence of remote, if remote is not a URL
             if remote_is_name?(remote)
               begin
-                run_cmd(%W[git config --get remote.#{remote}.url])
+                run_cmd(['git', 'config', '--get', "remote.#{remote}.url"])
               rescue TTY::Command::ExitError
                 raise Errors::RemoteDoesNotExist.new(remote)
               end
@@ -73,7 +73,7 @@ module Nanoc
 
             # If the branch exists then switch to it, otherwise prompt the user to create one.
             begin
-              run_cmd_unless_dry(%W[git checkout #{branch}])
+              run_cmd_unless_dry(['git', 'checkout', branch.to_s])
             rescue TTY::Command::ExitError
               raise Errors::BranchDoesNotExist.new(branch)
             end
@@ -82,15 +82,15 @@ module Nanoc
             unless clean_repo?
               msg = "Automated commit at #{Time.now.utc} by Nanoc #{Nanoc::VERSION}"
               author = 'Nanoc <>'
-              run_cmd_unless_dry(%w[git add -A])
-              run_cmd_unless_dry(%W[git commit -a --author #{author} -m #{msg}])
+              run_cmd_unless_dry(['git', 'add', '-A'])
+              run_cmd_unless_dry(['git', 'commit', '-a', '--author', author.to_s, '-m', msg.to_s])
             end
 
             # Push
             if forced
-              run_cmd_unless_dry(%W[git push -f #{remote} #{branch}])
+              run_cmd_unless_dry(['git', 'push', '-f', remote.to_s, branch.to_s])
             else
-              run_cmd_unless_dry(%W[git push #{remote} #{branch}])
+              run_cmd_unless_dry(['git', 'push', remote.to_s, branch.to_s])
             end
           end
         end

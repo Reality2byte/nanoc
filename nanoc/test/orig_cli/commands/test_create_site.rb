@@ -4,14 +4,14 @@ require 'helper'
 
 class Nanoc::CLI::Commands::CreateSiteTest < Nanoc::TestCase
   def test_create_site_with_existing_name
-    Nanoc::CLI.run %w[create_site foo]
+    Nanoc::CLI.run ['create_site', 'foo']
     assert_raises(::Nanoc::Core::TrivialError) do
-      Nanoc::CLI.run %w[create_site foo]
+      Nanoc::CLI.run ['create_site', 'foo']
     end
   end
 
   def test_can_compile_new_site
-    Nanoc::CLI.run %w[create_site foo]
+    Nanoc::CLI.run ['create_site', 'foo']
 
     FileUtils.cd('foo') do
       site = Nanoc::Core::SiteLoader.new.new_from_cwd
@@ -23,14 +23,14 @@ class Nanoc::CLI::Commands::CreateSiteTest < Nanoc::TestCase
     FileUtils.mkdir('foo')
 
     FileUtils.cd('foo') do
-      Nanoc::CLI.run %w[create_site ./]
+      Nanoc::CLI.run ['create_site', './']
       site = Nanoc::Core::SiteLoader.new.new_from_cwd
       Nanoc::Core::Compiler.compile(site)
     end
   end
 
   def test_can_compile_new_site_with_binary_items
-    Nanoc::CLI.run %w[create_site foo]
+    Nanoc::CLI.run ['create_site', 'foo']
 
     FileUtils.cd('foo') do
       File.open('content/blah', 'w') { |io| io << 'asdf' }
@@ -44,7 +44,7 @@ class Nanoc::CLI::Commands::CreateSiteTest < Nanoc::TestCase
   def test_can_compile_site_in_nonempty_directory
     FileUtils.mkdir('foo')
     FileUtils.touch(File.join('foo', 'SomeFile.txt'))
-    Nanoc::CLI.run %w[create_site foo --force]
+    Nanoc::CLI.run ['create_site', 'foo', '--force']
 
     FileUtils.cd('foo') do
       site = Nanoc::Core::SiteLoader.new.new_from_cwd
@@ -55,7 +55,7 @@ class Nanoc::CLI::Commands::CreateSiteTest < Nanoc::TestCase
   def test_compiled_site_output
     FileUtils.mkdir('foo')
     FileUtils.touch(File.join('foo', 'SomeFile.txt'))
-    Nanoc::CLI.run %w[create_site foo --force]
+    Nanoc::CLI.run ['create_site', 'foo', '--force']
 
     FileUtils.cd('foo') do
       site = Nanoc::Core::SiteLoader.new.new_from_cwd
@@ -70,7 +70,7 @@ class Nanoc::CLI::Commands::CreateSiteTest < Nanoc::TestCase
     original_encoding = Encoding.default_external
     Encoding.default_external = 'ISO-8859-1' # ew!
 
-    Nanoc::CLI.run %w[create_site foo]
+    Nanoc::CLI.run ['create_site', 'foo']
 
     FileUtils.cd('foo') do
       # Try with encoding = default encoding = utf-8
@@ -98,9 +98,9 @@ class Nanoc::CLI::Commands::CreateSiteTest < Nanoc::TestCase
   end
 
   def test_new_site_has_correct_stylesheets
-    Nanoc::CLI.run %w[create_site foo]
+    Nanoc::CLI.run ['create_site', 'foo']
     FileUtils.cd('foo') do
-      Nanoc::CLI.run %w[compile]
+      Nanoc::CLI.run ['compile']
 
       assert File.file?('content/stylesheet.css')
       assert_match(%r{/stylesheet.css}, File.read('output/index.html'))
@@ -108,9 +108,9 @@ class Nanoc::CLI::Commands::CreateSiteTest < Nanoc::TestCase
   end
 
   def test_new_site_has_correct_robots_txt
-    Nanoc::CLI.run %w[create_site foo]
+    Nanoc::CLI.run ['create_site', 'foo']
     FileUtils.cd('foo') do
-      Nanoc::CLI.run %w[compile]
+      Nanoc::CLI.run ['compile']
 
       assert File.file?('content/robots.txt')
       assert File.file?('output/robots.txt')
@@ -121,19 +121,19 @@ class Nanoc::CLI::Commands::CreateSiteTest < Nanoc::TestCase
   def test_new_site_prunes_by_default
     FileUtils.mkdir('foo')
     FileUtils.touch(File.join('foo', 'SomeFile.txt'))
-    Nanoc::CLI.run %w[create_site foo --force]
+    Nanoc::CLI.run ['create_site', 'foo', '--force']
 
     FileUtils.cd('foo') do
       File.write('output/blah.txt', 'stuff')
 
-      Nanoc::CLI.run %w[compile]
+      Nanoc::CLI.run ['compile']
 
       refute File.file?('output/blah.txt')
     end
   end
 
   def test_default_site_routes_items_properly
-    Nanoc::CLI.run %w[create_site foo]
+    Nanoc::CLI.run ['create_site', 'foo']
 
     FileUtils.cd('foo') do
       FileUtils.mkdir_p('content/bar')
@@ -157,7 +157,7 @@ class Nanoc::CLI::Commands::CreateSiteTest < Nanoc::TestCase
   end
 
   def test_create_site_gemfile
-    Nanoc::CLI.run %w[create_site foo]
+    Nanoc::CLI.run ['create_site', 'foo']
 
     FileUtils.cd('foo') do
       assert File.file?('Gemfile')

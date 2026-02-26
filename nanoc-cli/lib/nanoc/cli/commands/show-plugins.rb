@@ -55,7 +55,7 @@ module Nanoc::CLI::Commands
         puts
 
         # Print plugins organised by subtype
-        %i[builtin custom].each do |type|
+        [:builtin, :custom].each do |type|
           # Find relevant plugins
           relevant_plugins = plugins_with_this_superclass[type]
 

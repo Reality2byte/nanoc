@@ -32,7 +32,7 @@ describe Nanoc::Core::ProcessingActions::Snapshot do
     context 'with snapshot name' do
       subject { action.update(snapshot_names: [:zebra]) }
 
-      its(:snapshot_names) { is_expected.to eql(%i[before_layout zebra]) }
+      its(:snapshot_names) { is_expected.to eql([:before_layout, :zebra]) }
       its(:paths) { is_expected.to eql(['/foo.md']) }
     end
 

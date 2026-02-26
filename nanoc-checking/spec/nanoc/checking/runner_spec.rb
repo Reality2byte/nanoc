@@ -8,13 +8,13 @@ describe Nanoc::Checking::Runner, :site do
   describe '#run_specific' do
     it 'can run a predefined check' do
       File.write('output/blah', 'I am stale! Haha!')
-      expect { runner.run_specific(%w[stale]) }
+      expect { runner.run_specific(['stale']) }
         .to output(%r{output/blah:.*stale - file without matching item}m).to_stdout
     end
 
     it 'can run custom checks' do
       File.write('Checks', 'check :my_foo_check do ; puts "I AM FOO!" ; end')
-      expect { runner.run_specific(%w[my_foo_check]) }.to output(/I AM FOO!/).to_stdout
+      expect { runner.run_specific(['my_foo_check']) }.to output(/I AM FOO!/).to_stdout
     end
   end
 
@@ -132,7 +132,7 @@ describe Nanoc::Checking::Runner, :site do
           File.write('nanoc.yaml', "checking:\n  enabled_checks:\n    - elinks")
         end
 
-        it { is_expected.to match_array(%i[ilinks elinks]) }
+        it { is_expected.to contain_exactly(:ilinks, :elinks) }
       end
     end
   end
@@ -141,19 +141,19 @@ describe Nanoc::Checking::Runner, :site do
     subject { runner.send(:check_classes_named, names) }
 
     context 'given one full name' do
-      let(:names) { %w[internal_links] }
+      let(:names) { ['internal_links'] }
 
       it { is_expected.to eq([Nanoc::Checking::Checks::InternalLinks]) }
     end
 
     context 'given one full name with dash instead of underscore' do
-      let(:names) { %w[internal-links] }
+      let(:names) { ['internal-links'] }
 
       it { is_expected.to eq([Nanoc::Checking::Checks::InternalLinks]) }
     end
 
     context 'given one abbreviated name' do
-      let(:names) { %w[ilinks] }
+      let(:names) { ['ilinks'] }
 
       it { is_expected.to eq([Nanoc::Checking::Checks::InternalLinks]) }
     end

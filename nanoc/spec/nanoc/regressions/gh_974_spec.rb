@@ -12,7 +12,7 @@ describe 'GH-974', :site, :stdio do
   end
 
   it 'writes to path corresponding to identifier' do
-    Nanoc::CLI.run(%w[compile])
+    Nanoc::CLI.run(['compile'])
 
     expect(File.file?('output/foo.md')).to be(true)
   end

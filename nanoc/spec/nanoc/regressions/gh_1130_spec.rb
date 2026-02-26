@@ -16,6 +16,6 @@ describe 'GH-1130', :site, :stdio do
   end
 
   it 'does not raise error' do # rubocop:disable RSpec/NoExpectationExample
-    Nanoc::CLI.run(%w[check wat])
+    Nanoc::CLI.run(['check', 'wat'])
   end
 end

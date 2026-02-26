@@ -12,6 +12,6 @@ EOS
   end
 
   it 'preprocesses before running the check' do # rubocop:disable RSpec/NoExpectationExample
-    Nanoc::CLI.run(%w[check stale])
+    Nanoc::CLI.run(['check', 'stale'])
   end
 end

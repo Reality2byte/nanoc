@@ -24,9 +24,10 @@ describe Nanoc::CLI::CleaningStream do
   end
 
   it 'forwards methods' do
-    methods = %i[
-      write << flush tell print printf puts string reopen exist? exists? close
-      closed? external_encoding set_encoding sync sync= winsize winsize=
+    methods = [
+      :write, :<<, :flush, :tell, :print, :printf, :puts, :string, :reopen,
+      :exist?, :exists?, :close, :closed?, :external_encoding, :set_encoding,
+      :sync, :'sync=', :winsize, :'winsize='
     ]
 
     s = stream_class.new

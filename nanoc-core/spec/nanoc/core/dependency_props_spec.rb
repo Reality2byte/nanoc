@@ -176,7 +176,7 @@ describe Nanoc::Core::DependencyProps do
       let(:props) { described_class.new }
       let(:other_props) { props_all }
 
-      it { is_expected.to eql(Set.new(%i[raw_content attributes compiled_content path])) }
+      it { is_expected.to eql(Set.new([:raw_content, :attributes, :compiled_content, :path])) }
     end
 
     context 'some + nothing' do
@@ -190,28 +190,28 @@ describe Nanoc::Core::DependencyProps do
       let(:props) { described_class.new(compiled_content: true) }
       let(:other_props) { described_class.new(raw_content: true) }
 
-      it { is_expected.to eql(Set.new(%i[raw_content compiled_content])) }
+      it { is_expected.to eql(Set.new([:raw_content, :compiled_content])) }
     end
 
     context 'some + all' do
       let(:props) { described_class.new(compiled_content: true) }
       let(:other_props) { props_all }
 
-      it { is_expected.to eql(Set.new(%i[raw_content attributes compiled_content path])) }
+      it { is_expected.to eql(Set.new([:raw_content, :attributes, :compiled_content, :path])) }
     end
 
     context 'all + nothing' do
       let(:props) { props_all }
       let(:other_props) { described_class.new }
 
-      it { is_expected.to eql(Set.new(%i[raw_content attributes compiled_content path])) }
+      it { is_expected.to eql(Set.new([:raw_content, :attributes, :compiled_content, :path])) }
     end
 
     context 'all + all' do
       let(:props) { props_all }
       let(:other_props) { props_all }
 
-      it { is_expected.to eql(Set.new(%i[raw_content attributes compiled_content path])) }
+      it { is_expected.to eql(Set.new([:raw_content, :attributes, :compiled_content, :path])) }
     end
   end
 
@@ -227,11 +227,11 @@ describe Nanoc::Core::DependencyProps do
     end
 
     let(:props_attrs_list_a) do
-      described_class.new(attributes: %i[donkey giraffe])
+      described_class.new(attributes: [:donkey, :giraffe])
     end
 
     let(:props_attrs_list_b) do
-      described_class.new(attributes: %i[giraffe zebra])
+      described_class.new(attributes: [:giraffe, :zebra])
     end
 
     context 'false + false' do
@@ -253,7 +253,7 @@ describe Nanoc::Core::DependencyProps do
       let(:other_props) { props_attrs_list_a }
 
       it { is_expected.to be_a(Array) }
-      it { is_expected.to match_array(%i[donkey giraffe]) }
+      it { is_expected.to contain_exactly(:donkey, :giraffe) }
     end
 
     context 'true + false' do
@@ -282,7 +282,7 @@ describe Nanoc::Core::DependencyProps do
       let(:other_props) { props_attrs_false }
 
       it { is_expected.to be_a(Array) }
-      it { is_expected.to match_array(%i[donkey giraffe]) }
+      it { is_expected.to contain_exactly(:donkey, :giraffe) }
     end
 
     context 'list + true' do
@@ -297,7 +297,7 @@ describe Nanoc::Core::DependencyProps do
       let(:other_props) { props_attrs_list_b }
 
       it { is_expected.to be_a(Set) }
-      it { is_expected.to match_array(%i[donkey giraffe zebra]) }
+      it { is_expected.to contain_exactly(:donkey, :giraffe, :zebra) }
     end
   end
 
@@ -313,11 +313,11 @@ describe Nanoc::Core::DependencyProps do
     end
 
     let(:props_raw_content_list_a) do
-      described_class.new(raw_content: %w[donkey giraffe])
+      described_class.new(raw_content: ['donkey', 'giraffe'])
     end
 
     let(:props_raw_content_list_b) do
-      described_class.new(raw_content: %w[giraffe zebra])
+      described_class.new(raw_content: ['giraffe', 'zebra'])
     end
 
     context 'false + false' do
@@ -339,7 +339,7 @@ describe Nanoc::Core::DependencyProps do
       let(:other_props) { props_raw_content_list_a }
 
       it { is_expected.to be_a(Array) }
-      it { is_expected.to match_array(%w[donkey giraffe]) }
+      it { is_expected.to contain_exactly('donkey', 'giraffe') }
     end
 
     context 'true + false' do
@@ -368,7 +368,7 @@ describe Nanoc::Core::DependencyProps do
       let(:other_props) { props_raw_content_false }
 
       it { is_expected.to be_a(Array) }
-      it { is_expected.to match_array(%w[donkey giraffe]) }
+      it { is_expected.to contain_exactly('donkey', 'giraffe') }
     end
 
     context 'list + true' do
@@ -383,7 +383,7 @@ describe Nanoc::Core::DependencyProps do
       let(:other_props) { props_raw_content_list_b }
 
       it { is_expected.to be_a(Set) }
-      it { is_expected.to match_array(%w[donkey giraffe zebra]) }
+      it { is_expected.to contain_exactly('donkey', 'giraffe', 'zebra') }
     end
   end
 
@@ -423,13 +423,13 @@ describe Nanoc::Core::DependencyProps do
     context 'attributes and compiled_content active' do
       let(:props) { described_class.new(attributes: true, compiled_content: true) }
 
-      it { is_expected.to eql(Set.new(%i[attributes compiled_content])) }
+      it { is_expected.to eql(Set.new([:attributes, :compiled_content])) }
     end
 
     context 'all active' do
       let(:props) { described_class.new(raw_content: true, attributes: true, compiled_content: true, path: true) }
 
-      it { is_expected.to eql(Set.new(%i[raw_content attributes compiled_content path])) }
+      it { is_expected.to eql(Set.new([:raw_content, :attributes, :compiled_content, :path])) }
     end
   end
 

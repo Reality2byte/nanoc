@@ -20,7 +20,7 @@ shared_examples 'a generic rule' do
     context 'matches' do
       let(:identifier) { Nanoc::Core::Identifier.new('/foo/bar/', type: :legacy) }
 
-      it { is_expected.to eql(%w[foo bar]) }
+      it { is_expected.to eql(['foo', 'bar']) }
     end
   end
 

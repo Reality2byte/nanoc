@@ -98,7 +98,7 @@ Dir['*.gem'].each do |fn|
 end
 puts
 
-unless %w[nanoc-core nanoc-cli].include?(gem_name)
+unless ['nanoc-core', 'nanoc-cli'].include?(gem_name)
   puts '=== Verifying presence of release date…'
   release_line = File.readlines('NEWS.md').drop(2).first
   unless / \(\d{4}-\d{2}-\d{2}\)$/.match?(release_line)

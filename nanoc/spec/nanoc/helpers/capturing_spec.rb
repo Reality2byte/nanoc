@@ -13,7 +13,7 @@ describe Nanoc::Helpers::Capturing, :helper do
 
       let(:params) { raise 'overwrite me' }
 
-      let(:contents_enumerator) { %w[foo bar].to_enum }
+      let(:contents_enumerator) { ['foo', 'bar'].to_enum }
 
       shared_examples 'setting content' do
         context 'only name given' do
@@ -207,7 +207,7 @@ describe Nanoc::Helpers::Capturing, :helper do
       let(:_erbout) { ['existing content'] }
 
       shared_examples 'returns properly joined output' do
-        subject { helper.capture { _erbout << %w[new _ content] } }
+        subject { helper.capture { _erbout << ['new', '_', 'content'] } }
 
         it 'returns the appended content, joined' do
           expect(subject).to eql('new_content')

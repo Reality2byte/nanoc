@@ -15,7 +15,7 @@ describe 'GH-1313', :site, :stdio do
   end
 
   example do
-    expect { Nanoc::CLI.run(%w[compile]) }
+    expect { Nanoc::CLI.run(['compile']) }
       .to change { File.file?('build/bin/web/bin/should-be-pruned') }
       .from(true)
       .to(false)

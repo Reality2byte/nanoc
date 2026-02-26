@@ -228,7 +228,7 @@ module Nanoc::CLI::Commands
       path = arguments[:path]
 
       # Check whether site exists
-      if File.exist?(path) && (!File.directory?(path) || !(Dir.entries(path) - %w[. ..]).empty?) && !options[:force]
+      if File.exist?(path) && (!File.directory?(path) || !(Dir.entries(path) - ['.', '..']).empty?) && !options[:force]
         raise(
           Nanoc::Core::TrivialError,
           "The site was not created because '#{path}' already exists. " \

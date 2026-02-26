@@ -25,7 +25,7 @@ class Nanoc::CLI::Commands::CompileTest < Nanoc::TestCase
         io.write "layout '*', :erb\n"
       end
 
-      Nanoc::CLI.run %w[compile --verbose]
+      Nanoc::CLI.run ['compile', '--verbose']
     end
   end
 
@@ -60,7 +60,7 @@ class Nanoc::CLI::Commands::CompileTest < Nanoc::TestCase
       File.write('output/stray.html', 'I am a stray file and I am about to be deleted!')
 
       assert File.file?('output/stray.html')
-      Nanoc::CLI.run %w[compile]
+      Nanoc::CLI.run ['compile']
 
       assert File.file?('output/stray.html')
 
@@ -71,7 +71,7 @@ class Nanoc::CLI::Commands::CompileTest < Nanoc::TestCase
       end
 
       assert File.file?('output/stray.html')
-      Nanoc::CLI.run %w[compile]
+      Nanoc::CLI.run ['compile']
 
       refute File.file?('output/stray.html')
     end
@@ -110,7 +110,7 @@ class Nanoc::CLI::Commands::CompileTest < Nanoc::TestCase
       File.write('output/stray.html', 'I am a stray file and I am about to be deleted!')
 
       assert File.file?('output/stray.html')
-      Nanoc::CLI.run %w[compile]
+      Nanoc::CLI.run ['compile']
 
       assert File.file?('output/stray.html')
 
@@ -122,7 +122,7 @@ class Nanoc::CLI::Commands::CompileTest < Nanoc::TestCase
       end
 
       assert File.file?('output/stray.html')
-      Nanoc::CLI.run %w[compile]
+      Nanoc::CLI.run ['compile']
 
       refute File.file?('output/stray.html')
       assert File.directory?('output/excluded_dir'), 'excluded_dir should still be there'
@@ -174,7 +174,7 @@ class Nanoc::CLI::Commands::CompileTest < Nanoc::TestCase
   def new_file_action_printer(reps)
     # Ensure CLI is loaded
     begin
-      Nanoc::CLI.run(%w[help %])
+      Nanoc::CLI.run(['help', '%'])
     rescue SystemExit
     end
 

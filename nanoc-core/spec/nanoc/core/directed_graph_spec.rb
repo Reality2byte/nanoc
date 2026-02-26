@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 describe Nanoc::Core::DirectedGraph do
-  subject(:graph) { described_class.new(%w[1 2 3]) }
+  subject(:graph) { described_class.new(['1', '2', '3']) }
 
   describe '#edges' do
     subject { graph.edges }
@@ -135,7 +135,7 @@ describe Nanoc::Core::DirectedGraph do
         graph.add_edge('3', '2')
       end
 
-      it { is_expected.to match_array(%w[1 3]) }
+      it { is_expected.to contain_exactly('1', '3') }
       it { is_expected.to be_a(Set) }
     end
 
@@ -178,7 +178,7 @@ describe Nanoc::Core::DirectedGraph do
       context 'indirect predecessors' do
         before { graph.add_edge('3', '1') }
 
-        it { is_expected.to match_array(%w[1 2 3]) }
+        it { is_expected.to contain_exactly('1', '2', '3') }
       end
     end
   end
@@ -198,7 +198,7 @@ describe Nanoc::Core::DirectedGraph do
     it 'deletes edges to 1' do
       expect { subject }
         .to change { graph.direct_predecessors_of('1') }
-        .from(%w[2 3])
+        .from(['2', '3'])
         .to([])
     end
 

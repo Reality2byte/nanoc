@@ -16,24 +16,24 @@ def sub_sh(dir, cmd)
   end
 end
 
-packages = %w[
-  nanoc
-  nanoc-core
-  nanoc-cli
-  nanoc-checking
-  nanoc-dart-sass
-  nanoc-deploying
-  nanoc-external
-  nanoc-live
-  nanoc-org-mode
-  nanoc-spec
-  nanoc-tilt
-  guard-nanoc
+packages = [
+  'nanoc',
+  'nanoc-core',
+  'nanoc-cli',
+  'nanoc-checking',
+  'nanoc-dart-sass',
+  'nanoc-deploying',
+  'nanoc-external',
+  'nanoc-live',
+  'nanoc-org-mode',
+  'nanoc-spec',
+  'nanoc-tilt',
+  'guard-nanoc',
 ]
 
 def name_sets(packages)
   packages
-    .partition { |name| %w[nanoc nanoc-core nanoc-cli].include?(name) }
+    .partition { |name| ['nanoc', 'nanoc-core', 'nanoc-cli'].include?(name) }
     .map(&:sort)
 end
 
@@ -136,4 +136,4 @@ task :summary do
   end
 end
 
-task default: %i[test rubocop]
+task default: [:test, :rubocop]

@@ -21,11 +21,14 @@ module Nanoc
       # that lacks some options, the default value will be taken from
       # `DEFAULT_CONFIG`.
       DEFAULT_CONFIG = {
-        text_extensions: %w[adoc asciidoc atom css erb haml htm html js less
-                            markdown md org php rb sass scss tex txt xhtml xml
-                            coffee hb handlebars mustache ms slim rdoc].sort,
-        lib_dirs: %w[lib],
-        commands_dirs: %w[commands],
+        text_extensions: [
+          'adoc', 'asciidoc', 'atom', 'css', 'erb', 'haml', 'htm', 'html', 'js',
+          'less', 'markdown', 'md', 'org', 'php', 'rb', 'sass', 'scss', 'tex',
+          'txt', 'xhtml', 'xml', 'coffee', 'hb', 'handlebars', 'mustache', 'ms',
+          'slim', 'rdoc'
+        ].sort,
+        lib_dirs: ['lib'],
+        commands_dirs: ['commands'],
         output_dir: 'output',
         data_sources: [{}],
         index_filenames: ['index.html'],

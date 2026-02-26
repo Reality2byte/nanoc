@@ -9,18 +9,18 @@ describe 'meta', chdir: false do
     spec_file_base_names = spec_files.map { |fn| fn.gsub(%r{^spec/nanoc/cli/|_spec\.rb$}, '').tr('-', '_') }
 
     # TODO: don’t ignore anything
-    ignored_regular_file_base_names = %w[
-      stream_cleaners/abstract
-      ansi_string_colorizer
-      commands/create_site
-      commands/nanoc
-      commands/prune
-      compile_listeners/aggregate
-      logger
-      transform
+    ignored_regular_file_base_names = [
+      'stream_cleaners/abstract',
+      'ansi_string_colorizer',
+      'commands/create_site',
+      'commands/nanoc',
+      'commands/prune',
+      'compile_listeners/aggregate',
+      'logger',
+      'transform',
     ]
 
-    ignored_spec_file_base_names = %w[]
+    ignored_spec_file_base_names = []
 
     effective_regular_file_base_names =
       regular_file_base_names - ignored_regular_file_base_names

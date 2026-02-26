@@ -9,7 +9,7 @@ describe Nanoc::External::Filter do
     Thou art more lovely and more temperate
     SHAKESPEARE
 
-    res = filter.run(src, exec: 'wc', options: %w[-l])
+    res = filter.run(src, exec: 'wc', options: ['-l'])
     expect(res.strip).to eq('2')
   end
 end

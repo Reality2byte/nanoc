@@ -2,7 +2,7 @@
 
 module Nanoc::Filters
   module SassCommon
-    REQUIRES = %w[sass nanoc/filters/sass/importer nanoc/filters/sass/functions].freeze
+    REQUIRES = ['sass', 'nanoc/filters/sass/importer', 'nanoc/filters/sass/functions'].freeze
 
     def css(filter, rep, content, params)
       css, = render(filter, rep, content, params)

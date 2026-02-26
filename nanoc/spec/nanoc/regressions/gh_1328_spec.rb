@@ -26,19 +26,19 @@ describe 'GH-1328', :site, :stdio do
   end
 
   it 'fails check for foo.html' do
-    expect { Nanoc::CLI.run(%w[check ilinks]) }
+    expect { Nanoc::CLI.run(['check', 'ilinks']) }
       .to raise_error(Nanoc::Core::TrivialError, 'One or more checks failed')
       .and output(%r{output/foo\.html:}).to_stdout
   end
 
   it 'fails check for foo.xhtml' do
-    expect { Nanoc::CLI.run(%w[check ilinks]) }
+    expect { Nanoc::CLI.run(['check', 'ilinks']) }
       .to raise_error(Nanoc::Core::TrivialError, 'One or more checks failed')
       .and output(%r{output/foo\.xhtml:}).to_stdout
   end
 
   it 'fails check for foo.htm' do
-    expect { Nanoc::CLI.run(%w[check ilinks]) }
+    expect { Nanoc::CLI.run(['check', 'ilinks']) }
       .to raise_error(Nanoc::Core::TrivialError, 'One or more checks failed')
       .and output(%r{output/foo\.htm:}).to_stdout
   end

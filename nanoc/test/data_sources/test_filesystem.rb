@@ -565,12 +565,12 @@ class Nanoc::DataSources::FilesystemTest < Nanoc::TestCase
 
     # Write sample files
     FileUtils.mkdir_p('foo')
-    %w[foo.html foo.yaml bar.entry.html foo/qux.yaml].each do |filename|
+    ['foo.html', 'foo.yaml', 'bar.entry.html', 'foo/qux.yaml'].each do |filename|
       File.write(filename, 'test')
     end
 
     # Write stray files
-    %w[foo.html~ foo.yaml.orig bar.entry.html.bak].each do |filename|
+    ['foo.html~', 'foo.yaml.orig', 'bar.entry.html.bak'].each do |filename|
       File.write(filename, 'test')
     end
 
@@ -592,12 +592,12 @@ class Nanoc::DataSources::FilesystemTest < Nanoc::TestCase
 
     # Write sample files
     FileUtils.mkdir_p('foo')
-    %w[foo.html foo.yaml bar.html.erb foo/qux.yaml].each do |filename|
+    ['foo.html', 'foo.yaml', 'bar.html.erb', 'foo/qux.yaml'].each do |filename|
       File.write(filename, 'test')
     end
 
     # Write stray files
-    %w[foo.html~ foo.yaml.orig bar.entry.html.bak].each do |filename|
+    ['foo.html~', 'foo.yaml.orig', 'bar.entry.html.bak'].each do |filename|
       File.write(filename, 'test')
     end
 
@@ -618,7 +618,7 @@ class Nanoc::DataSources::FilesystemTest < Nanoc::TestCase
     data_source = Nanoc::DataSources::Filesystem.new(nil, nil, nil, nil)
 
     # Write sample files
-    %w[aaa/foo.html bbb/foo.html ccc/foo.html].each do |filename|
+    ['aaa/foo.html', 'bbb/foo.html', 'ccc/foo.html'].each do |filename|
       FileUtils.mkdir_p(File.dirname(filename))
       File.write(filename, 'test')
     end
@@ -639,7 +639,7 @@ class Nanoc::DataSources::FilesystemTest < Nanoc::TestCase
     data_source = Nanoc::DataSources::Filesystem.new(nil, nil, nil, config)
 
     # Write sample files
-    %w[stuff/foo.html stuff/foo.md stuff/foo.yaml].each do |filename|
+    ['stuff/foo.html', 'stuff/foo.md', 'stuff/foo.yaml'].each do |filename|
       FileUtils.mkdir_p(File.dirname(filename))
       File.write(filename, 'test')
     end
@@ -651,7 +651,7 @@ class Nanoc::DataSources::FilesystemTest < Nanoc::TestCase
     assert_equal 2, res.values[0].size
     assert_equal 'yaml', res.values[0][0]
     assert_instance_of Array, res.values[0][1]
-    assert_equal %w[html md], res.values[0][1].sort
+    assert_equal ['html', 'md'], res.values[0][1].sort
   end
 
   def test_all_split_files_in_with_multiple_content_files
@@ -659,7 +659,7 @@ class Nanoc::DataSources::FilesystemTest < Nanoc::TestCase
     data_source = Nanoc::DataSources::Filesystem.new(nil, nil, nil, nil)
 
     # Write sample files
-    %w[foo.html foo.xhtml foo.txt foo.yaml bar.html qux.yaml].each do |filename|
+    ['foo.html', 'foo.xhtml', 'foo.txt', 'foo.yaml', 'bar.html', 'qux.yaml'].each do |filename|
       File.write(filename, 'test')
     end
 

@@ -41,7 +41,7 @@ describe Nanoc::Checking::CommandRunners::Check, :site, :stdio do
   end
 
   describe 'help' do
-    subject { Nanoc::CLI.run(%w[help check]) }
+    subject { Nanoc::CLI.run(['help', 'check']) }
 
     it 'shows --deploy as deprecated' do
       expect { subject }.to output(/--deploy.*\(deprecated\)/).to_stdout

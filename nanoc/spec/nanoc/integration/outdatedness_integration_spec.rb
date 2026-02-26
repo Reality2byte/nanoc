@@ -22,14 +22,14 @@ describe 'Outdatedness integration', :site, :stdio do
         end
       EOS
 
-      Nanoc::CLI.run(%w[compile])
+      Nanoc::CLI.run(['compile'])
     end
 
     it 'shows default rep outdatedness' do
-      expect { Nanoc::CLI.run(%w[show-data --no-color]) }.to(
+      expect { Nanoc::CLI.run(['show-data', '--no-color']) }.to(
         output(%r{^item /foo\.md, rep default:\n  is not outdated}).to_stdout,
       )
-      expect { Nanoc::CLI.run(%w[show-data --no-color]) }.to(
+      expect { Nanoc::CLI.run(['show-data', '--no-color']) }.to(
         output(%r{^item /bar\.md, rep default:\n  is not outdated}).to_stdout,
       )
     end
@@ -38,10 +38,10 @@ describe 'Outdatedness integration', :site, :stdio do
       File.write('content/bar.md', 'JUST BAR!')
       FileUtils.touch('content/bar.md', mtime: time)
 
-      expect { Nanoc::CLI.run(%w[show-data --no-color]) }.to(
+      expect { Nanoc::CLI.run(['show-data', '--no-color']) }.to(
         output(%r{^item /foo\.md, rep default:\n  is not outdated}).to_stdout,
       )
-      expect { Nanoc::CLI.run(%w[show-data --no-color]) }.to(
+      expect { Nanoc::CLI.run(['show-data', '--no-color']) }.to(
         output(%r{^item /bar\.md, rep default:\n  is outdated:}).to_stdout,
       )
     end
@@ -50,10 +50,10 @@ describe 'Outdatedness integration', :site, :stdio do
       File.write('content/foo.md', "---\ntitle: hello\n---\n\nfoooOoooOOoooOooo")
       FileUtils.touch('content/foo.md', mtime: time)
 
-      expect { Nanoc::CLI.run(%w[show-data --no-color]) }.to(
+      expect { Nanoc::CLI.run(['show-data', '--no-color']) }.to(
         output(%r{^item /foo\.md, rep default:\n  is outdated:}).to_stdout,
       )
-      expect { Nanoc::CLI.run(%w[show-data --no-color]) }.to(
+      expect { Nanoc::CLI.run(['show-data', '--no-color']) }.to(
         output(%r{^item /bar\.md, rep default:\n  is not outdated}).to_stdout,
       )
     end
@@ -62,10 +62,10 @@ describe 'Outdatedness integration', :site, :stdio do
       File.write('content/foo.md', "---\ntitle: bye\n---\n\nfoo")
       FileUtils.touch('content/foo.md', mtime: time)
 
-      expect { Nanoc::CLI.run(%w[show-data --no-color]) }.to(
+      expect { Nanoc::CLI.run(['show-data', '--no-color']) }.to(
         output(%r{^item /foo\.md, rep default:\n  is outdated:}).to_stdout,
       )
-      expect { Nanoc::CLI.run(%w[show-data --no-color]) }.to(
+      expect { Nanoc::CLI.run(['show-data', '--no-color']) }.to(
         output(%r{^item /bar\.md, rep default:\n  is outdated:}).to_stdout,
       )
     end
@@ -94,11 +94,11 @@ describe 'Outdatedness integration', :site, :stdio do
         end
       EOS
 
-      Nanoc::CLI.run(%w[compile])
+      Nanoc::CLI.run(['compile'])
     end
 
     it 'shows default rep outdatedness' do
-      expect { Nanoc::CLI.run(%w[show-data --no-color]) }.to(
+      expect { Nanoc::CLI.run(['show-data', '--no-color']) }.to(
         output(%r{^item /bar\.md, rep default:\n  is not outdated}).to_stdout,
       )
     end
@@ -107,7 +107,7 @@ describe 'Outdatedness integration', :site, :stdio do
       File.write('content/bar.md', 'JUST BAR!')
       FileUtils.touch('content/bar.md', mtime: time)
 
-      expect { Nanoc::CLI.run(%w[show-data --no-color]) }.to(
+      expect { Nanoc::CLI.run(['show-data', '--no-color']) }.to(
         output(%r{^item /bar\.md, rep default:\n  is outdated:}).to_stdout,
       )
     end
@@ -116,7 +116,7 @@ describe 'Outdatedness integration', :site, :stdio do
       File.write('nanoc.yaml', 'title: Totes Newz')
       FileUtils.touch('nanoc.yaml', mtime: time)
 
-      expect { Nanoc::CLI.run(%w[show-data --no-color]) }.to(
+      expect { Nanoc::CLI.run(['show-data', '--no-color']) }.to(
         output(%r{^item /bar\.md, rep default:\n  is outdated:}).to_stdout,
       )
     end
@@ -138,14 +138,14 @@ describe 'Outdatedness integration', :site, :stdio do
         end
       EOS
 
-      Nanoc::CLI.run(%w[compile])
+      Nanoc::CLI.run(['compile'])
     end
 
     it 'shows default rep outdatedness' do
-      expect { Nanoc::CLI.run(%w[show-data --no-color]) }.to(
+      expect { Nanoc::CLI.run(['show-data', '--no-color']) }.to(
         output(%r{^item /foo\.md, rep default:\n  is not outdated}).to_stdout,
       )
-      expect { Nanoc::CLI.run(%w[show-data --no-color]) }.to(
+      expect { Nanoc::CLI.run(['show-data', '--no-color']) }.to(
         output(%r{^item /bar\.md, rep default:\n  is not outdated}).to_stdout,
       )
     end
@@ -153,10 +153,10 @@ describe 'Outdatedness integration', :site, :stdio do
     it 'shows file as outdated after modification' do
       File.write('content/bar.md', 'JUST BAR!')
 
-      expect { Nanoc::CLI.run(%w[show-data --no-color]) }.to(
+      expect { Nanoc::CLI.run(['show-data', '--no-color']) }.to(
         output(%r{^item /foo\.md, rep default:\n  is not outdated}).to_stdout,
       )
-      expect { Nanoc::CLI.run(%w[show-data --no-color]) }.to(
+      expect { Nanoc::CLI.run(['show-data', '--no-color']) }.to(
         output(%r{^item /bar\.md, rep default:\n  is outdated:}).to_stdout,
       )
     end
@@ -164,10 +164,10 @@ describe 'Outdatedness integration', :site, :stdio do
     it 'shows file and dependencies as outdated after content modification' do
       File.write('content/foo.md', "---\ntitle: hello\n---\n\nfoooOoooOOoooOooo")
 
-      expect { Nanoc::CLI.run(%w[show-data --no-color]) }.to(
+      expect { Nanoc::CLI.run(['show-data', '--no-color']) }.to(
         output(%r{^item /foo\.md, rep default:\n  is outdated:}).to_stdout,
       )
-      expect { Nanoc::CLI.run(%w[show-data --no-color]) }.to(
+      expect { Nanoc::CLI.run(['show-data', '--no-color']) }.to(
         output(%r{^item /bar\.md, rep default:\n  is outdated:}).to_stdout,
       )
     end
@@ -175,10 +175,10 @@ describe 'Outdatedness integration', :site, :stdio do
     it 'shows file and dependencies as not outdated after title modification' do
       File.write('content/foo.md', "---\ntitle: bye\n---\n\nfoo")
 
-      expect { Nanoc::CLI.run(%w[show-data --no-color]) }.to(
+      expect { Nanoc::CLI.run(['show-data', '--no-color']) }.to(
         output(%r{^item /foo\.md, rep default:\n  is outdated:}).to_stdout,
       )
-      expect { Nanoc::CLI.run(%w[show-data --no-color]) }.to(
+      expect { Nanoc::CLI.run(['show-data', '--no-color']) }.to(
         output(%r{^item /bar\.md, rep default:\n  is not outdated}).to_stdout,
       )
     end
@@ -200,14 +200,14 @@ describe 'Outdatedness integration', :site, :stdio do
         end
       EOS
 
-      Nanoc::CLI.run(%w[compile])
+      Nanoc::CLI.run(['compile'])
     end
 
     it 'shows default rep outdatedness' do
-      expect { Nanoc::CLI.run(%w[show-data --no-color]) }.to(
+      expect { Nanoc::CLI.run(['show-data', '--no-color']) }.to(
         output(%r{^item /foo\.md, rep default:\n  is not outdated}).to_stdout,
       )
-      expect { Nanoc::CLI.run(%w[show-data --no-color]) }.to(
+      expect { Nanoc::CLI.run(['show-data', '--no-color']) }.to(
         output(%r{^item /bar\.md, rep default:\n  is not outdated}).to_stdout,
       )
     end
@@ -215,10 +215,10 @@ describe 'Outdatedness integration', :site, :stdio do
     it 'shows file as outdated after modification' do
       File.write('content/bar.md', 'JUST BAR!')
 
-      expect { Nanoc::CLI.run(%w[show-data --no-color]) }.to(
+      expect { Nanoc::CLI.run(['show-data', '--no-color']) }.to(
         output(%r{^item /foo\.md, rep default:\n  is not outdated}).to_stdout,
       )
-      expect { Nanoc::CLI.run(%w[show-data --no-color]) }.to(
+      expect { Nanoc::CLI.run(['show-data', '--no-color']) }.to(
         output(%r{^item /bar\.md, rep default:\n  is outdated:}).to_stdout,
       )
     end
@@ -226,10 +226,10 @@ describe 'Outdatedness integration', :site, :stdio do
     it 'shows file and dependencies as outdated after content modification' do
       File.write('content/foo.md', "---\ntitle: hello\n---\n\nfoooOoooOOoooOooo")
 
-      expect { Nanoc::CLI.run(%w[show-data --no-color]) }.to(
+      expect { Nanoc::CLI.run(['show-data', '--no-color']) }.to(
         output(%r{^item /foo\.md, rep default:\n  is outdated:}).to_stdout,
       )
-      expect { Nanoc::CLI.run(%w[show-data --no-color]) }.to(
+      expect { Nanoc::CLI.run(['show-data', '--no-color']) }.to(
         output(%r{^item /bar\.md, rep default:\n  is outdated:}).to_stdout,
       )
     end
@@ -237,10 +237,10 @@ describe 'Outdatedness integration', :site, :stdio do
     it 'shows file and dependencies as outdated after title modification' do
       File.write('content/foo.md', "---\ntitle: bye\n---\n\nfoo")
 
-      expect { Nanoc::CLI.run(%w[show-data --no-color]) }.to(
+      expect { Nanoc::CLI.run(['show-data', '--no-color']) }.to(
         output(%r{^item /foo\.md, rep default:\n  is outdated:}).to_stdout,
       )
-      expect { Nanoc::CLI.run(%w[show-data --no-color]) }.to(
+      expect { Nanoc::CLI.run(['show-data', '--no-color']) }.to(
         output(%r{^item /bar\.md, rep default:\n  is outdated:}).to_stdout,
       )
     end
@@ -258,10 +258,10 @@ describe 'Outdatedness integration', :site, :stdio do
         end
       EOS
 
-      expect { Nanoc::CLI.run(%w[show-data --no-color]) }.to(
+      expect { Nanoc::CLI.run(['show-data', '--no-color']) }.to(
         output(%r{^item /foo\.md, rep default:\n  is outdated:}).to_stdout,
       )
-      expect { Nanoc::CLI.run(%w[show-data --no-color]) }.to(
+      expect { Nanoc::CLI.run(['show-data', '--no-color']) }.to(
         output(%r{^item /bar\.md, rep default:\n  is not outdated}).to_stdout,
       )
     end

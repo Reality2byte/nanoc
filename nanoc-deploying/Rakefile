@@ -15,4 +15,4 @@ task :gem do
   sh('gem build *.gemspec')
 end
 
-task default: %i[test rubocop]
+task default: [:test, :rubocop]

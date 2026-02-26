@@ -17,7 +17,7 @@ class Nanoc::CLI::Commands::PruneTest < Nanoc::TestCase
       File.write('output2/index.html', 'this is a index.')
 
       assert_raises SystemExit do
-        Nanoc::CLI.run %w[prune]
+        Nanoc::CLI.run ['prune']
       end
 
       assert File.file?('output2/index.html')
@@ -46,7 +46,7 @@ class Nanoc::CLI::Commands::PruneTest < Nanoc::TestCase
       File.write('output2/index.html', 'this is a index.')
 
       io = capturing_stdio do
-        Nanoc::CLI.run %w[prune --yes]
+        Nanoc::CLI.run ['prune', '--yes']
       end
 
       assert_match %r{^\s+delete  output2/foo\.html$}, io[:stdout]
@@ -70,7 +70,7 @@ class Nanoc::CLI::Commands::PruneTest < Nanoc::TestCase
       File.write('output2/index.html', 'this is a index.')
 
       io = capturing_stdio do
-        Nanoc::CLI.run %w[prune --dry-run]
+        Nanoc::CLI.run ['prune', '--dry-run']
       end
 
       assert_match %r{^\s+delete  \(dry run\) output2/index\.html$}, io[:stdout]
@@ -107,7 +107,7 @@ class Nanoc::CLI::Commands::PruneTest < Nanoc::TestCase
       File.write('output/bad-dir/blah', 'stuff')
       File.write('output/index.html', 'stuff')
 
-      Nanoc::CLI.run %w[prune --yes]
+      Nanoc::CLI.run ['prune', '--yes']
 
       assert File.file?('output/index.html')
       assert File.file?('output/good-dir/blah')
@@ -142,7 +142,7 @@ class Nanoc::CLI::Commands::PruneTest < Nanoc::TestCase
       File.write('output-real/some-file.html', 'stuff')
       File.write('output-real/index.html', 'stuff')
 
-      Nanoc::CLI.run %w[prune --yes]
+      Nanoc::CLI.run ['prune', '--yes']
 
       assert File.file?('output-real/index.html')
       refute File.directory?('output-real/some-dir')
@@ -160,7 +160,7 @@ class Nanoc::CLI::Commands::PruneTest < Nanoc::TestCase
       FileUtils.mkdir_p('output/a/b/c')
       File.write('output/a/b/c/index.html', 'stuff')
 
-      Nanoc::CLI.run %w[prune --yes]
+      Nanoc::CLI.run ['prune', '--yes']
 
       refute File.file?('output/a/b/c/index.html')
       refute File.directory?('output/a/b/c')

@@ -19,14 +19,14 @@ describe Array do
 
   describe '#__nanoc_freeze_recursively' do
     it 'prevents first-level elements from being modified' do
-      array = [:a, %i[b c], :d]
+      array = [:a, [:b, :c], :d]
       array.__nanoc_freeze_recursively
 
       expect { array[0] = 123 }.to raise_frozen_error
     end
 
     it 'prevents second-level elements from being modified' do
-      array = [:a, %i[b c], :d]
+      array = [:a, [:b, :c], :d]
       array.__nanoc_freeze_recursively
 
       expect { array[1][0] = 123 }.to raise_frozen_error

@@ -17,6 +17,6 @@ describe 'GH-1185', :site, :stdio do
   end
 
   it 'does not crash' do # rubocop:disable RSpec/NoExpectationExample
-    Nanoc::CLI.run(%w[compile])
+    Nanoc::CLI.run(['compile'])
   end
 end

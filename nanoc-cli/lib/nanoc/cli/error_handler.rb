@@ -35,7 +35,7 @@ module Nanoc::CLI
     # @return [void]
     def handle_while(exit_on_error:)
       # Set exit handler
-      %w[INT TERM].each do |signal|
+      ['INT', 'TERM'].each do |signal|
         Signal.trap(signal) do
           puts
           exit(0)

@@ -65,6 +65,12 @@ Lint/MissingSuper:
     - Nanoc::Core::Pattern # abstract
     - Nanoc::Core::IdentifiableCollection # abstract
 
+Style/WordArray:
+  EnforcedStyle: brackets
+
+Style/SymbolArray:
+  EnforcedStyle: brackets
+
 # ----- CONFIGURED (enabled non-default cops) -----
 
 Layout/ClassStructure:

@@ -192,13 +192,13 @@ describe Nanoc::Core::ConfigView do
     end
 
     context 'with existing keys' do
-      let(:keys) { %i[foo bar] }
+      let(:keys) { [:foo, :bar] }
 
       it { is_expected.to be(:baz) }
     end
 
     context 'with non-existing keys' do
-      let(:keys) { %i[foo baz bar] }
+      let(:keys) { [:foo, :baz, :bar] }
 
       it { is_expected.to be_nil }
     end

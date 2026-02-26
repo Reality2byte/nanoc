@@ -111,7 +111,7 @@ class Nanoc::Filters::ColorizeSyntax::CommonTest < Nanoc::TestCase
       input = '<pre><code class="language-ruby">puts "foo"</code></pre>'
 
       # Run filter
-      %i[albino pygmentize simon_highlight].each do |colorizer|
+      [:albino, :pygmentize, :simon_highlight].each do |colorizer|
         input = '<pre><code class="language-ruby">puts "foo"</code></pre>'
         filter.setup_and_run(
           input,

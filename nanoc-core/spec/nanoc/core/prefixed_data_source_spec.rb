@@ -8,11 +8,11 @@ describe Nanoc::Core::PrefixedDataSource, :stdio do
   let(:klass) do
     Class.new(Nanoc::Core::DataSource) do
       def item_changes
-        %i[one_foo one_bar]
+        [:one_foo, :one_bar]
       end
 
       def layout_changes
-        %i[one_foo one_bar]
+        [:one_foo, :one_bar]
       end
     end
   end

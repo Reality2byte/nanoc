@@ -11,7 +11,7 @@ describe 'GH-1319', :site, :stdio do
       end
     EOS
 
-    Nanoc::CLI.run(%w[compile])
+    Nanoc::CLI.run(['compile'])
   end
 
   example do

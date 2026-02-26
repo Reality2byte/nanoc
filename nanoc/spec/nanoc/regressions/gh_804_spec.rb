@@ -19,7 +19,7 @@ EOS
   end
 
   it 'does not crash' do
-    expect { Nanoc::CLI.run(%w[check donkey]) }.to(
+    expect { Nanoc::CLI.run(['check', 'donkey']) }.to(
       raise_error(Nanoc::Core::TrivialError, 'One or more checks failed').and(
         output(
           %r{

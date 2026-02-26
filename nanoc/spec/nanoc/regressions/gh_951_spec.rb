@@ -14,7 +14,7 @@ EOS
   end
 
   it 'copies foo.md' do
-    Nanoc::CLI.run(%w[compile])
+    Nanoc::CLI.run(['compile'])
 
     expect(File.file?('output/foo.md')).to be(true)
   end

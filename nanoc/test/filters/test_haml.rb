@@ -116,7 +116,7 @@ class Nanoc::Filters::HamlTest < Nanoc::TestCase
       RULES
 
       # Compile
-      Nanoc::CLI.run(%w[compile])
+      Nanoc::CLI.run(['compile'])
 
       # Check
       expected_regex = %r{

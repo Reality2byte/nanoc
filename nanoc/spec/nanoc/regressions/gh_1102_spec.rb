@@ -11,16 +11,16 @@ describe 'GH-1102', :site, :stdio do
       end
     EOS
 
-    Nanoc::CLI.run(%w[compile])
+    Nanoc::CLI.run(['compile'])
   end
 
   it 'does not output filename more than once' do
     regex = /skip.*index\.html.*skip.*index\.html/m
-    expect { Nanoc::CLI.run(%w[compile --verbose]) }.not_to output(regex).to_stdout
+    expect { Nanoc::CLI.run(['compile', '--verbose']) }.not_to output(regex).to_stdout
   end
 
   it 'outputs filename' do
     regex = /skip.*index\.html/
-    expect { Nanoc::CLI.run(%w[compile --verbose]) }.to output(regex).to_stdout
+    expect { Nanoc::CLI.run(['compile', '--verbose']) }.to output(regex).to_stdout
   end
 end

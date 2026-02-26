@@ -32,7 +32,7 @@ module Nanoc
         end
 
         def cleanup_old_stores
-          %w[checksums compiled_content dependencies outdatedness action_sequence].each do |fn|
+          ['checksums', 'compiled_content', 'dependencies', 'outdatedness', 'action_sequence'].each do |fn|
             full_fn = File.join('tmp', fn)
             if File.file?(full_fn)
               FileUtils.rm_f(full_fn)

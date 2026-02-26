@@ -74,12 +74,12 @@ describe Nanoc::Core::Checksummer do
   end
 
   context 'Array' do
-    let(:obj) { %w[hello goodbye] }
+    let(:obj) { ['hello', 'goodbye'] }
 
     it { is_expected.to eql('Array#0<String#1<hello>,String#2<goodbye>,>') }
 
     context 'different order' do
-      let(:obj) { %w[goodbye hello] }
+      let(:obj) { ['goodbye', 'hello'] }
 
       it { is_expected.to eql('Array#0<String#1<goodbye>,String#2<hello>,>') }
     end
@@ -98,12 +98,12 @@ describe Nanoc::Core::Checksummer do
   end
 
   context 'Set' do
-    let(:obj) { Set.new(%w[hello goodbye]) }
+    let(:obj) { Set.new(['hello', 'goodbye']) }
 
     it { is_expected.to eql('Set#0<String#1<goodbye>,String#2<hello>,>') }
 
     context 'different order' do
-      let(:obj) { Set.new(%w[goodbye hello]) }
+      let(:obj) { Set.new(['goodbye', 'hello']) }
 
       it { is_expected.to eql('Set#0<String#1<goodbye>,String#2<hello>,>') }
     end
