@@ -6,26 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 58
-# Configuration parameters: AllowedParentClasses.
-Lint/MissingSuper:
-  Exclude:
-    - 'nanoc-checking/spec/nanoc/checking/check_spec.rb'
-    - 'nanoc-cli/lib/nanoc/cli/compile_listeners/aggregate.rb'
-    - 'nanoc-cli/lib/nanoc/cli/compile_listeners/file_action_printer.rb'
-    - 'nanoc-cli/lib/nanoc/cli/compile_listeners/timing_recorder.rb'
-    - 'nanoc-cli/spec/nanoc/cli/compile_listeners/abstract_spec.rb'
-    - 'nanoc-spec/lib/nanoc/spec.rb'
-    - 'nanoc/lib/nanoc/helpers/breadcrumbs.rb'
-    - 'nanoc/lib/nanoc/rule_dsl/action_provider.rb'
-    - 'nanoc/spec/nanoc/filters/sass_spec.rb'
-    - 'nanoc/spec/nanoc/orig_cli/commands/show_rules_spec.rb'
-    - 'nanoc/test/filters/test_slim.rb'
-    - 'nanoc/test/filters/test_xsl.rb'
-    - 'nanoc/test/helpers/test_blogging.rb'
-    - 'nanoc/test/helpers/test_capturing.rb'
-    - 'nanoc/test/helpers/test_xml_sitemap.rb'
-
 # Offense count: 5
 RSpec/AnyInstance:
   Exclude:

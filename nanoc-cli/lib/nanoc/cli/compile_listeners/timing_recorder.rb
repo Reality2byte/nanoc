@@ -14,6 +14,8 @@ module Nanoc::CLI::CompileListeners
 
     # @param [Enumerable<Nanoc::Core::ItemRep>] reps
     def initialize(reps:)
+      super()
+
       @reps = reps
 
       @stages_summary = DDMetrics::Summary.new

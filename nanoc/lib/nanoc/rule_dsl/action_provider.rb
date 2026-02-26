@@ -23,6 +23,8 @@ module Nanoc::RuleDSL
     end
 
     def initialize(rules_collection, action_sequence_calculator)
+      super()
+
       @rules_collection = rules_collection
       @action_sequence_calculator = action_sequence_calculator
     end

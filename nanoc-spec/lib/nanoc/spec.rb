@@ -210,6 +210,8 @@ module Nanoc
           end
 
           def initialize(context)
+            super()
+
             @context = context
           end
 

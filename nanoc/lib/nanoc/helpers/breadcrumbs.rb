@@ -5,12 +5,10 @@ module Nanoc::Helpers
   module Breadcrumbs
     class AmbiguousAncestorError < ::Nanoc::Core::Error
       def initialize(pattern, items)
+        super("expected only one item to match #{pattern}, but found #{items.size}")
+
         @pattern = pattern
         @items = items
-      end
-
-      def message
-        "expected only one item to match #{@pattern}, but found #{@items.size}"
       end
     end
 

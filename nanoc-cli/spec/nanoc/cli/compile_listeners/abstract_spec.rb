@@ -22,6 +22,8 @@ describe Nanoc::CLI::CompileListeners::Abstract do
         attr_reader :stopped
 
         def initialize
+          super
+
           @started = false
           @stopped = false
         end

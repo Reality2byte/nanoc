@@ -75,6 +75,8 @@ describe Nanoc::OrigCLI::Commands::ShowRules, :site, :stdio do
         end
 
         def initialize(rules_collection)
+          super()
+
           @rules_collection = rules_collection
         end
       end.new(rules_collection)

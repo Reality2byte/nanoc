@@ -3,6 +3,8 @@
 module Nanoc::CLI::CompileListeners
   class Aggregate < Abstract
     def initialize(command_runner:, site:, compiler:)
+      super()
+
       @site = site
       @compiler = compiler
       @command_runner = command_runner

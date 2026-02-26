@@ -143,8 +143,6 @@ class Nanoc::Filters::XSLTest < Nanoc::TestCase
         def self.for(_context)
           raise NotImplementedError
         end
-
-        def initialize; end
       end.new
 
     compilation_context =

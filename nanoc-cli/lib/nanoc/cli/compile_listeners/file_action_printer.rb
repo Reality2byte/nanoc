@@ -3,6 +3,8 @@
 module Nanoc::CLI::CompileListeners
   class FileActionPrinter < Abstract
     def initialize(reps:)
+      super()
+
       @reps = reps
 
       @stopwatches = {}
