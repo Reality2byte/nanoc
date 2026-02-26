@@ -20,7 +20,8 @@ module Nanoc::Helpers
 
       # Check for required attributes
       if @config[:base_url].nil?
-        raise 'The Nanoc::Helpers::XMLSitemap helper requires the site configuration to specify the base URL for the site.'
+        raise 'The Nanoc::Helpers::XMLSitemap helper requires the site ' \
+              'configuration to specify the base URL for the site.'
       end
 
       # Build sitemap

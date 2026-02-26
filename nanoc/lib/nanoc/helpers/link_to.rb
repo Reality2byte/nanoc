@@ -18,11 +18,16 @@ module Nanoc::Helpers
         when String
           target
         when Nanoc::Core::CompilationItemView, Nanoc::Core::BasicItemView, Nanoc::Core::BasicItemRepView
-          raise "Cannot create a link to #{target.inspect} because this target is not outputted (its routing rule returns nil)" if target.path.nil?
+          if target.path.nil?
+            raise "Cannot create a link to #{target.inspect} because this " \
+                  'target is not outputted (its routing rule returns nil)'
+          end
 
           target.path
         else
-          raise ArgumentError, "Cannot link to #{target.inspect} (expected a string or an item, not a #{target.class.name})"
+          raise ArgumentError,
+                "Cannot link to #{target.inspect} (expected a string or an " \
+                "item, not a #{target.class.name})"
         end
 
       # Join attributes
@@ -60,7 +65,8 @@ module Nanoc::Helpers
         path = target.path
         if path.nil?
           # TODO: get proper error
-          raise "Cannot get the relative path to #{target.inspect} because this target is not outputted (its routing rule returns nil)"
+          raise "Cannot get the relative path to #{target.inspect} because " \
+                'this target is not outputted (its routing rule returns nil)'
         end
       end
 
@@ -73,7 +79,9 @@ module Nanoc::Helpers
       dst_path = Pathname.new(path)
       if @item_rep.path.nil?
         # TODO: get proper error
-        raise "Cannot get the relative path to #{path} because the current item representation, #{@item_rep.inspect}, is not outputted (its routing rule returns nil)"
+        raise "Cannot get the relative path to #{path} because the current " \
+              "item representation, #{@item_rep.inspect}, is not outputted " \
+              '(its routing rule returns nil)'
       end
 
       src_path = Pathname.new(@item_rep.path)

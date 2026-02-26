@@ -15,7 +15,10 @@ class Nanoc::DataSources::Filesystem < Nanoc::DataSource
       #   resolved before giving up
       def initialize(filename)
         @filename = filename
-        super("Too many indirections while resolving symlinks. I gave up after finding out #{filename} was yet another symlink. Sorry!")
+        super(
+          'Too many indirections while resolving symlinks. I gave up after ' \
+          "finding out #{filename} was yet another symlink. Sorry!",
+        )
       end
     end
 
@@ -29,7 +32,10 @@ class Nanoc::DataSources::Filesystem < Nanoc::DataSource
       #   supported
       def initialize(filename)
         @filename = filename
-        super("The file at #{filename} is of an unsupported type (expected file, directory or link, but it is #{File.ftype(filename)}")
+        super(
+          "The file at #{filename} is of an unsupported type (expected file, " \
+          "directory or link, but it is #{File.ftype(filename)}",
+        )
       end
     end
 

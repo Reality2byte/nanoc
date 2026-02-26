@@ -26,7 +26,11 @@ class Nanoc::DataSources::Filesystem < Nanoc::DataSource
 
     class InvalidFormat < Generic
       def initialize(content_filename)
-        super("The file '#{content_filename}' appears to start with a metadata section (three or five dashes at the top) but it does not seem to be in the correct format.")
+        super(
+          "The file '#{content_filename}' appears to start with a metadata " \
+          'section (three or five dashes at the top) but it does not seem ' \
+          'to be in the correct format.'
+        )
       end
     end
 

@@ -208,7 +208,8 @@ module Nanoc::Filters
       when :srcset
         handle_srcset_node(node)
       else
-        raise Nanoc::Core::Errors::InternalInconsistency, "Unsupported selector type #{selector_type.inspect} in #{self.class}"
+        raise Nanoc::Core::Errors::InternalInconsistency,
+              "Unsupported selector type #{selector_type.inspect} in #{self.class}"
       end
     end
 

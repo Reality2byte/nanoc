@@ -50,7 +50,10 @@ module Nanoc::DataSources
   class Filesystem < Nanoc::DataSource
     class AmbiguousMetadataAssociationError < ::Nanoc::Core::Error
       def initialize(content_filenames, meta_filename)
-        super("There are multiple content files (#{content_filenames.sort.join(', ')}) that could match the file containing metadata (#{meta_filename}).")
+        super(
+          "There are multiple content files (#{content_filenames.sort.join(', ')}) " \
+          "that could match the file containing metadata (#{meta_filename}).",
+        )
       end
     end
 
@@ -118,7 +121,11 @@ module Nanoc::DataSources
       attr_reader :is_binary
       alias binary? is_binary
 
-      def initialize(is_binary:, attributes:, content: nil, filename: nil, content_checksum_data: nil, attributes_checksum_data: nil)
+      def initialize(
+        is_binary:, attributes:, content: nil, filename: nil,
+        content_checksum_data: nil,
+        attributes_checksum_data: nil
+      )
         if content.nil? && filename.nil?
           raise ArgumentError, '#initialize needs at least content or filename'
         end

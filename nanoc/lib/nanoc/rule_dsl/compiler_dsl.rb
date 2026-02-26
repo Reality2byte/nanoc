@@ -177,15 +177,19 @@ module Nanoc::RuleDSL
       routing_block = proc do
         if item.identifier.full?
           item.identifier.to_s
+        elsif item[:extension].nil? || (item[:content_filename].nil? && item.identifier =~ %r{#{item[:extension]}/$})
+          item.identifier.chop
         else
           # This is a temporary solution until an item can map back to its data
-          # source.
-          # ATM item[:content_filename] is nil for items coming from the static
-          # data source.
-          item[:extension].nil? || (item[:content_filename].nil? && item.identifier =~ %r{#{item[:extension]}/$}) ? item.identifier.chop : item.identifier.chop + '.' + item[:extension]
+          # source. ATM item[:content_filename] is nil for items coming from the
+          # static data source.
+          item.identifier.chop + '.' + item[:extension]
         end
       end
-      routing_rule = Nanoc::RuleDSL::RoutingRule.new(create_pattern(identifier), rep, routing_block, snapshot_name: :last)
+      routing_rule = Nanoc::RuleDSL::RoutingRule.new(
+        create_pattern(identifier), rep, routing_block,
+        snapshot_name: :last
+      )
       @rules_collection.add_item_routing_rule(routing_rule)
     end
 

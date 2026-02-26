@@ -22,7 +22,11 @@ module Nanoc::RuleDSL
 
     class PathWithoutInitialSlashError < ::Nanoc::Error
       def initialize(rep, basic_path)
-        super("The path returned for the #{rep.inspect} item representation, “#{basic_path}”, does not start with a slash. Please ensure that all routing rules return a path that starts with a slash.")
+        super(
+          "The path returned for the #{rep.inspect} item representation, " \
+          "“#{basic_path}”, does not start with a slash. Please ensure that " \
+          'all routing rules return a path that starts with a slash.',
+        )
       end
     end
 
