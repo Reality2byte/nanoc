@@ -198,7 +198,7 @@ module Nanoc
     def self.recursive_contents_of(path)
       return [] unless File.directory?(path)
 
-      files, dirs = *Dir[path + '/*'].sort.partition { |e| File.file?(e) }
+      files, dirs = *Dir[path + '/*'].partition { |e| File.file?(e) }
       dirs.each { |d| files.concat recursive_contents_of(d) }
       files
     end

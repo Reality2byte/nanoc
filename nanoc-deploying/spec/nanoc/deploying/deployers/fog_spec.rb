@@ -38,13 +38,13 @@ describe Nanoc::Deploying::Deployers::Fog, :stdio do
 
   shared_examples 'no effective deploy' do
     it 'does not modify remote' do
-      expect { subject }.not_to change { Dir['remote/**/*'].sort }
+      expect { subject }.not_to change { Dir['remote/**/*'] }
     end
   end
 
   shared_examples 'effective deploy' do
     it 'modifies remote' do
-      expect { subject }.to change { Dir['remote/**/*'].sort }
+      expect { subject }.to change { Dir['remote/**/*'] }
         .to([
           'remote/bucky',
           'remote/bucky/etc',
@@ -101,7 +101,7 @@ describe Nanoc::Deploying::Deployers::Fog, :stdio do
         end
 
         it 'modifies remote' do
-          expect { subject }.to change { Dir['remote/**/*'].sort }
+          expect { subject }.to change { Dir['remote/**/*'] }
             .to([
               'remote/bucky',
               'remote/bucky/foo',
@@ -131,7 +131,7 @@ describe Nanoc::Deploying::Deployers::Fog, :stdio do
 
       it 'does not contain stale files' do
         subject
-        expect(Dir['remote/**/*'].sort).not_to include('remote/bucky/pig')
+        expect(Dir['remote/**/*']).not_to include('remote/bucky/pig')
       end
     end
 
@@ -145,7 +145,7 @@ describe Nanoc::Deploying::Deployers::Fog, :stdio do
 
       it 'does not contain stale files' do
         subject
-        expect(Dir['remote/**/*'].sort).not_to include('remote/bucky/secret/pig')
+        expect(Dir['remote/**/*']).not_to include('remote/bucky/secret/pig')
       end
     end
 

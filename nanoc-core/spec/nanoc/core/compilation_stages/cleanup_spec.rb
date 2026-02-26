@@ -93,7 +93,7 @@ describe Nanoc::Core::CompilationStages::Cleanup do
       FileUtils.mkdir_p(staging_dir)
 
       expect { subject }
-        .to change { Dir.glob('tmp/nanoc/*').sort }
+        .to change { Dir.glob('tmp/nanoc/*') }
         .from([default_dir, prod_dir, staging_dir].sort)
         .to([default_dir])
     end
