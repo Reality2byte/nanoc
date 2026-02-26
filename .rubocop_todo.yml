@@ -813,16 +813,3 @@ Style/RedundantArgument:
   Exclude:
     - 'nanoc/lib/nanoc/helpers/capturing.rb'
     - 'nanoc/spec/nanoc/helpers/capturing_spec.rb'
-
-# Offense count: 22
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: AllowComments.
-Style/RedundantInitialize:
-  Exclude:
-    - 'nanoc-checking/spec/nanoc/checking/check_spec.rb'
-    - 'nanoc/spec/nanoc/filters/sass_spec.rb'
-    - 'nanoc/test/filters/test_slim.rb'
-    - 'nanoc/test/filters/test_xsl.rb'
-    - 'nanoc/test/helpers/test_blogging.rb'
-    - 'nanoc/test/helpers/test_capturing.rb'
-    - 'nanoc/test/helpers/test_xml_sitemap.rb'
