@@ -224,6 +224,9 @@ RSpec/IncludeExamples: # new in 3.6
 RSpec/ExampleLength:
   Enabled: false
 
+Minitest/MultipleAssertions:
+  Enabled: false
+
 # ----- DISABLED (buggy) -----
 
 # This cop attempts to replace Nanoc::VERSION with described_class, which makes

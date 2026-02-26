@@ -55,24 +55,6 @@ Lint/RedundantDirGlobSort:
     - 'nanoc-core/spec/nanoc/core/compilation_stages/cleanup_spec.rb'
     - 'nanoc-deploying/spec/nanoc/deploying/deployers/fog_spec.rb'
 
-# Offense count: 40
-# Configuration parameters: Max.
-Minitest/MultipleAssertions:
-  Exclude:
-    - 'nanoc-checking/test/nanoc/checking/test_link_collector.rb'
-    - 'nanoc/test/base/test_compiler.rb'
-    - 'nanoc/test/base/test_site.rb'
-    - 'nanoc/test/data_sources/test_filesystem.rb'
-    - 'nanoc/test/filters/test_relativize_paths.rb'
-    - 'nanoc/test/helpers/test_blogging.rb'
-    - 'nanoc/test/helpers/test_capturing.rb'
-    - 'nanoc/test/helpers/test_xml_sitemap.rb'
-    - 'nanoc/test/orig_cli/commands/test_compile.rb'
-    - 'nanoc/test/orig_cli/commands/test_create_site.rb'
-    - 'nanoc/test/orig_cli/commands/test_prune.rb'
-    - 'nanoc/test/rule_dsl/test_action_provider.rb'
-    - 'nanoc/test/rule_dsl/test_compiler_dsl.rb'
-
 # Offense count: 9
 # Configuration parameters: EnforcedStyle, CheckMethodNames, CheckSymbols, AllowedIdentifiers, AllowedPatterns.
 # SupportedStyles: snake_case, normalcase, non_integer
