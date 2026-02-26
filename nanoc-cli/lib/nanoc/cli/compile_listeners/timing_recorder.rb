@@ -97,7 +97,10 @@ module Nanoc::CLI::CompileListeners
       end
 
       on(:phase_resumed) do |phase_name, rep|
-        # It probably looks weird that a phase can be resumed even though it was not suspended earlier. This can happen when compilation is suspended, where you’d get the sequence started -> suspended -> started -> resumed.
+        # It probably looks weird that a phase can be resumed even though it was
+        # not suspended earlier. This can happen when compilation is suspended,
+        # where you’d get the sequence started -> suspended -> started ->
+        # resumed.
         stopwatch = stopwatches[[phase_name, rep]]
         stopwatch.start unless stopwatch.running?
       end

@@ -70,7 +70,10 @@ module Nanoc
           return true if File.file?(path)
 
           # Check whether directory with index file exists
-          return true if File.directory?(path) && @config[:index_filenames].any? { |fn| File.file?(File.join(path, fn)) }
+          if File.directory?(path) &&
+             @config[:index_filenames].any? { |fn| File.file?(File.join(path, fn)) }
+            return true
+          end
 
           # Nope :(
           false

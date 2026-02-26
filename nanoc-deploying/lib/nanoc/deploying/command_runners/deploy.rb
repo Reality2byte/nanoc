@@ -106,7 +106,9 @@ module Nanoc
           deployer_class = Nanoc::Deploying::Deployer.named(name.to_sym)
           if deployer_class.nil?
             names = Nanoc::Deploying::Deployer.all.map(&:identifier)
-            raise Nanoc::Core::TrivialError, "The specified deploy target has an unrecognised kind “#{name}” (expected one of #{names.join(', ')})."
+            raise Nanoc::Core::TrivialError,
+                  'The specified deploy target has an unrecognised kind ' \
+                  "“#{name}” (expected one of #{names.join(', ')})."
           end
           deployer_class
         end

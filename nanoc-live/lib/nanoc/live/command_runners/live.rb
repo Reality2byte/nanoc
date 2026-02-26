@@ -8,11 +8,16 @@ module Nanoc
           if defined?(Guard::Nanoc)
             $stderr.puts '-' * 40
             $stderr.puts 'NOTE:'
-            $stderr.puts 'You are using the `nanoc live` command provided by `nanoc-live`, but the `guard-nanoc` gem is also installed, which also provides a `nanoc live` command.'
+            $stderr.puts 'You are using the `nanoc live` command provided by ' \
+                         '`nanoc-live`, but the `guard-nanoc` gem is also ' \
+                         'installed, which also provides a `nanoc live` command.'
             if defined?(Bundler)
-              $stderr.puts 'Recommendation: Remove `guard-nanoc` from your Gemfile, either manually or by running the `bundle remove guard-nanoc` command.'
+              $stderr.puts 'Recommendation: Remove `guard-nanoc` from your ' \
+                           'Gemfile, either manually or by running the ' \
+                           '`bundle remove guard-nanoc` command.'
             else
-              $stderr.puts 'Recommendation: Uninstall `guard-nanoc` (run the `gem uninstall guard-nanoc` command).'
+              $stderr.puts 'Recommendation: Uninstall `guard-nanoc` (run ' \
+                           'the `gem uninstall guard-nanoc` command).'
             end
             $stderr.puts '-' * 40
           end

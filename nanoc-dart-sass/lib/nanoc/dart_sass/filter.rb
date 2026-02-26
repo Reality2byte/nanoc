@@ -63,11 +63,17 @@ module Nanoc
           ext = File.extname(path)
           if ext == '.*'
             if from_import
-              result = exactly_one(try_path_with_ext("#{without_ext(path)}.import") + try_path_with_ext("#{path}.import"))
+              result = exactly_one(
+                try_path_with_ext("#{without_ext(path)}.import") +
+                try_path_with_ext("#{path}.import"),
+              )
               return result unless result.nil?
             end
 
-            result = exactly_one(try_path_with_ext(without_ext(path)) + try_path_with_ext(path))
+            result = exactly_one(
+              try_path_with_ext(without_ext(path)) +
+              try_path_with_ext(path),
+            )
             return result unless result.nil?
 
             return try_path_as_dir(path, from_import)

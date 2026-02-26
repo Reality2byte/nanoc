@@ -38,20 +38,28 @@ describe Nanoc::CLI::Commands::ShowData, :stdio do
     end
 
     it 'prints a legend' do
-      expect { subject }.to output(/Item dependencies =+\n\nLegend:/).to_stdout
+      expect { subject }.to output(
+        /Item dependencies =+\n\nLegend:/,
+      ).to_stdout
     end
 
     context 'no dependencies' do
       it 'outputs no dependencies for /about.md' do
-        expect { subject }.to output(%r{^item /about.md depends on:\n  \(nothing\)$}m).to_stdout
+        expect { subject }.to output(
+          %r{^item /about.md depends on:\n  \(nothing\)$}m,
+        ).to_stdout
       end
 
       it 'outputs no dependencies for /dog.md' do
-        expect { subject }.to output(%r{^item /dog.md depends on:\n  \(nothing\)$}m).to_stdout
+        expect { subject }.to output(
+          %r{^item /dog.md depends on:\n  \(nothing\)$}m,
+        ).to_stdout
       end
 
       it 'outputs no dependencies for /other.dat' do
-        expect { subject }.to output(%r{^item /other.dat depends on:\n  \(nothing\)$}m).to_stdout
+        expect { subject }.to output(
+          %r{^item /other.dat depends on:\n  \(nothing\)$}m,
+        ).to_stdout
       end
     end
 
@@ -61,7 +69,9 @@ describe Nanoc::CLI::Commands::ShowData, :stdio do
       end
 
       it 'outputs dependencies for /dog.md' do
-        expect { subject }.to output(%r{^item /dog.md depends on:\n  \[    item \] \(r___\) /about.md$}m).to_stdout
+        expect { subject }.to output(
+          %r{^item /dog.md depends on:\n  \[    item \] \(r___\) /about.md$}m,
+        ).to_stdout
       end
     end
 
@@ -71,7 +81,9 @@ describe Nanoc::CLI::Commands::ShowData, :stdio do
       end
 
       it 'outputs dependencies for /dog.md' do
-        expect { subject }.to output(%r{^item /dog.md depends on:\n  \[    item \] \(_a__\) /about.md$}m).to_stdout
+        expect { subject }.to output(
+          %r{^item /dog.md depends on:\n  \[    item \] \(_a__\) /about.md$}m,
+        ).to_stdout
       end
     end
 
@@ -81,7 +93,9 @@ describe Nanoc::CLI::Commands::ShowData, :stdio do
       end
 
       it 'outputs dependencies for /dog.md' do
-        expect { subject }.to output(%r{^item /dog.md depends on:\n  \[  config \] \(_a__\)$}m).to_stdout
+        expect { subject }.to output(
+          %r{^item /dog.md depends on:\n  \[  config \] \(_a__\)$}m,
+        ).to_stdout
       end
     end
 
@@ -91,7 +105,9 @@ describe Nanoc::CLI::Commands::ShowData, :stdio do
       end
 
       it 'outputs dependencies for /dog.md' do
-        expect { subject }.to output(%r{^item /dog.md depends on:\n  \[    item \] \(__c_\) /about.md$}m).to_stdout
+        expect { subject }.to output(
+          %r{^item /dog.md depends on:\n  \[    item \] \(__c_\) /about.md$}m,
+        ).to_stdout
       end
     end
 
@@ -101,7 +117,9 @@ describe Nanoc::CLI::Commands::ShowData, :stdio do
       end
 
       it 'outputs dependencies for /dog.md' do
-        expect { subject }.to output(%r{^item /dog.md depends on:\n  \[    item \] \(___p\) /about.md$}m).to_stdout
+        expect { subject }.to output(
+          %r{^item /dog.md depends on:\n  \[    item \] \(___p\) /about.md$}m,
+        ).to_stdout
       end
     end
 
@@ -111,7 +129,9 @@ describe Nanoc::CLI::Commands::ShowData, :stdio do
       end
 
       it 'outputs dependencies for /dog.md' do
-        expect { subject }.to output(%r{^item /dog.md depends on:\n  \[    item \] \(ra__\) /about.md$}m).to_stdout
+        expect { subject }.to output(
+          %r{^item /dog.md depends on:\n  \[    item \] \(ra__\) /about.md$}m,
+        ).to_stdout
       end
     end
 
@@ -121,7 +141,9 @@ describe Nanoc::CLI::Commands::ShowData, :stdio do
       end
 
       it 'outputs dependencies for /dog.md' do
-        expect { subject }.to output(%r{^item /dog.md depends on:\n  \[   items \] \(r___\) matching any identifier$}m).to_stdout
+        expect { subject }.to output(
+          %r{^item /dog.md depends on:\n  \[   items \] \(r___\) matching any identifier$}m,
+        ).to_stdout
       end
     end
 
@@ -131,7 +153,9 @@ describe Nanoc::CLI::Commands::ShowData, :stdio do
       end
 
       it 'outputs dependencies for /dog.md' do
-        expect { subject }.to output(%r{^item /dog.md depends on:\n  \[   items \] \(r___\) matching identifier /about\.\*$}m).to_stdout
+        expect { subject }.to output(
+          %r{^item /dog.md depends on:\n  \[   items \] \(r___\) matching identifier /about\.\*$}m,
+        ).to_stdout
       end
     end
 
@@ -142,7 +166,12 @@ describe Nanoc::CLI::Commands::ShowData, :stdio do
       end
 
       it 'outputs dependencies for /dog.md' do
-        expect { subject }.to output(%r{^item /dog.md depends on:\n  \[   items \] \(r___\) matching identifier /about\.\*\n                     matching identifier /giraffe\.\*$}m).to_stdout
+        expect { subject }.to output(
+          %r{
+            ^item\ /dog.md\ depends\ on:\n\ \ \[\ \ \ items\ \]\ \(r___\)
+            \ matching\ identifier\ /about\.\*\n\s+matching\ identifier\ /giraffe\.\*$
+          }xm,
+        ).to_stdout
       end
     end
 
@@ -152,7 +181,9 @@ describe Nanoc::CLI::Commands::ShowData, :stdio do
       end
 
       it 'outputs dependencies for /dog.md' do
-        expect { subject }.to output(%r{^item /dog.md depends on:\n  \[ layouts \] \(r___\) matching identifier /about\.\*$}m).to_stdout
+        expect { subject }.to output(
+          %r{^item /dog.md depends on:\n  \[ layouts \] \(r___\) matching identifier /about\.\*$}m,
+        ).to_stdout
       end
     end
 
@@ -163,7 +194,12 @@ describe Nanoc::CLI::Commands::ShowData, :stdio do
       end
 
       it 'outputs dependencies for /dog.md' do
-        expect { subject }.to output(%r{^item /dog.md depends on:\n  \[ layouts \] \(r___\) matching identifier /about\.\*\n                     matching identifier /giraffe\.\*$}m).to_stdout
+        expect { subject }.to output(
+          %r{
+            ^item\ /dog.md\ depends\ on:\n\ \ \[\ layouts\ \]\ \(r___\)
+            \ matching\ identifier\ /about\.\*\n\s+matching\ identifier\ /giraffe\.\*$
+          }xm,
+        ).to_stdout
       end
     end
   end
@@ -214,11 +250,15 @@ describe Nanoc::CLI::Commands::ShowData, :stdio do
       end
 
       example do
-        expect { subject }.to output(%r{^item /about.md, rep default:\n  is not outdated$}).to_stdout
+        expect { subject }.to output(
+          %r{^item /about.md, rep default:\n  is not outdated$},
+        ).to_stdout
       end
 
       example do
-        expect { subject }.to output(%r{^item /dog.md, rep default:\n  is not outdated$}).to_stdout
+        expect { subject }.to output(
+          %r{^item /dog.md, rep default:\n  is not outdated$},
+        ).to_stdout
       end
     end
 
@@ -241,11 +281,25 @@ describe Nanoc::CLI::Commands::ShowData, :stdio do
       end
 
       example do
-        expect { subject }.to output(%r{^item /about.md, rep default:\n  is outdated:\n    - The content of this item has been modified since the last time the site was compiled.\n    - The attributes of this item have been modified since the last time the site was compiled.$}).to_stdout
+        expect { subject }.to output(
+          %r{
+            ^item\ /about.md,\ rep\ default:\n\ \ is\ outdated:\n\ \ \ \ -
+            \ The\ content\ of\ this\ item\ has\ been\ modified\ since\ the
+            \ last\ time\ the\ site\ was\ compiled.\n\ \ \ \ -\ The\ attributes
+            \ of\ this\ item\ have\ been\ modified\ since\ the\ last\ time\ the
+            \ site\ was\ compiled.$
+          }x,
+        ).to_stdout
       end
 
       example do
-        expect { subject }.to output(%r{^item /dog.md, rep default:\n  is outdated:\n    - This item uses content or attributes that have changed since the last time the site was compiled.$}).to_stdout
+        expect { subject }.to output(
+          %r{
+            ^item\ /dog.md,\ rep\ default:\n\ \ is\ outdated:\n\ \ \ \ -\ This
+            \ item\ uses\ content\ or\ attributes\ that\ have\ changed\ since
+            \ the\ last\ time\ the\ site\ was\ compiled.$
+          }x,
+        ).to_stdout
       end
     end
   end
@@ -278,7 +332,9 @@ describe Nanoc::CLI::Commands::ShowData, :stdio do
       end
 
       example do
-        expect { subject }.to output(%r{^layout /default.erb:\n  is not outdated$}).to_stdout
+        expect { subject }.to output(
+          %r{^layout /default.erb:\n  is not outdated$},
+        ).to_stdout
       end
     end
 
@@ -295,7 +351,15 @@ describe Nanoc::CLI::Commands::ShowData, :stdio do
       end
 
       example do
-        expect { subject }.to output(%r{^layout /default.erb:\n  is outdated:\n    - The content of this item has been modified since the last time the site was compiled.\n    - The attributes of this item have been modified since the last time the site was compiled.$}).to_stdout
+        expect { subject }.to output(
+          %r{
+            ^layout\ /default.erb:\n\ \ is\ outdated:\n\ \ \ \ -\ The\ content
+            \ of\ this\ item\ has\ been\ modified\ since\ the\ last\ time\ the
+            \ site\ was\ compiled.\n\ \ \ \ -\ The\ attributes\ of\ this\ item
+            \ have\ been\ modified\ since\ the\ last\ time\ the\ site\ was
+            \ compiled.$
+          }x,
+        ).to_stdout
       end
     end
   end

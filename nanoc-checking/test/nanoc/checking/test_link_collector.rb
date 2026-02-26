@@ -103,7 +103,9 @@ module Nanoc
       def test_collect_links_from_space_separated_lists
         # The white-space variations in this file’s attributes are intentional
         File.open('file-a.html', 'w') do |io|
-          io << %(<img src="image.jpeg" srcset="image-large.jpeg 2000w,	image-medium.jpeg 1000w ,image-small.jpeg 300w">)
+          io << %(<img )
+          io << %(src="image.jpeg" )
+          io << %(srcset="image-large.jpeg 2000w,	image-medium.jpeg 1000w ,image-small.jpeg 300w">)
           io << %(<source srcset="image-large.webp 2000w,   image-medium.webp 1000w, image-small.webp
 300w" type="image/webp">)
           io << %(<a ping="	ping1	ping2		http://example.com/ping3">A 1</a>)

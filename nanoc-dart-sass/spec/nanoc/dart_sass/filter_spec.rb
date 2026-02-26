@@ -164,11 +164,15 @@ describe Nanoc::DartSass::Filter, :helper do
     it 'creates dependencies' do
       filter = described_class.new(ctx.assigns)
 
-      expect(ctx.dependency_tracker).to receive(:bounce).with(ctx.items._unwrap, anything).at_least(:once)
+      expect(ctx.dependency_tracker).to receive(:bounce)
+        .with(ctx.items._unwrap, anything).at_least(:once)
 
-      expect(ctx.dependency_tracker).to receive(:bounce).with(ctx.items['/assets/style/defs1.scss']._unwrap, raw_content: true)
-      expect(ctx.dependency_tracker).to receive(:bounce).with(ctx.items['/assets/style/defs2.scss']._unwrap, raw_content: true)
-      expect(ctx.dependency_tracker).to receive(:bounce).with(ctx.items['/assets/style/defs3.scss']._unwrap, raw_content: true)
+      expect(ctx.dependency_tracker).to receive(:bounce)
+        .with(ctx.items['/assets/style/defs1.scss']._unwrap, raw_content: true)
+      expect(ctx.dependency_tracker).to receive(:bounce)
+        .with(ctx.items['/assets/style/defs2.scss']._unwrap, raw_content: true)
+      expect(ctx.dependency_tracker).to receive(:bounce)
+        .with(ctx.items['/assets/style/defs3.scss']._unwrap, raw_content: true)
 
       filter.run(content)
     end

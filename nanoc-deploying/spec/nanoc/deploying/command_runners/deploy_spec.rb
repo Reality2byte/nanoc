@@ -167,7 +167,9 @@ describe Nanoc::Deploying::CommandRunners::Deploy, :site, :stdio do
 
       shared_examples 'missing kind warning' do
         it 'warns about missing kind' do
-          expect { run }.to output(/Warning: The specified deploy target does not have a kind attribute. Assuming rsync./).to_stderr
+          expect { run }.to output(
+            /Warning: The specified deploy target does not have a kind attribute. Assuming rsync./,
+          ).to_stderr
         end
       end
 

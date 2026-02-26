@@ -67,7 +67,17 @@ describe Nanoc::DartSass::Filter::NanocImporter do
   end
 
   describe '#canonicalize' do
-    subject { importer.canonicalize(url, Struct.new(:containing_url, :from_import).new(containing_url: "nanoc:#{source_item.identifier}", from_import: false)) }
+    subject do
+      importer.canonicalize(
+        url,
+        Struct
+        .new(:containing_url, :from_import)
+        .new(
+          containing_url: "nanoc:#{source_item.identifier}",
+          from_import: false,
+        ),
+      )
+    end
 
     context 'when given a URL with nanoc: prefix' do
       let(:url) { 'nanoc:/assets/style/colors.scss' }
@@ -84,7 +94,15 @@ describe Nanoc::DartSass::Filter::NanocImporter do
 
   describe '#load' do
     subject(:load_call) do
-      canonicalized_url = importer.canonicalize(url, Struct.new(:containing_url, :from_import).new(containing_url: "nanoc:#{source_item.identifier}", from_import: false))
+      canonicalized_url = importer.canonicalize(
+        url,
+        Struct
+        .new(:containing_url, :from_import)
+        .new(
+          containing_url: "nanoc:#{source_item.identifier}",
+          from_import: false,
+        ),
+      )
       if canonicalized_url.nil?
         raise "Could not find an item matching pattern `#{url}`"
       end
@@ -208,7 +226,11 @@ describe Nanoc::DartSass::Filter::NanocImporter do
       let(:url) { 'color.*' }
 
       it 'raises' do
-        expect { load_call }.to raise_error("It's not clear which file to import. Found:\n  /assets/style/color.sass\n  /assets/style/color.scss")
+        expect do
+          load_call
+        end.to raise_error(
+          "It's not clear which file to import. Found:\n  /assets/style/color.sass\n  /assets/style/color.scss",
+        )
       end
     end
   end

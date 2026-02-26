@@ -42,7 +42,10 @@ describe Nanoc::CLI::StackTraceWriter do
         expect { subject }
           .to change(io, :string)
           .from('')
-          .to(match(%r{^  0\. (C:)?/.+/spec/nanoc/cli/stack_trace_writer_spec\.rb:\d+.*$\n  1\. (C:)?/.+/spec/nanoc/cli/stack_trace_writer_spec\.rb:\d}m))
+          .to(match(%r{
+            ^\ \ 0\.\ (C:)?/.+/spec/nanoc/cli/stack_trace_writer_spec\.rb:\d+.*$\n
+            \ \ 1\.\ (C:)?/.+/spec/nanoc/cli/stack_trace_writer_spec\.rb:\d
+          }xm))
       end
 
       it 'has more than 10 stack frames' do
@@ -72,7 +75,10 @@ describe Nanoc::CLI::StackTraceWriter do
         expect { subject }
           .to change(io, :string)
           .from('')
-          .to(match(%r{^  0\. (C:)?/.+/spec/nanoc/cli/stack_trace_writer_spec\.rb:\d+.*$\n  1\. (C:)?/.+/spec/nanoc/cli/stack_trace_writer_spec\.rb:\d}m))
+          .to(match(%r{
+            ^\ \ 0\.\ (C:)?/.+/spec/nanoc/cli/stack_trace_writer_spec\.rb:\d+.*$\n
+            \ \ 1\.\ (C:)?/.+/spec/nanoc/cli/stack_trace_writer_spec\.rb:\d
+          }xm))
       end
 
       it 'has not more than 10 stack frames' do

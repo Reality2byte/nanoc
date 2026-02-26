@@ -162,7 +162,10 @@ describe Nanoc::CLI::ErrorHandler, :stdio do
     end
 
     example do
-      expect { subject }.to output("\n===== MESSAGE:\n\nJsonSchema::AggregateError: \n  * #/enable_output_diff: For 'properties/enable_output_diff', \"yeah\" is not a boolean.\n").to_stdout
+      expect { subject }.to output(
+        "\n===== MESSAGE:\n\nJsonSchema::AggregateError: \n  * " \
+        "#/enable_output_diff: For 'properties/enable_output_diff', \"yeah\" is not a boolean.\n",
+      ).to_stdout
     end
   end
 

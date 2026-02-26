@@ -2,9 +2,9 @@
 
 usage 'check [options] [names]'
 summary 'run issue checks'
-description "
-Run issue checks on the current site. If the `--all` option is passed, all available issue checks will be run. By default, the issue checks marked for deployment will be run.
-"
+description <<~DESC.chomp
+  Run issue checks on the current site. If the `--all` option is passed, all available issue checks will be run. By default, the issue checks marked for deployment will be run.
+DESC
 
 flag :a, :all,    'run all checks'
 flag :L, :list,   'list all checks'

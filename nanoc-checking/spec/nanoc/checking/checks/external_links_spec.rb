@@ -171,7 +171,10 @@ describe Nanoc::Checking::Checks::ExternalLinks do
 
   context 'javascript URL' do
     before do
-      File.write('output/hi.html', %[<a href="javascript:window.scrollTo({top:0,behavior: 'smooth'})">scroll to top</a>])
+      File.write(
+        'output/hi.html',
+        %[<a href="javascript:window.scrollTo({top:0,behavior: 'smooth'})">scroll to top</a>],
+      )
     end
 
     let(:check) do

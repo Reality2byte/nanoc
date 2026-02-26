@@ -114,7 +114,11 @@ module Nanoc
 
         # Run checks in parallel
         Parallel.each_with_index(checks, in_threads: NUM_THREADS) do |check, index|
-          log_check(index:, topic: format("  %-#{length}s", check.class.identifier.to_s), state: colorizer.c('running', :blue))
+          log_check(
+            index:,
+            topic: format("  %-#{length}s", check.class.identifier.to_s),
+            state: colorizer.c('running', :blue),
+          )
 
           check.run
 

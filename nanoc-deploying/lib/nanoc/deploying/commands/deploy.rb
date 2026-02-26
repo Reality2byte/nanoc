@@ -2,9 +2,9 @@
 
 usage 'deploy [target] [options]'
 summary 'deploy the compiled site'
-description "
-Deploys the compiled site. The compiled site contents in the output directory will be uploaded to the destination, which is specified using the `--target` option.
-"
+description <<~DESC.chomp
+  Deploys the compiled site. The compiled site contents in the output directory will be uploaded to the destination, which is specified using the `--target` option.
+DESC
 
 option :t, :target,         'specify the location to deploy to (default: `default`)', argument: :required
 flag :C, :'no-check',       'do not run the issue checks marked for deployment'

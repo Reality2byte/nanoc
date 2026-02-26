@@ -40,7 +40,8 @@ module Nanoc
       def self.enter_site_dir
         dir = find_site_dir
         if dir.nil?
-          raise ::Nanoc::Core::TrivialError, 'The current working directory, nor any of its parents, seems to be a Nanoc site.'
+          raise ::Nanoc::Core::TrivialError,
+                'The current working directory, nor any of its parents, seems to be a Nanoc site.'
         end
 
         return if Dir.getwd == dir
