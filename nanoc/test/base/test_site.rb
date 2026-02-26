@@ -13,14 +13,14 @@ class Nanoc::Core::SiteTest < Nanoc::TestCase
     File.write('config.yaml', 'output_dir: public_html')
     site = Nanoc::Core::SiteLoader.new.new_from_cwd
 
-    assert_equal Dir.getwd + '/public_html', site.config.output_dir
+    assert_equal "#{Dir.getwd}/public_html", site.config.output_dir
   end
 
   def test_initialize_with_dir_with_nanoc_yaml
     File.write('nanoc.yaml', 'output_dir: public_html')
     site = Nanoc::Core::SiteLoader.new.new_from_cwd
 
-    assert_equal Dir.getwd + '/public_html', site.config.output_dir
+    assert_equal "#{Dir.getwd}/public_html", site.config.output_dir
   end
 
   def test_initialize_with_incomplete_data_source_config
@@ -58,7 +58,7 @@ class Nanoc::Core::SiteTest < Nanoc::TestCase
     assert_nil site.config[:parent_config_file]
     assert site.config[:enable_output_diff]
     assert_equal 'bar', site.config[:foo]
-    assert_equal Dir.getwd + '/public_html', site.config.output_dir
+    assert_equal "#{Dir.getwd}/public_html", site.config.output_dir
   end
 
   def test_initialize_with_missing_parent_config_file

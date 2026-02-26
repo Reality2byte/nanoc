@@ -74,7 +74,7 @@ class Nanoc::CLI::Commands::CreateSiteTest < Nanoc::TestCase
 
     FileUtils.cd('foo') do
       # Try with encoding = default encoding = utf-8
-      File.write('content/index.html', 'Hello ' + 0xD6.chr + "!\n")
+      File.write('content/index.html', "Hello #{0xD6.chr}!\n")
       exception = assert_raises(Nanoc::DataSources::Filesystem::Errors::InvalidEncoding) do
         Nanoc::Core::SiteLoader.new.new_from_cwd
       end

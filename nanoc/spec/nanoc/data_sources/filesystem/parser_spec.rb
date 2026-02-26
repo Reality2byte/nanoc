@@ -33,7 +33,7 @@ describe Nanoc::DataSources::Filesystem::Parser do
       end
 
       context 'UTF-8 bom' do
-        let(:meta) { [0xEF, 0xBB, 0xBF].map(&:chr).join + "foo: bar\r\n" }
+        let(:meta) { "#{[0xEF, 0xBB, 0xBF].map(&:chr).join}foo: bar\r\n" }
 
         it 'strips UTF-8 BOM' do
           expect(subject.attributes).to eq('foo' => 'bar')
@@ -102,7 +102,7 @@ describe Nanoc::DataSources::Filesystem::Parser do
         end
 
         context 'UTF-8 bom' do
-          let(:content) { [0xEF, 0xBB, 0xBF].map(&:chr).join + "Hello!\n" }
+          let(:content) { "#{[0xEF, 0xBB, 0xBF].map(&:chr).join}Hello!\n" }
 
           it 'has no attributes' do
             expect(subject.attributes).to eq({})
@@ -295,7 +295,7 @@ describe Nanoc::DataSources::Filesystem::Parser do
 
         context 'UTF-8 bom' do
           let(:content) do
-            [0xEF, 0xBB, 0xBF].map(&:chr).join + "---\ntitle: Welcome\n---\nHello!\n"
+            "#{[0xEF, 0xBB, 0xBF].map(&:chr).join}---\ntitle: Welcome\n---\nHello!\n"
           end
 
           it 'has attributes' do
@@ -396,8 +396,8 @@ describe Nanoc::DataSources::Filesystem::Parser do
       end
 
       context 'UTF-8 bom' do
-        let(:content) { [0xEF, 0xBB, 0xBF].map(&:chr).join + "Hello!\n" }
-        let(:meta) { [0xEF, 0xBB, 0xBF].map(&:chr).join + "title: Welcome\n" }
+        let(:content) { "#{[0xEF, 0xBB, 0xBF].map(&:chr).join}Hello!\n" }
+        let(:meta) { "#{[0xEF, 0xBB, 0xBF].map(&:chr).join}title: Welcome\n" }
 
         it 'has attributes' do
           expect(subject.attributes).to eq('title' => 'Welcome')

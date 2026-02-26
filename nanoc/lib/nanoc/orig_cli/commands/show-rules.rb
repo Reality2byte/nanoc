@@ -27,7 +27,7 @@ module Nanoc::OrigCLI::Commands
     end
 
     def explain_item(item, rules:, reps:)
-      puts(fmt_heading("Item #{item.identifier}") + ':')
+      puts("#{fmt_heading("Item #{item.identifier}")}:")
 
       reps[item].each do |rep|
         rule = rules.compilation_rule_for(rep)
@@ -38,7 +38,7 @@ module Nanoc::OrigCLI::Commands
     end
 
     def explain_layout(layout, rules:)
-      puts(fmt_heading("Layout #{layout.identifier}") + ':')
+      puts("#{fmt_heading("Layout #{layout.identifier}")}:")
 
       found = false
       rules.layout_filter_mapping.each_key do |pattern|

@@ -110,7 +110,7 @@ module Nanoc::Helpers
       end
 
       def build_for_feed(xml)
-        root_url = @config[:base_url] + '/'
+        root_url = "#{@config[:base_url]}/"
         xml.instruct!
         xml.feed(xmlns: 'http://www.w3.org/2005/Atom', 'xml:base' => root_url) do
           # Add primary attributes
@@ -250,7 +250,7 @@ module Nanoc::Helpers
 
       formatted_date = attribute_to_time(item[:created_at]).__nanoc_to_iso8601_date
 
-      'tag:' + hostname + ',' + formatted_date + ':' + base_dir + (item.path || item.identifier.to_s)
+      "tag:#{hostname},#{formatted_date}:#{base_dir}#{item.path || item.identifier.to_s}"
     end
 
     # @param [String, Time, Date, DateTime] arg

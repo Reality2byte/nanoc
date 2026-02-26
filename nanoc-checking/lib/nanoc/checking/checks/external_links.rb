@@ -135,7 +135,7 @@ module Nanoc
             end
 
           if url.query
-            path = path + '?' + url.query
+            path = "#{path}?#{url.query}"
           end
 
           path

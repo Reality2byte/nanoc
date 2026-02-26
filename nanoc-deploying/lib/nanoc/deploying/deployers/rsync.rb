@@ -44,7 +44,7 @@ module Nanoc
         # @see Nanoc::Deploying::Deployer#run
         def run
           # Get params
-          src = source_path + '/'
+          src = "#{source_path}/"
           dst = config[:dst]
           options = config[:options] || DEFAULT_OPTIONS
 

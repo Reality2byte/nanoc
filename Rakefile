@@ -51,17 +51,17 @@ packages.each do |package|
 end
 
 desc 'Run tests for all packages'
-task test: packages.map { |p| p.tr('-', '_') + ':test' }
+task test: packages.map { |p| "#{p.tr('-', '_')}:test" }
 
 desc 'Run tests for most important packages'
 task test_quick: ['nanoc:test', 'nanoc_core:test', 'nanoc_cli:test', 'rubocop']
 
 desc 'Build gems all packages'
-task gem: packages.map { |p| p.tr('-', '_') + ':gem' }
+task gem: packages.map { |p| "#{p.tr('-', '_')}:gem" }
 
 desc 'Print overview of which packages need a release'
 task :needs_release do
-  tags = `git tags`.lines.map(&:chomp).map { |t| t.match?(/\A\d/) ? 'nanoc-v' + t : t }
+  tags = `git tags`.lines.map(&:chomp).map { |t| t.match?(/\A\d/) ? "nanoc-v#{t}" : t }
   tags_by_base_name = tags.group_by { |t| t[/\A.*(?=-v\d)/] }.select { |(base_name, _tags)| base_name }
   versions_by_base_name = tags_by_base_name.transform_values do |list|
     list.map { |nv| nv.match(/\A.*-v(\d.*)/) }.compact.map { |m| Gem::Version.new(m[1]) }
@@ -76,7 +76,7 @@ task :needs_release do
 
       if last_version
         dir = name
-        tag = name == 'nanoc' ? last_version.to_s : name + '-v' + last_version.to_s
+        tag = name == 'nanoc' ? last_version.to_s : "#{name}-v#{last_version}"
         diff = `git diff --stat #{tag} #{dir}`
         needs_release = diff.match?(/\d+ files changed/)
 

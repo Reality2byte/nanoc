@@ -359,7 +359,7 @@ module Nanoc::DataSources
       elsif ext.empty?
         base_filename
       else
-        base_filename + '.' + ext
+        "#{base_filename}.#{ext}"
       end
     end
 

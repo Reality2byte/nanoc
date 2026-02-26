@@ -28,7 +28,7 @@ module Nanoc
 
         puts 'Available checks:'
         puts
-        puts all_check_classes.map { |i| '  ' + i.identifier.to_s }.sort.join("\n")
+        puts all_check_classes.map { |i| "  #{i.identifier}" }.sort.join("\n")
       end
 
       # Runs all checks.

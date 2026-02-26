@@ -172,7 +172,7 @@ module Nanoc
         end
 
         def list_local_files(src)
-          Dir[src + '/**/*'].select { |f| File.file?(f) }
+          Dir["#{src}/**/*"].select { |f| File.file?(f) }
         end
 
         def upload_all(src, path, etags, wrapper)

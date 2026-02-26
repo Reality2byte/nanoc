@@ -128,13 +128,13 @@ describe Nanoc::Filters::SassCommon do
 
     let(:item_main_default_rep) do
       Nanoc::Core::ItemRep.new(item_main, :default).tap do |rep|
-        rep.raw_paths = rep.paths = { last: [Dir.getwd + '/output/style/main.sass'] }
+        rep.raw_paths = rep.paths = { last: ["#{Dir.getwd}/output/style/main.sass"] }
       end
     end
 
     let(:item_main_sourcemap_rep) do
       Nanoc::Core::ItemRep.new(item_main, :sourcemap).tap do |rep|
-        rep.raw_paths = rep.paths = { last: [Dir.getwd + '/output/style/main.sass.map'] }
+        rep.raw_paths = rep.paths = { last: ["#{Dir.getwd}/output/style/main.sass.map"] }
       end
     end
 

@@ -25,7 +25,7 @@ require 'nanoc/orig_cli'
 Nanoc::CLI.setup
 
 module Nanoc::TestHelpers
-  LIB_DIR = File.expand_path(__dir__ + '/../lib')
+  LIB_DIR = File.expand_path("#{__dir__}/../lib")
 
   def disable_nokogiri?
     ENV.key?('DISABLE_NOKOGIRI')
@@ -227,7 +227,7 @@ module Nanoc::TestHelpers
   end
 
   def root_dir
-    File.absolute_path(__dir__ + '/..')
+    File.absolute_path("#{__dir__}/..")
   end
 
   # FIXME: deduplicate

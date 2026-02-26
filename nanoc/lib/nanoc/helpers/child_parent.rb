@@ -8,7 +8,7 @@ module Nanoc::Helpers
         item.parent
       else
         path_without_last_component = item.identifier.to_s.sub(%r{[^/]+$}, '').chop
-        @items[path_without_last_component + '.*']
+        @items["#{path_without_last_component}.*"]
       end
     end
 
@@ -16,7 +16,7 @@ module Nanoc::Helpers
       if item.identifier.legacy?
         item.children
       else
-        pattern = item.identifier.without_ext + '/*'
+        pattern = "#{item.identifier.without_ext}/*"
         @items.find_all(pattern)
       end
     end

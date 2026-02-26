@@ -81,7 +81,7 @@ module Nanoc::CLI::CompileListeners
           path = path[(Dir.getwd.size + 1)..path.size]
         end
 
-        Nanoc::CLI::Logger.instance.file(:high, :delete, '(dry run) ' + path)
+        Nanoc::CLI::Logger.instance.file(:high, :delete, "(dry run) #{path}")
       end
     end
 

@@ -237,8 +237,8 @@ RSpec::Matchers.alias_matcher :some_binary_content, :be_some_binary_content
 
 RSpec::Matchers.define :have_correct_yard_examples do |_name, *_expected_args|
   chain :in_file do |file|
-    root_dir = File.expand_path(__dir__ + '/../..')
-    YARD.parse(root_dir + '/' + file)
+    root_dir = File.expand_path("#{__dir__}/../..")
+    YARD.parse("#{root_dir}/#{file}")
   end
 
   match do |actual|
@@ -295,8 +295,8 @@ end
 
 RSpec::Matchers.define :have_a_valid_manifest do
   match do |actual|
-    manifest_lines = File.readlines(actual + '.manifest').map(&:chomp).reject(&:empty?)
-    gemspec_lines = eval(File.read(actual + '.gemspec'), binding, actual + '.gemspec').files
+    manifest_lines = File.readlines("#{actual}.manifest").map(&:chomp).reject(&:empty?)
+    gemspec_lines = eval(File.read("#{actual}.gemspec"), binding, "#{actual}.gemspec").files
 
     @missing_from_manifest = gemspec_lines - manifest_lines
     @extra_in_manifest = manifest_lines - gemspec_lines

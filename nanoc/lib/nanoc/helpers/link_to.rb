@@ -32,7 +32,7 @@ module Nanoc::Helpers
 
       # Join attributes
       attributes = attributes.reduce('') do |memo, (key, value)|
-        memo + key.to_s + '="' + h(value) + '" '
+        "#{memo}#{key}=\"#{h(value)}\" "
       end
 
       # Create link

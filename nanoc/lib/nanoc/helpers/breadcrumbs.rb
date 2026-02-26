@@ -51,7 +51,7 @@ module Nanoc::Helpers
             new_prefix == old_prefix ? nil : new_prefix
           end
 
-        prefixes.map { |pr| pr + '.*' }
+        prefixes.map { |pr| "#{pr}.*" }
       end
 
       def self.find_one(items, pat, tiebreaker)
@@ -103,12 +103,12 @@ module Nanoc::Helpers
 
       # e.g. ['', '/foo', '/foo/bar']
       components = item.identifier.components
-      prefixes = components.inject(['']) { |acc, elem| acc + [acc.last + '/' + elem] }
+      prefixes = components.inject(['']) { |acc, elem| acc + ["#{acc.last}/#{elem}"] }
 
       tiebreaker = Int::ERROR_TIEBREAKER if tiebreaker == :error
 
       if @item.identifier.legacy?
-        prefixes.map { |pr| @items[Nanoc::Core::Identifier.new('/' + pr, type: :legacy)] }
+        prefixes.map { |pr| @items[Nanoc::Core::Identifier.new("/#{pr}", type: :legacy)] }
       else
         ancestral_prefixes = prefixes.grep_v(%r{^/index\.})[0..-2]
         ancestral_items =

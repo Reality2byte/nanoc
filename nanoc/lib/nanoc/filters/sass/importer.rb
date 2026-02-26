@@ -45,7 +45,7 @@ module Nanoc::Filters::SassCommon
     end
 
     def key(identifier, _options)
-      [self.class.name + ':' + root, identifier.to_s]
+      ["#{self.class.name}:#{root}", identifier.to_s]
     end
 
     def public_url(identifier, _sourcemap_directory)

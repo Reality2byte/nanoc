@@ -107,7 +107,8 @@ describe Nanoc::CLI::ErrorHandler, :stdio do
         end
 
         it 'prints summary' do
-          expected_output = "\n" + <<~OUT
+          expected_output = <<~OUT
+
             Error: cannot load such file -- nokogiri
 
             1. Add `gem 'nokogiri'` to your Gemfile

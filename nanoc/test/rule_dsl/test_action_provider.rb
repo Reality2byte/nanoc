@@ -33,7 +33,7 @@ class Nanoc::RuleDSL::ActionProviderTest < Nanoc::TestCase
       # Adjust normal rules file
       File.write(
         'Rules',
-        "include_rules 'more_rules'\n\npreprocess {}\n\n" + File.read('Rules'),
+        "include_rules 'more_rules'\n\npreprocess {}\n\n#{File.read('Rules')}",
       )
 
       # Create site and compiler
@@ -65,7 +65,7 @@ class Nanoc::RuleDSL::ActionProviderTest < Nanoc::TestCase
       # Adjust normal rules file
       File.write(
         'Rules',
-        "include_rules 'more_rules'\n\npostprocess {}\n\n" + File.read('Rules'),
+        "include_rules 'more_rules'\n\npostprocess {}\n\n#{File.read('Rules')}",
       )
 
       # Create site and compiler

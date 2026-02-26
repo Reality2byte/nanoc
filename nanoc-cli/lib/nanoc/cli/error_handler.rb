@@ -271,7 +271,7 @@ module Nanoc::CLI
       stream.puts
 
       if verbose
-        stream.puts '===== ' + title.upcase + ':'
+        stream.puts "===== #{title.upcase}:"
         stream.puts
       end
     end
@@ -293,7 +293,7 @@ module Nanoc::CLI
     def message_for_error(error)
       case error
       when JsonSchema::AggregateError
-        "\n" + error.errors.map { |e| "  * #{e.pointer}: #{e.message}" }.join("\n")
+        "\n#{error.errors.map { |e| "  * #{e.pointer}: #{e.message}" }.join("\n")}"
       else
         error.message
       end

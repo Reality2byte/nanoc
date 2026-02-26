@@ -78,7 +78,7 @@ module Nanoc::RuleDSL
       when Hash
         if arg.key?(:ext)
           ext = arg[:ext].sub(/\A\./, '')
-          path = @item.identifier.without_exts + '.' + ext
+          path = "#{@item.identifier.without_exts}.#{ext}"
           snapshot(snapshot_name, path:)
         else
           raise ArgumentError, 'Cannot call #write this way (need path or :ext)'

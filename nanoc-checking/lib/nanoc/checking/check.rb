@@ -30,7 +30,7 @@ module Nanoc
           raise Nanoc::Checking::OutputDirNotFoundError.new(output_dir)
         end
 
-        output_filenames = Dir[output_dir + '/**/*'].select { |f| File.file?(f) }
+        output_filenames = Dir["#{output_dir}/**/*"].select { |f| File.file?(f) }
 
         # FIXME: ugly
         compiler = Nanoc::Core::Compiler.new_for(site)

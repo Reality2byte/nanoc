@@ -183,7 +183,7 @@ module Nanoc::RuleDSL
           # This is a temporary solution until an item can map back to its data
           # source. ATM item[:content_filename] is nil for items coming from the
           # static data source.
-          item.identifier.chop + '.' + item[:extension]
+          "#{item.identifier.chop}.#{item[:extension]}"
         end
       end
       routing_rule = Nanoc::RuleDSL::RoutingRule.new(

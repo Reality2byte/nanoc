@@ -8,7 +8,7 @@ module Nanoc
         def run
           require 'w3c_validators'
 
-          Dir[@config.output_dir + '/**/*.' + extension].each do |filename|
+          Dir["#{@config.output_dir}/**/*.#{extension}"].each do |filename|
             results = validator_class.new.validate_file(filename)
             lines = File.readlines(filename)
             results.errors.each do |e|

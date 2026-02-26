@@ -55,15 +55,15 @@ describe Nanoc::Core::Checksummer do
       [
         'Nanoc::RuleDSL::CompilationRuleContext#0<',
         'item=',
-        'Nanoc::Core::BasicItemView#1<' + expected_item_checksum + '>',
+        "Nanoc::Core::BasicItemView#1<#{expected_item_checksum}>",
         ',rep=',
-        'Nanoc::Core::BasicItemRepView#8<' + expected_item_rep_checksum + '>',
+        "Nanoc::Core::BasicItemRepView#8<#{expected_item_rep_checksum}>",
         ',items=',
         'Nanoc::Core::ItemCollectionWithoutRepsView#11<Nanoc::Core::ItemCollection#12<@2,>>',
         ',layouts=',
-        'Nanoc::Core::LayoutCollectionView#13<Nanoc::Core::LayoutCollection#14<' + expected_layout_checksum + ',>>',
+        "Nanoc::Core::LayoutCollectionView#13<Nanoc::Core::LayoutCollection#14<#{expected_layout_checksum},>>",
         ',config=',
-        'Nanoc::Core::ConfigView#20<' + expected_config_checksum + '>',
+        "Nanoc::Core::ConfigView#20<#{expected_config_checksum}>",
         '>',
       ].join
     end

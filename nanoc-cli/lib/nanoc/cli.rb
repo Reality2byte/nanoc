@@ -130,7 +130,7 @@ module Nanoc
       @root_command = nil
 
       # Add root command
-      filename = __dir__ + '/cli/commands/nanoc.rb'
+      filename = "#{__dir__}/cli/commands/nanoc.rb"
       @root_command = Cri::Command.load_file(filename, infer_name: true)
 
       # Add help command
@@ -138,7 +138,7 @@ module Nanoc
       add_command(help_cmd)
 
       # Add other commands
-      cmd_filenames = Dir[__dir__ + '/cli/commands/*.rb']
+      cmd_filenames = Dir["#{__dir__}/cli/commands/*.rb"]
       cmd_filenames.each do |cmd_filename|
         basename = File.basename(cmd_filename, '.rb')
 
@@ -198,7 +198,7 @@ module Nanoc
     def self.recursive_contents_of(path)
       return [] unless File.directory?(path)
 
-      files, dirs = *Dir[path + '/*'].partition { |e| File.file?(e) }
+      files, dirs = *Dir["#{path}/*"].partition { |e| File.file?(e) }
       dirs.each { |d| files.concat recursive_contents_of(d) }
       files
     end
@@ -229,8 +229,8 @@ end
 
 loader = Zeitwerk::Loader.new
 loader.inflector = inflector_class.new
-loader.push_dir(__dir__ + '/..')
-loader.ignore(__dir__ + '/../nanoc-cli.rb')
-loader.ignore(__dir__ + '/cli/commands')
+loader.push_dir("#{__dir__}/..")
+loader.ignore("#{__dir__}/../nanoc-cli.rb")
+loader.ignore("#{__dir__}/cli/commands")
 loader.setup
 loader.eager_load

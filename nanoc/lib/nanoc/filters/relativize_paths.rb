@@ -72,7 +72,7 @@ module Nanoc::Filters
         if exclude?(path, params)
           Regexp.last_match[0]
         else
-          'url(' + quote + relative_path_to(path) + quote + ')'
+          "url(#{quote}#{relative_path_to(path)}#{quote})"
         end
       end
     end
