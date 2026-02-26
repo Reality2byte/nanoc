@@ -50,16 +50,6 @@ Lint/RedundantDirGlobSort:
     - 'nanoc-core/spec/nanoc/core/compilation_stages/cleanup_spec.rb'
     - 'nanoc-deploying/spec/nanoc/deploying/deployers/fog_spec.rb'
 
-# Offense count: 9
-# Configuration parameters: EnforcedStyle, CheckMethodNames, CheckSymbols, AllowedIdentifiers, AllowedPatterns.
-# SupportedStyles: snake_case, normalcase, non_integer
-# AllowedIdentifiers: TLS1_1, TLS1_2, capture3, iso8601, rfc1123_date, rfc822, rfc2822, rfc3339, x86_64
-Naming/VariableNumber:
-  Exclude:
-    - 'nanoc-checking/spec/nanoc/checking/check_spec.rb'
-    - 'nanoc-core/spec/nanoc/core/aggregate_data_source_spec.rb'
-    - 'nanoc/spec/nanoc/rule_dsl/action_sequence_calculator_spec.rb'
-
 # Offense count: 5
 RSpec/AnyInstance:
   Exclude:

@@ -50,7 +50,7 @@ describe(Nanoc::RuleDSL::ActionSequenceCalculator) do
       context 'rules exist' do
         before do
           rules_proc = proc do
-            filter :erb, speed: :over_9000
+            filter :erb, speed: :ultra
             layout '/default.*'
             filter :typohero
           end
@@ -67,7 +67,7 @@ describe(Nanoc::RuleDSL::ActionSequenceCalculator) do
 
           expect(subject[1]).to be_a(Nanoc::Core::ProcessingActions::Filter)
           expect(subject[1].filter_name).to be(:erb)
-          expect(subject[1].params).to eql(speed: :over_9000)
+          expect(subject[1].params).to eql(speed: :ultra)
 
           expect(subject[2]).to be_a(Nanoc::Core::ProcessingActions::Snapshot)
           expect(subject[2].snapshot_names).to eql([:pre])

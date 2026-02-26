@@ -86,7 +86,7 @@ describe Nanoc::Checking::Check do
 
   describe '.define' do
     before do
-      described_class.define(:spec_check_example_1) do
+      described_class.define(:spec_check_example_a) do
         add_issue('it’s totes bad')
       end
 
@@ -95,11 +95,11 @@ describe Nanoc::Checking::Check do
     end
 
     it 'is discoverable' do
-      expect(described_class.named(:spec_check_example_1)).not_to be_nil
+      expect(described_class.named(:spec_check_example_a)).not_to be_nil
     end
 
     it 'runs properly' do
-      check = described_class.named(:spec_check_example_1).create(site)
+      check = described_class.named(:spec_check_example_a).create(site)
       check.run
       expect(check.issues.size).to eq(1)
       expect(check.issues.first.description).to eq('it’s totes bad')

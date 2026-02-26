@@ -2,10 +2,10 @@
 
 describe Nanoc::Core::AggregateDataSource, :stdio do
   subject(:data_source) do
-    described_class.new([data_source_1, data_source_2], {})
+    described_class.new([data_source_a, data_source_b], {})
   end
 
-  let(:klass_1) do
+  let(:klass_a) do
     Class.new(Nanoc::Core::DataSource) do
       def items
         [Nanoc::Core::Item.new('One', {}, '/one.md')]
@@ -25,7 +25,7 @@ describe Nanoc::Core::AggregateDataSource, :stdio do
     end
   end
 
-  let(:klass_2) do
+  let(:klass_b) do
     Class.new(Nanoc::Core::DataSource) do
       def items
         [Nanoc::Core::Item.new('Two', {}, '/two.md')]
@@ -45,19 +45,19 @@ describe Nanoc::Core::AggregateDataSource, :stdio do
     end
   end
 
-  let(:data_source_1) do
-    klass_1.new({}, nil, nil, {})
+  let(:data_source_a) do
+    klass_a.new({}, nil, nil, {})
   end
 
-  let(:data_source_2) do
-    klass_2.new({}, nil, nil, {})
+  let(:data_source_b) do
+    klass_b.new({}, nil, nil, {})
   end
 
   describe '#items' do
     subject { data_source.items }
 
     it 'contains all items' do
-      expect(subject).to match_array(data_source_1.items + data_source_2.items)
+      expect(subject).to match_array(data_source_a.items + data_source_b.items)
     end
   end
 
@@ -65,7 +65,7 @@ describe Nanoc::Core::AggregateDataSource, :stdio do
     subject { data_source.layouts }
 
     it 'contains all layouts' do
-      expect(subject).to match_array(data_source_1.layouts + data_source_2.layouts)
+      expect(subject).to match_array(data_source_a.layouts + data_source_b.layouts)
     end
   end
 
@@ -73,7 +73,7 @@ describe Nanoc::Core::AggregateDataSource, :stdio do
     subject { data_source.item_changes }
 
     it 'yields changes from both' do
-      expect(subject).to match_array(data_source_1.item_changes + data_source_2.item_changes)
+      expect(subject).to match_array(data_source_a.item_changes + data_source_b.item_changes)
     end
   end
 
@@ -81,7 +81,7 @@ describe Nanoc::Core::AggregateDataSource, :stdio do
     subject { data_source.layout_changes }
 
     it 'yields changes from both' do
-      expect(subject).to match_array(data_source_1.layout_changes + data_source_2.layout_changes)
+      expect(subject).to match_array(data_source_a.layout_changes + data_source_b.layout_changes)
     end
   end
 end
