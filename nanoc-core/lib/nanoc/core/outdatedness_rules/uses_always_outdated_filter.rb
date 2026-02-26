@@ -15,7 +15,7 @@ module Nanoc
 
         def any_always_outdated?(seq)
           seq
-            .select { |a| a.is_a?(Nanoc::Core::ProcessingActions::Filter) }
+            .grep(Nanoc::Core::ProcessingActions::Filter)
             .map { |a| Nanoc::Core::Filter.named(a.filter_name) }
             .compact
             .any?(&:always_outdated?)

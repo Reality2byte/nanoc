@@ -87,11 +87,11 @@ module Nanoc
       end
 
       def new_items
-        @new_objects.select { |o| o.is_a?(Nanoc::Core::Item) }
+        @new_objects.grep(Nanoc::Core::Item)
       end
 
       def new_layouts
-        @new_objects.select { |o| o.is_a?(Nanoc::Core::Layout) }
+        @new_objects.grep(Nanoc::Core::Layout)
       end
 
       # Returns the direct dependencies for the given object.

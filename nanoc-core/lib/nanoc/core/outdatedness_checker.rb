@@ -187,7 +187,7 @@ module Nanoc
           )
         end
 
-        pairs = attributes_prop.select { |a| a.is_a?(Array) }.to_h
+        pairs = attributes_prop.grep(Array).to_h
 
         if pairs.empty?
           raise(

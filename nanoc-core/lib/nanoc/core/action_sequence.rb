@@ -25,7 +25,7 @@ module Nanoc
 
       # contract C::None => C::ArrayOf[Nanoc::Core::ProcessingAction]
       def snapshot_actions
-        @actions.select { |a| a.is_a?(Nanoc::Core::ProcessingActions::Snapshot) }
+        @actions.grep(Nanoc::Core::ProcessingActions::Snapshot)
       end
 
       # contract C::None => Array
