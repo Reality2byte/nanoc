@@ -11,7 +11,11 @@ describe Nanoc::Core::CompilationPhases::Abstract do
   let(:wrapped) { nil }
 
   describe '#run' do
-    subject { phase.run(rep, is_outdated: false) {} }
+    subject do
+      phase.run(rep, is_outdated: false) do
+        # do nothing
+      end
+    end
 
     it 'raises' do
       expect { subject }.to raise_error(NotImplementedError)

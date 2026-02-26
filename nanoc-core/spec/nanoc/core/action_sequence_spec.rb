@@ -32,6 +32,7 @@ describe Nanoc::Core::ActionSequence do
     context 'no actions' do
       let(:action_sequence) do
         Nanoc::Core::ActionSequenceBuilder.build do |b|
+          # do nothing
         end
       end
 
@@ -57,6 +58,7 @@ describe Nanoc::Core::ActionSequence do
     context 'no actions' do
       let(:action_sequence) do
         Nanoc::Core::ActionSequenceBuilder.build do |b|
+          # do nothing
         end
       end
 

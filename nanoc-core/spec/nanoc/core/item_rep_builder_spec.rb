@@ -36,6 +36,7 @@ describe Nanoc::Core::ItemRepBuilder do
     it 'has no snapshot defs by default' do
       action_sequence =
         Nanoc::Core::ActionSequenceBuilder.build do |b|
+          # do nothing
         end
 
       snapshot_defs = described_class.send(:snapshot_defs_for, action_sequence, rep)

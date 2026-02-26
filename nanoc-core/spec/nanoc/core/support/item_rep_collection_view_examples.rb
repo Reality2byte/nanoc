@@ -40,7 +40,11 @@ shared_examples 'an item rep collection view' do
     end
 
     it 'returns self' do
-      expect(view.each { |_i| }).to equal(view)
+      res = view.each do |_i|
+        # do nothing
+      end
+
+      expect(res).to equal(view)
     end
 
     it 'yields elements with the right context' do

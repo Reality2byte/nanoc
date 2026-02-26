@@ -117,11 +117,18 @@ shared_examples 'an identifiable collection view' do
 
     it 'creates dependency' do
       expect(dependency_tracker).to receive(:bounce).with(wrapped, raw_content: true)
-      view.each { |_i| }
+      view.each do |_i|
+        # do nothing
+      end
     end
 
     it 'returns self' do
-      expect(view.each { |_i| }).to equal(view)
+      res =
+        view.each do |_i|
+          # do nothing
+        end
+
+      expect(res).to equal(view)
     end
 
     it 'yields elements with the right context' do
