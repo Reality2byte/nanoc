@@ -73,11 +73,6 @@ Minitest/MultipleAssertions:
     - 'nanoc/test/rule_dsl/test_action_provider.rb'
     - 'nanoc/test/rule_dsl/test_compiler_dsl.rb'
 
-# Offense count: 1
-Minitest/SkipEnsure:
-  Exclude:
-    - 'nanoc/test/orig_cli/commands/test_create_site.rb'
-
 # Offense count: 9
 # Configuration parameters: EnforcedStyle, CheckMethodNames, CheckSymbols, AllowedIdentifiers, AllowedPatterns.
 # SupportedStyles: snake_case, normalcase, non_integer
