@@ -256,3 +256,6 @@ Style/MapIntoArray:
 # This incorrectly identifies some methods that return true/false as being predicate methods.
 Naming/PredicateMethod:
   Enabled: false
+
+Style/RedundantArgument:
+  Enabled: false
