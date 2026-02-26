@@ -170,7 +170,9 @@ describe Nanoc::Core::PostCompileItemRepView do
         expect { subject }
           .to raise_error(
             Nanoc::Core::Errors::CannotGetCompiledContentOfBinaryItem,
-            'You cannot access the compiled content of a binary item representation (but you can access the path). The offending item rep is /foo (rep name :jacques).',
+            'You cannot access the compiled content of a binary item ' \
+            'representation (but you can access the path). The offending ' \
+            'item rep is /foo (rep name :jacques).',
           )
       end
     end

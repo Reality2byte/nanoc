@@ -221,6 +221,9 @@ Minitest/AssertEmptyLiteral:
 RSpec/IncludeExamples: # new in 3.6
   Enabled: false
 
+RSpec/ExampleLength:
+  Enabled: false
+
 # ----- DISABLED (buggy) -----
 
 # This cop attempts to replace Nanoc::VERSION with described_class, which makes

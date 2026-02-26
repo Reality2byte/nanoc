@@ -144,7 +144,9 @@ shared_examples 'a document view' do
       it { is_expected.to eql('donkey') }
 
       it 'creates a dependency' do
-        expect { subject }.to change { dependency_store.objects_causing_outdatedness_of(base_item) }.from([]).to([document])
+        expect { subject }.to change {
+          dependency_store.objects_causing_outdatedness_of(base_item)
+        }.from([]).to([document])
       end
 
       it 'creates a dependency with the right props' do
@@ -165,7 +167,9 @@ shared_examples 'a document view' do
       it { is_expected.to be_nil }
 
       it 'creates a dependency' do
-        expect { subject }.to change { dependency_store.objects_causing_outdatedness_of(base_item) }.from([]).to([document])
+        expect { subject }.to change {
+          dependency_store.objects_causing_outdatedness_of(base_item)
+        }.from([]).to([document])
       end
 
       it 'creates a dependency with the right props' do
@@ -187,7 +191,9 @@ shared_examples 'a document view' do
     let(:document) { entity_class.new('stuff', { animal: 'donkey' }, '/foo') }
 
     it 'creates a dependency' do
-      expect { subject }.to change { dependency_store.objects_causing_outdatedness_of(base_item) }.from([]).to([document])
+      expect { subject }.to change {
+        dependency_store.objects_causing_outdatedness_of(base_item)
+      }.from([]).to([document])
     end
 
     it 'creates a dependency with the right props' do
@@ -217,7 +223,9 @@ shared_examples 'a document view' do
       it { is_expected.to eql('donkey') }
 
       it 'creates a dependency' do
-        expect { subject }.to change { dependency_store.objects_causing_outdatedness_of(base_item) }.from([]).to([document])
+        expect { subject }.to change {
+          dependency_store.objects_causing_outdatedness_of(base_item)
+        }.from([]).to([document])
       end
 
       it 'creates a dependency with the right props' do
@@ -241,7 +249,9 @@ shared_examples 'a document view' do
         it { is_expected.to eql('nothing sorry') }
 
         it 'creates a dependency' do
-          expect { subject }.to change { dependency_store.objects_causing_outdatedness_of(base_item) }.from([]).to([document])
+          expect { subject }.to change {
+            dependency_store.objects_causing_outdatedness_of(base_item)
+          }.from([]).to([document])
         end
 
         it 'creates a dependency with the right props' do
@@ -262,7 +272,9 @@ shared_examples 'a document view' do
         it { is_expected.to eql('nothing sorry') }
 
         it 'creates a dependency' do
-          expect { subject }.to change { dependency_store.objects_causing_outdatedness_of(base_item) }.from([]).to([document])
+          expect { subject }.to change {
+            dependency_store.objects_causing_outdatedness_of(base_item)
+          }.from([]).to([document])
         end
 
         it 'creates a dependency with the right props' do
@@ -298,7 +310,9 @@ shared_examples 'a document view' do
       it { is_expected.to be(true) }
 
       it 'creates a dependency' do
-        expect { subject }.to change { dependency_store.objects_causing_outdatedness_of(base_item) }.from([]).to([document])
+        expect { subject }.to change {
+          dependency_store.objects_causing_outdatedness_of(base_item)
+        }.from([]).to([document])
       end
 
       it 'creates a dependency with the right props' do
@@ -319,7 +333,9 @@ shared_examples 'a document view' do
       it { is_expected.to be(false) }
 
       it 'creates a dependency' do
-        expect { subject }.to change { dependency_store.objects_causing_outdatedness_of(base_item) }.from([]).to([document])
+        expect { subject }.to change {
+          dependency_store.objects_causing_outdatedness_of(base_item)
+        }.from([]).to([document])
       end
 
       it 'creates a dependency with the right props' do
@@ -351,7 +367,9 @@ shared_examples 'a document view' do
     it { is_expected.to eql('stuff') }
 
     it 'creates a dependency' do
-      expect { subject }.to change { dependency_store.objects_causing_outdatedness_of(base_item) }.from([]).to([document])
+      expect { subject }.to change {
+        dependency_store.objects_causing_outdatedness_of(base_item)
+      }.from([]).to([document])
     end
 
     it 'creates a dependency with the right props' do

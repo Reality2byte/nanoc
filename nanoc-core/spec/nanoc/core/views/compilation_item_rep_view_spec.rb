@@ -85,7 +85,9 @@ describe Nanoc::Core::CompilationItemRepView do
             ),
           }
 
-          # Write some demo content. The assumption here is that the item would have an output file if the cache is available, even if that output file is outdated.
+          # Write some demo content. The assumption here is that the item would
+          # have an output file if the cache is available, even if that output
+          # file is outdated.
           rep.raw_paths[:last].each do |path|
             FileUtils.mkdir_p(File.dirname(path))
             File.write(path, 'stuff')
@@ -229,7 +231,9 @@ describe Nanoc::Core::CompilationItemRepView do
         end
 
         it 'creates a dependency' do
-          expect { subject }.to change { dependency_store.objects_causing_outdatedness_of(base_item) }.from([]).to([item])
+          expect { subject }.to change {
+            dependency_store.objects_causing_outdatedness_of(base_item)
+          }.from([]).to([item])
         end
 
         it 'creates a dependency with the right props' do
@@ -307,7 +311,9 @@ describe Nanoc::Core::CompilationItemRepView do
             ),
           }
 
-          # Write some demo content. The assumption here is that the item would have an output file if the cache is available, even if that output file is outdated.
+          # Write some demo content. The assumption here is that the item would
+          # have an output file if the cache is available, even if that output
+          # file is outdated.
           rep.raw_paths[:last].each do |path|
             FileUtils.mkdir_p(File.dirname(path))
             File.write(path, 'stuff')
@@ -363,7 +369,11 @@ describe Nanoc::Core::CompilationItemRepView do
             expect { subject }.not_to raise_error
           end
 
-          it { is_expected.to eq('In my vision, I was on the veranda of a vast estate, a palazzo of some fantastic proportion.') }
+          it do
+            expect(subject).to eq(
+              'In my vision, I was on the veranda of a vast estate, a palazzo of some fantastic proportion.',
+            )
+          end
 
           it 'marks item rep as compiled' do
             expect { subject }

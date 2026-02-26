@@ -21,7 +21,7 @@ describe Nanoc::Core::Checksummer::CompactDigest do
 end
 
 describe Nanoc::Core::Checksummer do
-  subject { described_class.calc(obj, Nanoc::Core::Checksummer::VerboseDigest) }
+  subject(:checksum) { described_class.calc(obj, Nanoc::Core::Checksummer::VerboseDigest) }
 
   describe '.calc_for_each_attribute_of' do
     let(:obj) { Nanoc::Core::Item.new('asdf', { 'foo' => 'bar' }, '/foo.md') }
@@ -214,7 +214,13 @@ describe Nanoc::Core::Checksummer do
   context 'Nanoc::Core::Item' do
     let(:obj) { Nanoc::Core::Item.new('asdf', { 'foo' => 'bar' }, '/foo.md') }
 
-    it { is_expected.to eql('Nanoc::Core::Item#0<content=Nanoc::Core::TextualContent#1<String#2<asdf>>,attributes=Hash#3<Symbol#4<foo>=String#5<bar>,>,identifier=Nanoc::Core::Identifier#6<String#7</foo.md>>>') }
+    it {
+      expect(checksum).to eql(
+        'Nanoc::Core::Item#0<content=Nanoc::Core::TextualContent#1<' \
+        'String#2<asdf>>,attributes=Hash#3<Symbol#4<foo>=String#5<bar>,>,' \
+        'identifier=Nanoc::Core::Identifier#6<String#7</foo.md>>>',
+      )
+    }
 
     context 'binary' do
       let(:filename) { File.expand_path('foo.dat') }
@@ -229,7 +235,13 @@ describe Nanoc::Core::Checksummer do
         File.utime(mtime, mtime, content.filename)
       end
 
-      it { is_expected.to eql('Nanoc::Core::Item#0<content=Nanoc::Core::BinaryContent#1<Pathname#2<6-200>>,attributes=Hash#3<Symbol#4<foo>=String#5<bar>,>,identifier=Nanoc::Core::Identifier#6<String#7</foo.md>>>') }
+      it {
+        expect(checksum).to eql(
+          'Nanoc::Core::Item#0<content=Nanoc::Core::BinaryContent#1' \
+          '<Pathname#2<6-200>>,attributes=Hash#3<Symbol#4<foo>=String#5<bar>,>,' \
+          'identifier=Nanoc::Core::Identifier#6<String#7</foo.md>>>',
+        )
+      }
     end
 
     context 'recursive attributes' do
@@ -237,7 +249,13 @@ describe Nanoc::Core::Checksummer do
         obj.attributes[:foo] = obj
       end
 
-      it { is_expected.to eql('Nanoc::Core::Item#0<content=Nanoc::Core::TextualContent#1<String#2<asdf>>,attributes=Hash#3<Symbol#4<foo>=@0,>,identifier=Nanoc::Core::Identifier#5<String#6</foo.md>>>') }
+      it {
+        expect(checksum).to eql(
+          'Nanoc::Core::Item#0<content=Nanoc::Core::TextualContent#1' \
+          '<String#2<asdf>>,attributes=Hash#3<Symbol#4<foo>=@0,>,' \
+          'identifier=Nanoc::Core::Identifier#5<String#6</foo.md>>>',
+        )
+      }
     end
 
     context 'with checksum' do
@@ -249,27 +267,47 @@ describe Nanoc::Core::Checksummer do
     context 'with content checksum' do
       let(:obj) { Nanoc::Core::Item.new('asdf', { 'foo' => 'bar' }, '/foo.md', content_checksum_data: 'con-cs') }
 
-      it { is_expected.to eql('Nanoc::Core::Item#0<content_checksum_data=con-cs,attributes=Hash#1<Symbol#2<foo>=String#3<bar>,>,identifier=Nanoc::Core::Identifier#4<String#5</foo.md>>>') }
+      it {
+        expect(checksum).to eql(
+          'Nanoc::Core::Item#0<content_checksum_data=con-cs,attributes=Hash#1' \
+          '<Symbol#2<foo>=String#3<bar>,>,identifier=Nanoc::Core::Identifier#4<String#5</foo.md>>>',
+        )
+      }
     end
 
     context 'with attributes checksum' do
       let(:obj) { Nanoc::Core::Item.new('asdf', { 'foo' => 'bar' }, '/foo.md', attributes_checksum_data: 'attr-cs') }
 
-      it { is_expected.to eql('Nanoc::Core::Item#0<content=Nanoc::Core::TextualContent#1<String#2<asdf>>,attributes_checksum_data=attr-cs,identifier=Nanoc::Core::Identifier#3<String#4</foo.md>>>') }
+      it {
+        expect(checksum).to eql(
+          'Nanoc::Core::Item#0<content=Nanoc::Core::TextualContent#1<String#2' \
+          '<asdf>>,attributes_checksum_data=attr-cs,identifier=Nanoc::Core::Identifier#3<String#4</foo.md>>>',
+        )
+      }
     end
   end
 
   context 'Nanoc::Core::Layout' do
     let(:obj) { Nanoc::Core::Layout.new('asdf', { 'foo' => 'bar' }, '/foo.md') }
 
-    it { is_expected.to eql('Nanoc::Core::Layout#0<content=Nanoc::Core::TextualContent#1<String#2<asdf>>,attributes=Hash#3<Symbol#4<foo>=String#5<bar>,>,identifier=Nanoc::Core::Identifier#6<String#7</foo.md>>>') }
+    it {
+      expect(checksum).to eql(
+        'Nanoc::Core::Layout#0<content=Nanoc::Core::TextualContent#1<String#2' \
+        '<asdf>>,attributes=Hash#3<Symbol#4<foo>=String#5<bar>,>,identifier=Nanoc::Core::Identifier#6<String#7</foo.md>>>',
+      )
+    }
 
     context 'recursive attributes' do
       before do
         obj.attributes[:foo] = obj
       end
 
-      it { is_expected.to eql('Nanoc::Core::Layout#0<content=Nanoc::Core::TextualContent#1<String#2<asdf>>,attributes=Hash#3<Symbol#4<foo>=@0,>,identifier=Nanoc::Core::Identifier#5<String#6</foo.md>>>') }
+      it {
+        expect(checksum).to eql(
+          'Nanoc::Core::Layout#0<content=Nanoc::Core::TextualContent#1<String#2' \
+          '<asdf>>,attributes=Hash#3<Symbol#4<foo>=@0,>,identifier=Nanoc::Core::Identifier#5<String#6</foo.md>>>',
+        )
+      }
     end
 
     context 'with checksum' do
@@ -283,7 +321,13 @@ describe Nanoc::Core::Checksummer do
     let(:obj) { Nanoc::Core::ItemRep.new(item, :pdf) }
     let(:item) { Nanoc::Core::Item.new('asdf', {}, '/foo.md') }
 
-    it { is_expected.to eql('Nanoc::Core::ItemRep#0<item=Nanoc::Core::Item#1<content=Nanoc::Core::TextualContent#2<String#3<asdf>>,attributes=Hash#4<>,identifier=Nanoc::Core::Identifier#5<String#6</foo.md>>>,name=Symbol#7<pdf>>') }
+    it {
+      expect(checksum).to eql(
+        'Nanoc::Core::ItemRep#0<item=Nanoc::Core::Item#1<content=' \
+        'Nanoc::Core::TextualContent#2<String#3<asdf>>,attributes=Hash#4<>,' \
+        'identifier=Nanoc::Core::Identifier#5<String#6</foo.md>>>,name=Symbol#7<pdf>>',
+      )
+    }
   end
 
   context 'Nanoc::Core::Context' do
@@ -302,7 +346,13 @@ describe Nanoc::Core::Checksummer do
     let(:obj) { Nanoc::Core::CompilationItemView.new(item, nil) }
     let(:item) { Nanoc::Core::Item.new('asdf', {}, '/foo.md') }
 
-    it { is_expected.to eql('Nanoc::Core::CompilationItemView#0<Nanoc::Core::Item#1<content=Nanoc::Core::TextualContent#2<String#3<asdf>>,attributes=Hash#4<>,identifier=Nanoc::Core::Identifier#5<String#6</foo.md>>>>') }
+    it {
+      expect(checksum).to eql(
+        'Nanoc::Core::CompilationItemView#0<Nanoc::Core::Item#1<content=' \
+        'Nanoc::Core::TextualContent#2<String#3<asdf>>,attributes=Hash#4<>,' \
+        'identifier=Nanoc::Core::Identifier#5<String#6</foo.md>>>>',
+      )
+    }
   end
 
   context 'Nanoc::Core::BasicItemRepView' do
@@ -310,7 +360,14 @@ describe Nanoc::Core::Checksummer do
     let(:rep) { Nanoc::Core::ItemRep.new(item, :pdf) }
     let(:item) { Nanoc::Core::Item.new('asdf', {}, '/foo.md') }
 
-    it { is_expected.to eql('Nanoc::Core::BasicItemRepView#0<Nanoc::Core::ItemRep#1<item=Nanoc::Core::Item#2<content=Nanoc::Core::TextualContent#3<String#4<asdf>>,attributes=Hash#5<>,identifier=Nanoc::Core::Identifier#6<String#7</foo.md>>>,name=Symbol#8<pdf>>>') }
+    it {
+      expect(checksum).to eql(
+        'Nanoc::Core::BasicItemRepView#0<Nanoc::Core::ItemRep#1<item=' \
+        'Nanoc::Core::Item#2<content=Nanoc::Core::TextualContent#3<' \
+        'String#4<asdf>>,attributes=Hash#5<>,identifier=' \
+        'Nanoc::Core::Identifier#6<String#7</foo.md>>>,name=Symbol#8<pdf>>>',
+      )
+    }
   end
 
   context 'Nanoc::Core::CompilationItemRepView' do
@@ -318,21 +375,40 @@ describe Nanoc::Core::Checksummer do
     let(:rep) { Nanoc::Core::ItemRep.new(item, :pdf) }
     let(:item) { Nanoc::Core::Item.new('asdf', {}, '/foo.md') }
 
-    it { is_expected.to eql('Nanoc::Core::CompilationItemRepView#0<Nanoc::Core::ItemRep#1<item=Nanoc::Core::Item#2<content=Nanoc::Core::TextualContent#3<String#4<asdf>>,attributes=Hash#5<>,identifier=Nanoc::Core::Identifier#6<String#7</foo.md>>>,name=Symbol#8<pdf>>>') }
+    it {
+      expect(checksum).to eql(
+        'Nanoc::Core::CompilationItemRepView#0<Nanoc::Core::ItemRep#1<' \
+        'item=Nanoc::Core::Item#2<content=Nanoc::Core::TextualContent#3<' \
+        'String#4<asdf>>,attributes=Hash#5<>,identifier=' \
+        'Nanoc::Core::Identifier#6<String#7</foo.md>>>,name=Symbol#8<pdf>>>',
+      )
+    }
   end
 
   context 'Nanoc::Core::BasicItemView' do
     let(:obj) { Nanoc::Core::BasicItemView.new(item, nil) }
     let(:item) { Nanoc::Core::Item.new('asdf', {}, '/foo.md') }
 
-    it { is_expected.to eql('Nanoc::Core::BasicItemView#0<Nanoc::Core::Item#1<content=Nanoc::Core::TextualContent#2<String#3<asdf>>,attributes=Hash#4<>,identifier=Nanoc::Core::Identifier#5<String#6</foo.md>>>>') }
+    it {
+      expect(checksum).to eql(
+        'Nanoc::Core::BasicItemView#0<Nanoc::Core::Item#1<content=' \
+        'Nanoc::Core::TextualContent#2<String#3<asdf>>,attributes=Hash#4<>,' \
+        'identifier=Nanoc::Core::Identifier#5<String#6</foo.md>>>>',
+      )
+    }
   end
 
   context 'Nanoc::Core::LayoutView' do
     let(:obj) { Nanoc::Core::LayoutView.new(layout, nil) }
     let(:layout) { Nanoc::Core::Layout.new('asdf', {}, '/foo.md') }
 
-    it { is_expected.to eql('Nanoc::Core::LayoutView#0<Nanoc::Core::Layout#1<content=Nanoc::Core::TextualContent#2<String#3<asdf>>,attributes=Hash#4<>,identifier=Nanoc::Core::Identifier#5<String#6</foo.md>>>>') }
+    it {
+      expect(checksum).to eql(
+        'Nanoc::Core::LayoutView#0<Nanoc::Core::Layout#1<content=' \
+        'Nanoc::Core::TextualContent#2<String#3<asdf>>,attributes=Hash#4<>,' \
+        'identifier=Nanoc::Core::Identifier#5<String#6</foo.md>>>>',
+      )
+    }
   end
 
   context 'Nanoc::Core::ConfigView' do
@@ -357,7 +433,17 @@ describe Nanoc::Core::Checksummer do
       )
     end
 
-    it { is_expected.to eql('Nanoc::Core::ItemCollectionWithRepsView#0<Nanoc::Core::ItemCollection#1<Nanoc::Core::Item#2<content=Nanoc::Core::TextualContent#3<String#4<foo>>,attributes=Hash#5<>,identifier=Nanoc::Core::Identifier#6<String#7</foo.md>>>,Nanoc::Core::Item#8<content=Nanoc::Core::TextualContent#9<String#10<bar>>,attributes=@5,identifier=Nanoc::Core::Identifier#11<String#12</bar.md>>>,>>') }
+    it {
+      expect(checksum).to eql(
+        'Nanoc::Core::ItemCollectionWithRepsView#0<' \
+        'Nanoc::Core::ItemCollection#1<Nanoc::Core::Item#2<content=' \
+        'Nanoc::Core::TextualContent#3<String#4<foo>>,attributes=Hash#5<>,' \
+        'identifier=Nanoc::Core::Identifier#6<String#7</foo.md>>>,' \
+        'Nanoc::Core::Item#8<content=Nanoc::Core::TextualContent#9<' \
+        'String#10<bar>>,attributes=@5,identifier=' \
+        'Nanoc::Core::Identifier#11<String#12</bar.md>>>,>>',
+      )
+    }
   end
 
   context 'Nanoc::Core::ItemCollectionWithoutRepsView' do
@@ -375,7 +461,17 @@ describe Nanoc::Core::Checksummer do
       )
     end
 
-    it { is_expected.to eql('Nanoc::Core::ItemCollectionWithoutRepsView#0<Nanoc::Core::ItemCollection#1<Nanoc::Core::Item#2<content=Nanoc::Core::TextualContent#3<String#4<foo>>,attributes=Hash#5<>,identifier=Nanoc::Core::Identifier#6<String#7</foo.md>>>,Nanoc::Core::Item#8<content=Nanoc::Core::TextualContent#9<String#10<bar>>,attributes=@5,identifier=Nanoc::Core::Identifier#11<String#12</bar.md>>>,>>') }
+    it {
+      expect(checksum).to eql(
+        'Nanoc::Core::ItemCollectionWithoutRepsView#0<' \
+        'Nanoc::Core::ItemCollection#1<Nanoc::Core::Item#2<content=' \
+        'Nanoc::Core::TextualContent#3<String#4<foo>>,attributes=Hash#5<>,' \
+        'identifier=Nanoc::Core::Identifier#6<String#7</foo.md>>>,' \
+        'Nanoc::Core::Item#8<content=Nanoc::Core::TextualContent#9<' \
+        'String#10<bar>>,attributes=@5,identifier=' \
+        'Nanoc::Core::Identifier#11<String#12</bar.md>>>,>>',
+      )
+    }
   end
 
   context 'other marshal-able classes' do

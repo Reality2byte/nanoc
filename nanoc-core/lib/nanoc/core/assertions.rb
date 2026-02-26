@@ -25,7 +25,13 @@ module Nanoc
       class AllItemRepsHaveCompiledContent < Nanoc::Core::Assertions::Base
         include Nanoc::Core::ContractsSupport
 
-        contract C::KeywordArgs[compiled_content_cache: C::Or[Nanoc::Core::CompiledContentCache, Nanoc::Core::TextualCompiledContentCache], item_reps: Nanoc::Core::ItemRepRepo] => C::Any
+        contract C::KeywordArgs[
+          compiled_content_cache: C::Or[
+            Nanoc::Core::CompiledContentCache,
+            Nanoc::Core::TextualCompiledContentCache,
+          ],
+          item_reps: Nanoc::Core::ItemRepRepo,
+        ] => C::Any
         def initialize(compiled_content_cache:, item_reps:)
           super()
 

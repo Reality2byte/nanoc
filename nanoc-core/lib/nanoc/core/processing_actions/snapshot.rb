@@ -25,7 +25,8 @@ module Nanoc
           [:snapshot, @snapshot_names, true, @paths]
         end
 
-        contract C::KeywordArgs[snapshot_names: C::Optional[C::IterOf[Symbol]], paths: C::Optional[C::IterOf[String]]] => self
+        contract C::KeywordArgs[snapshot_names: C::Optional[C::IterOf[Symbol]],
+                                paths: C::Optional[C::IterOf[String]]] => self
         def update(snapshot_names: [], paths: [])
           self.class.new(@snapshot_names + snapshot_names.to_a, @paths + paths.to_a)
         end

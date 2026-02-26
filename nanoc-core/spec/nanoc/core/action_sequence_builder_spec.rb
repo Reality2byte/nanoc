@@ -48,7 +48,10 @@ describe Nanoc::Core::ActionSequenceBuilder do
 
       it 'raises' do
         expect { subject }
-          .to raise_error(Nanoc::Core::ActionSequenceBuilder::CannotCreateMultipleSnapshotsWithSameNameError, 'Attempted to create a snapshot with a duplicate name :last for the item rep /foo.md (rep name :default)')
+          .to raise_error(
+            Nanoc::Core::ActionSequenceBuilder::CannotCreateMultipleSnapshotsWithSameNameError,
+            'Attempted to create a snapshot with a duplicate name :last for the item rep /foo.md (rep name :default)',
+          )
       end
     end
   end

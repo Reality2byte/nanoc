@@ -95,7 +95,11 @@ shared_examples 'an item rep collection view' do
       let(:name) { 'foo' }
 
       it 'raises' do
-        expect { subject }.to raise_error(ArgumentError, 'expected BasicItemRepCollectionView#[] to be called with a symbol')
+        expect do
+          subject
+        end.to raise_error(
+          ArgumentError, 'expected BasicItemRepCollectionView#[] to be called with a symbol'
+        )
       end
     end
 
@@ -103,7 +107,13 @@ shared_examples 'an item rep collection view' do
       let(:name) { 0 }
 
       it 'raises' do
-        expect { subject }.to raise_error(ArgumentError, 'expected BasicItemRepCollectionView#[] to be called with a symbol (you likely want `.reps[:default]` rather than `.reps[0]`)')
+        expect do
+          subject
+        end.to raise_error(
+          ArgumentError,
+          'expected BasicItemRepCollectionView#[] to be called with a symbol ' \
+          '(you likely want `.reps[:default]` rather than `.reps[0]`)',
+        )
       end
     end
   end

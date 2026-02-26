@@ -5,7 +5,11 @@ module Nanoc
     class Content
       include Nanoc::Core::ContractsSupport
 
-      contract C::Or[self, String, Proc], C::KeywordArgs[binary: C::Optional[C::Bool], filename: C::Optional[C::Maybe[String]]] => self
+      contract C::Or[self, String, Proc],
+               C::KeywordArgs[
+                 binary: C::Optional[C::Bool],
+                 filename: C::Optional[C::Maybe[String]],
+               ] => self
       def self.create(content, binary: false, filename: nil)
         if content.nil?
           raise ArgumentError, 'Cannot create nil content'

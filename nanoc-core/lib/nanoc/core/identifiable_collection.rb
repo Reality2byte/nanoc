@@ -17,7 +17,8 @@ module Nanoc
         raise 'IdentifiableCollection is abstract and cannot be instantiated'
       end
 
-      # contract C::Or[Hash, C::Named['Nanoc::Core::Configuration']], C::IterOf[C::RespondTo[:identifier]], C::Maybe[String] => C::Any
+      # contract C::Or[Hash, C::Named['Nanoc::Core::Configuration']],
+      #   C::IterOf[C::RespondTo[:identifier]], C::Maybe[String] => C::Any
       def initialize_basic(config, objects = [], name = nil)
         @config = config
         @objects = Immutable::Vector.new(objects)

@@ -131,7 +131,14 @@ describe Nanoc::Core::CompiledContentRepo do
             let(:content) { Nanoc::Core::BinaryContent.new(File.expand_path('donkey.dat')) }
 
             it 'raises' do
-              expect { subject }.to raise_error(Nanoc::Core::Errors::CannotGetCompiledContentOfBinaryItem, 'You cannot access the compiled content of a binary item representation (but you can access the path). The offending item rep is /foo.md (rep name :foo).')
+              expect do
+                subject
+              end.to raise_error(
+                Nanoc::Core::Errors::CannotGetCompiledContentOfBinaryItem,
+                'You cannot access the compiled content of a binary item ' \
+                'representation (but you can access the path). The offending ' \
+                'item rep is /foo.md (rep name :foo).',
+              )
             end
           end
         end

@@ -61,7 +61,9 @@ module Nanoc
           res = @item_reps.find { |ir| ir.name == rep_name }
           res && view_class.new(res, @context)
         when Integer
-          raise ArgumentError, "expected BasicItemRepCollectionView#[] to be called with a symbol (you likely want `.reps[:default]` rather than `.reps[#{rep_name}]`)"
+          raise ArgumentError,
+                'expected BasicItemRepCollectionView#[] to be called with a ' \
+                "symbol (you likely want `.reps[:default]` rather than `.reps[#{rep_name}]`)"
         else
           raise ArgumentError, 'expected BasicItemRepCollectionView#[] to be called with a symbol'
         end

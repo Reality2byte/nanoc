@@ -286,7 +286,9 @@ describe Nanoc::Core::CompilationItemView do
         it { is_expected.to eq('Specific Hallo') }
 
         it 'creates a dependency' do
-          expect { subject }.to change { dependency_store.objects_causing_outdatedness_of(base_item) }.from([]).to([item])
+          expect { subject }.to change {
+            dependency_store.objects_causing_outdatedness_of(base_item)
+          }.from([]).to([item])
         end
       end
     end

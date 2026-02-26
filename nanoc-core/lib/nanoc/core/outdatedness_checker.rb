@@ -30,7 +30,10 @@ module Nanoc
         action_sequences: C_ACTION_SEQUENCES,
         reps: Nanoc::Core::ItemRepRepo,
       ] => C::Any
-      def initialize(site:, checksum_store:, checksums:, dependency_store:, action_sequence_store:, action_sequences:, reps:)
+      def initialize(
+        site:, checksum_store:, checksums:, dependency_store:,
+        action_sequence_store:, action_sequences:, reps:
+      )
         @site = site
         @checksum_store = checksum_store
         @checksums = checksums
@@ -134,7 +137,9 @@ module Nanoc
 
       def attributes_unaffected?(status, dependency)
         reason = status.reasons.find { |r| r.is_a?(Nanoc::Core::OutdatednessReasons::AttributesModified) }
-        reason && !dependency.props.attribute_keys.empty? && !dependency.props.attribute_keys.intersect?(reason.attributes)
+        reason &&
+          !dependency.props.attribute_keys.empty? &&
+          !dependency.props.attribute_keys.intersect?(reason.attributes)
       end
 
       def raw_content_prop_causes_outdatedness?(objects, raw_content_prop)

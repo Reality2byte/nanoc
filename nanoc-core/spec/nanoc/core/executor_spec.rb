@@ -424,9 +424,12 @@ describe Nanoc::Core::Executor do
       end
 
       it 'sends notifications' do
-        expect(Nanoc::Core::NotificationCenter).to receive(:post).with(:dependency_created, root_item, layout).ordered
-        expect(Nanoc::Core::NotificationCenter).to receive(:post).with(:filtering_started, rep, :simple_erb_uy2wbp6dcf4hlc4gbluauh07zuz2wvei).ordered
-        expect(Nanoc::Core::NotificationCenter).to receive(:post).with(:filtering_ended, rep, :simple_erb_uy2wbp6dcf4hlc4gbluauh07zuz2wvei).ordered
+        expect(Nanoc::Core::NotificationCenter).to receive(:post)
+          .with(:dependency_created, root_item, layout).ordered
+        expect(Nanoc::Core::NotificationCenter).to receive(:post)
+          .with(:filtering_started, rep, :simple_erb_uy2wbp6dcf4hlc4gbluauh07zuz2wvei).ordered
+        expect(Nanoc::Core::NotificationCenter).to receive(:post)
+          .with(:filtering_ended, rep, :simple_erb_uy2wbp6dcf4hlc4gbluauh07zuz2wvei).ordered
 
         subject
       end
@@ -501,7 +504,10 @@ describe Nanoc::Core::Executor do
       it 'raises' do
         expect { subject }.to raise_error(
           Nanoc::Core::Errors::CannotLayoutBinaryItem,
-          'The “/index.md” item (rep “donkey”) cannot be laid out because it is a binary item. If you are getting this error for an item that should be textual instead of binary, make sure that its extension is included in the text_extensions array in the site configuration.',
+          'The “/index.md” item (rep “donkey”) cannot be laid out because it ' \
+          'is a binary item. If you are getting this error for an item that ' \
+          'should be textual instead of binary, make sure that its extension ' \
+          'is included in the text_extensions array in the site configuration.',
         )
       end
     end
@@ -514,7 +520,8 @@ describe Nanoc::Core::Executor do
         end
       end
 
-      expect(Nanoc::Core::Filter).to receive(:named).with(:simple_erb_uy2wbp6dcf4hlc4gbluauh07zuz2wvei) { filter_class }
+      expect(Nanoc::Core::Filter).to receive(:named)
+        .with(:simple_erb_uy2wbp6dcf4hlc4gbluauh07zuz2wvei) { filter_class }
 
       expect { subject }.to raise_frozen_error
     end
@@ -589,7 +596,11 @@ describe Nanoc::Core::Executor do
       let(:layouts) do
         Nanoc::Core::LayoutCollection.new(
           config,
-          [Nanoc::Core::Layout.new('head <%= @foo %> foot', {}, Nanoc::Core::Identifier.new('/default/', type: :legacy))],
+          [Nanoc::Core::Layout.new(
+            'head <%= @foo %> foot',
+            {},
+            Nanoc::Core::Identifier.new('/default/', type: :legacy),
+          )],
         )
       end
 

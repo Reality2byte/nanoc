@@ -23,7 +23,9 @@ describe Nanoc::Core::DataSource, :stdio do
 
   describe '#new_item' do
     it 'supports checksum data' do
-      item = data_source.new_item('stuff', { title: 'Stuff!' }, '/asdf', checksum_data: 'abcdef')
+      item = data_source.new_item(
+        'stuff', { title: 'Stuff!' }, '/asdf', checksum_data: 'abcdef'
+      )
 
       expect(item.content.string).to eql('stuff')
       expect(item.attributes[:title]).to eql('Stuff!')
@@ -32,7 +34,11 @@ describe Nanoc::Core::DataSource, :stdio do
     end
 
     it 'supports content/attributes checksum data' do
-      item = data_source.new_item('stuff', { title: 'Stuff!' }, '/asdf', content_checksum_data: 'con-cs', attributes_checksum_data: 'attr-cs')
+      item = data_source.new_item(
+        'stuff', { title: 'Stuff!' }, '/asdf',
+        content_checksum_data: 'con-cs',
+        attributes_checksum_data: 'attr-cs'
+      )
 
       expect(item.content.string).to eql('stuff')
       expect(item.attributes[:title]).to eql('Stuff!')
@@ -44,7 +50,10 @@ describe Nanoc::Core::DataSource, :stdio do
 
   describe '#new_layout' do
     it 'supports checksum data' do
-      layout = data_source.new_layout('stuff', { title: 'Stuff!' }, '/asdf', checksum_data: 'abcdef')
+      layout = data_source.new_layout(
+        'stuff', { title: 'Stuff!' }, '/asdf',
+        checksum_data: 'abcdef'
+      )
 
       expect(layout.content.string).to eql('stuff')
       expect(layout.attributes[:title]).to eql('Stuff!')
@@ -53,7 +62,11 @@ describe Nanoc::Core::DataSource, :stdio do
     end
 
     it 'supports content/attributes checksum data' do
-      layout = data_source.new_layout('stuff', { title: 'Stuff!' }, '/asdf', content_checksum_data: 'con-cs', attributes_checksum_data: 'attr-cs')
+      layout = data_source.new_layout(
+        'stuff', { title: 'Stuff!' }, '/asdf',
+        content_checksum_data: 'con-cs',
+        attributes_checksum_data: 'attr-cs'
+      )
 
       expect(layout.content.string).to eql('stuff')
       expect(layout.attributes[:title]).to eql('Stuff!')
@@ -67,7 +80,12 @@ describe Nanoc::Core::DataSource, :stdio do
     subject { data_source.item_changes }
 
     it 'warns' do
-      expect { subject }.to output("Caution: Data source nil does not implement #item_changes; live compilation will not pick up changes in this data source.\n").to_stderr
+      expect do
+        subject
+      end.to output(
+        'Caution: Data source nil does not implement #item_changes; live ' \
+        "compilation will not pick up changes in this data source.\n",
+      ).to_stderr
     end
 
     it 'never yields anything' do
@@ -82,7 +100,12 @@ describe Nanoc::Core::DataSource, :stdio do
     subject { data_source.layout_changes }
 
     it 'warns' do
-      expect { subject }.to output("Caution: Data source nil does not implement #layout_changes; live compilation will not pick up changes in this data source.\n").to_stderr
+      expect do
+        subject
+      end.to output(
+        'Caution: Data source nil does not implement #layout_changes; live ' \
+        "compilation will not pick up changes in this data source.\n",
+      ).to_stderr
     end
 
     it 'never yields anything' do

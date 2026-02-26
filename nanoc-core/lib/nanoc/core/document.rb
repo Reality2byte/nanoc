@@ -41,7 +41,10 @@ module Nanoc
       # @param [String, nil] content_checksum_data
       #
       # @param [String, nil] attributes_checksum_data
-      def initialize(content, attributes, identifier, checksum_data: nil, content_checksum_data: nil, attributes_checksum_data: nil)
+      def initialize(
+        content, attributes, identifier,
+        checksum_data: nil, content_checksum_data: nil, attributes_checksum_data: nil
+      )
         @content = Nanoc::Core::Content.create(content)
         @attributes = Nanoc::Core::LazyValue.new(attributes).map(&:__nanoc_symbolize_keys_recursively)
         @identifier = Nanoc::Core::Identifier.from(identifier)

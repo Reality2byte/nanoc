@@ -140,13 +140,19 @@ module Nanoc
 
         puts '-' * 78
         puts 'A NOTE ABOUT PERFORMANCE:'
-        puts 'The `contracts` gem is loaded, which enables extra run-time checks, but can drastically reduce Nanoc’s performance. The `contracts` gem is intended for development purposes, and is not recommended for day-to-day Nanoc usage.'
+        puts 'The `contracts` gem is loaded, which enables extra run-time ' \
+             'checks, but can drastically reduce Nanoc’s performance. The ' \
+             '`contracts` gem is intended for development purposes, and is ' \
+             'not recommended for day-to-day Nanoc usage.'
         puts
 
         if defined?(Bundler)
-          puts 'To speed up compilation, remove `contracts` from the Gemfile and run `bundle install`.'
+          puts 'To speed up compilation, remove `contracts` from the Gemfile ' \
+               'and run `bundle install`.'
         else
-          puts 'To speed up compilation, either uninstall the `contracts` gem, or use Bundler (https://bundler.io/) with a Gemfile that doesn’t include `contracts`.'
+          puts 'To speed up compilation, either uninstall the `contracts` ' \
+               'gem, or use Bundler (https://bundler.io/) with a Gemfile ' \
+               'that doesn’t include `contracts`.'
         end
 
         puts '-' * 78

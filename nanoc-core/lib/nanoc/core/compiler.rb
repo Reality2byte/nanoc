@@ -15,7 +15,10 @@ module Nanoc
         Nanoc::Core::CompilerLoader.new.load(site, focus:)
       end
 
-      def initialize(site, compiled_content_cache:, checksum_store:, action_sequence_store:, action_provider:, dependency_store:, outdatedness_store:, focus:)
+      def initialize(
+        site, compiled_content_cache:, checksum_store:, action_sequence_store:,
+        action_provider:, dependency_store:, outdatedness_store:, focus:
+      )
         @site = site
 
         # Needed because configuration is mutable :(

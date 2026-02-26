@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 describe 'meta', chdir: false do
-  # rubocop:disable RSpec/ExampleLength
   it 'is covered by specs' do
     regular_files = Dir['lib/nanoc/core/**/*.rb']
     regular_file_base_names = regular_files.map { |fn| fn.gsub(%r{^lib/nanoc/core/|\.rb$}, '') }

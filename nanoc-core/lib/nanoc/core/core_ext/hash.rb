@@ -13,7 +13,12 @@ module Nanoc
           hash = {}
           each_pair do |key, value|
             new_key   = key.respond_to?(:to_sym) ? key.to_sym : key
-            new_value = value.respond_to?(:__nanoc_symbolize_keys_recursively) ? value.__nanoc_symbolize_keys_recursively : value
+            new_value =
+              if value.respond_to?(:__nanoc_symbolize_keys_recursively)
+                value.__nanoc_symbolize_keys_recursively
+              else
+                value
+              end
             hash[new_key] = new_value
           end
           hash
@@ -23,7 +28,12 @@ module Nanoc
           hash = {}
           each_pair do |key, value|
             new_key   = key.is_a?(Symbol) ? key.to_s : key
-            new_value = value.respond_to?(:__nanoc_stringify_keys_recursively) ? value.__nanoc_stringify_keys_recursively : value
+            new_value =
+              if value.respond_to?(:__nanoc_stringify_keys_recursively)
+                value.__nanoc_stringify_keys_recursively
+              else
+                value
+              end
             hash[new_key] = new_value
           end
           hash

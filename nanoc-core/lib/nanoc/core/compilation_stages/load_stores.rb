@@ -6,7 +6,10 @@ module Nanoc
       class LoadStores < Nanoc::Core::CompilationStage
         include Nanoc::Core::ContractsSupport
 
-        def initialize(checksum_store:, compiled_content_cache:, dependency_store:, action_sequence_store:, outdatedness_store:)
+        def initialize(
+          checksum_store:, compiled_content_cache:, dependency_store:,
+          action_sequence_store:, outdatedness_store:
+        )
           super()
 
           @checksum_store = checksum_store

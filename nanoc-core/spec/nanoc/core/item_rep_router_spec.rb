@@ -138,7 +138,13 @@ describe(Nanoc::Core::ItemRepRouter) do
         let(:paths_to_reps) { { '/foo/index.html' => Nanoc::Core::ItemRep.new(item, :other) } }
 
         it 'errors' do
-          expect { subject }.to raise_error(Nanoc::Core::ItemRepRouter::IdenticalRoutesError, 'The item representations /foo.md (rep name :default) and /foo.md (rep name :other) are both routed to /foo/index.html.')
+          expect do
+            subject
+          end.to raise_error(
+            Nanoc::Core::ItemRepRouter::IdenticalRoutesError,
+            'The item representations /foo.md (rep name :default) and ' \
+            '/foo.md (rep name :other) are both routed to /foo/index.html.',
+          )
         end
       end
 
@@ -163,7 +169,14 @@ describe(Nanoc::Core::ItemRepRouter) do
             let(:paths) { ['foo/index.html'] }
 
             it 'errors' do
-              expect { subject }.to raise_error(Nanoc::Core::ItemRepRouter::RouteWithoutSlashError, 'The item representation /foo.md (rep name :default) is routed to foo/index.html, which does not start with a slash, as required.')
+              expect do
+                subject
+              end.to raise_error(
+                Nanoc::Core::ItemRepRouter::RouteWithoutSlashError,
+                'The item representation /foo.md (rep name :default) is ' \
+                'routed to foo/index.html, which does not start with a slash, ' \
+                'as required.',
+              )
             end
           end
 
@@ -189,7 +202,10 @@ describe(Nanoc::Core::ItemRepRouter) do
 
           it 'sets the raw paths' do
             subject
-            expect(rep.raw_paths).to eql(foo: ["#{Dir.getwd}/output/foo/index.html", "#{Dir.getwd}/output/bar/index.html"])
+            expect(rep.raw_paths).to eql(foo: [
+              "#{Dir.getwd}/output/foo/index.html",
+              "#{Dir.getwd}/output/bar/index.html",
+            ])
           end
 
           it 'sets the paths' do

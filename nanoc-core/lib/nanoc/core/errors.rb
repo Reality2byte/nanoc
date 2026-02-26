@@ -20,7 +20,10 @@ module Nanoc
         def initialize(item_rep, snapshot)
           @item_rep = item_rep
           @snapshot = snapshot
-          super("The “#{item_rep.inspect}” item rep does not have a snapshot “#{snapshot.inspect}”")
+
+          super(
+            "The “#{item_rep.inspect}” item rep does not have a snapshot “#{snapshot.inspect}”"
+          )
         end
       end
 
@@ -47,7 +50,9 @@ module Nanoc
         # @param [String] data_source_name The data source name for which no
         #   data source could be found
         def initialize(data_source_name)
-          super("The data source specified in the site’s configuration file, “#{data_source_name}”, does not exist.")
+          super(
+            'The data source specified in the site’s configuration file, ' \
+            "“#{data_source_name}”, does not exist.")
         end
       end
 
@@ -67,7 +72,10 @@ module Nanoc
           @rep = rep
           @snapshot_name = snapshot_name
 
-          super("The current item cannot be compiled yet because of an unmet dependency on the “#{rep.item.identifier}” item (rep “#{rep.name}”, snapshot “#{snapshot_name}”).")
+          super(
+            'The current item cannot be compiled yet because of an ' \
+            "unmet dependency on the “#{rep.item.identifier}” item " \
+            "(rep “#{rep.name}”, snapshot “#{snapshot_name}”).")
         end
       end
 
@@ -94,22 +102,31 @@ module Nanoc
         # @param [String] layout_identifier The identifier of the layout for
         #   which the filter could not be determined
         def initialize(layout_identifier)
-          super("The filter to be used for the “#{layout_identifier}” layout could not be determined. Make sure the layout does have a filter.")
+          super(
+            "The filter to be used for the “#{layout_identifier}” layout " \
+            'could not be determined. Make sure the layout does have a filter.')
         end
       end
 
       # Error that is raised when the compiled content of a binary item is attempted to be accessed.
       class CannotGetCompiledContentOfBinaryItem < ::Nanoc::Core::Error
-        # @param [Nanoc::Core::ItemRep] rep The binary item representation whose compiled content was attempted to be accessed
+        # @param [Nanoc::Core::ItemRep] rep The binary item representation
+        #   whose compiled content was attempted to be accessed
         def initialize(rep)
-          super("You cannot access the compiled content of a binary item representation (but you can access the path). The offending item rep is #{rep}.")
+          super(
+            'You cannot access the compiled content of a binary item ' \
+            "representation (but you can access the path). The offending item rep is #{rep}.")
         end
       end
 
       # Error that is raised when attempting to call #parent or #children on an item with a legacy identifier.
       class CannotGetParentOrChildrenOfNonLegacyItem < ::Nanoc::Core::Error
         def initialize(identifier)
-          super("You cannot get the parent or children of an item that has a “full” identifier (#{identifier}). Getting the parent or children of an item is only possible for items that have a legacy identifier.")
+          super(
+            'You cannot get the parent or children of an item that has a ' \
+            "“full” identifier (#{identifier}). Getting the parent or " \
+            'children of an item is only possible for items that have a ' \
+            'legacy identifier.')
         end
       end
 
@@ -128,7 +145,12 @@ module Nanoc
         # @param [Nanoc::Core::ItemRep] rep The item representation that was attempted
         #   to be laid out
         def initialize(rep)
-          super("The “#{rep.item.identifier}” item (rep “#{rep.name}”) cannot be laid out because it is a binary item. If you are getting this error for an item that should be textual instead of binary, make sure that its extension is included in the text_extensions array in the site configuration.")
+          super(
+            "The “#{rep.item.identifier}” item (rep “#{rep.name}”) cannot " \
+            'be laid out because it is a binary item. If you are getting ' \
+            'this error for an item that should be textual instead of ' \
+            'binary, make sure that its extension is included in the ' \
+            'text_extensions array in the site configuration.')
         end
       end
 
@@ -140,7 +162,10 @@ module Nanoc
         #
         # @param [Class] filter_class The filter class that was used
         def initialize(rep, filter_class)
-          super("The “#{filter_class.inspect}” filter cannot be used to filter the “#{rep.item.identifier}” item (rep “#{rep.name}”), because textual filters cannot be used on binary items.")
+          super(
+            "The “#{filter_class.inspect}” filter cannot be used to filter " \
+            "the “#{rep.item.identifier}” item (rep “#{rep.name}”), because " \
+            'textual filters cannot be used on binary items.')
         end
       end
 
@@ -152,7 +177,13 @@ module Nanoc
         #
         # @param [Class] filter_class The filter class that was used
         def initialize(rep, filter_class)
-          super("The “#{filter_class.inspect}” filter cannot be used to filter the “#{rep.item.identifier}” item (rep “#{rep.name}”), because binary filters cannot be used on textual items. If you are getting this error for an item that should be textual instead of binary, make sure that its extension is included in the text_extensions array in the site configuration.")
+          super(
+            "The “#{filter_class.inspect}” filter cannot be used to filter " \
+            "the “#{rep.item.identifier}” item (rep “#{rep.name}”), because " \
+            'binary filters cannot be used on textual items. If you are ' \
+            'getting this error for an item that should be textual instead ' \
+            'of binary, make sure that its extension is included in the ' \
+            'text_extensions array in the site configuration.')
         end
       end
 

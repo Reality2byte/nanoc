@@ -8,7 +8,9 @@ module Nanoc
 
         affects_props :attributes, :compiled_content
 
-        contract C::Or[Nanoc::Core::ItemRep, Nanoc::Core::Item, Nanoc::Core::Configuration, Nanoc::Core::Layout], C::Named['Nanoc::Core::BasicOutdatednessChecker'] => C::Maybe[Nanoc::Core::OutdatednessReasons::Generic]
+        contract C::Or[Nanoc::Core::ItemRep, Nanoc::Core::Item, Nanoc::Core::Configuration, Nanoc::Core::Layout],
+                 C::Named['Nanoc::Core::BasicOutdatednessChecker'] =>
+                C::Maybe[Nanoc::Core::OutdatednessReasons::Generic]
         def apply(obj, basic_outdatedness_checker)
           case obj
           when Nanoc::Core::ItemRep

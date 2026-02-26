@@ -81,7 +81,11 @@ module Nanoc
         unless Nanoc::Core::Feature.enabled?(Nanoc::Core::Feature::WHERE)
           raise(
             Nanoc::Core::TrivialError,
-            '#where is experimental, and not yet available unless the corresponding feature flag is turned on. Set the `NANOC_FEATURES` environment variable to `where` to enable its usage. (Alternatively, set the environment variable to `all` to turn on all feature flags.)',
+            '#where is experimental, and not yet available unless the ' \
+            'corresponding feature flag is turned on. Set the ' \
+            '`NANOC_FEATURES` environment variable to `where` to enable ' \
+            'its usage. (Alternatively, set the environment variable to ' \
+            '`all` to turn on all feature flags.)',
           )
         end
 
@@ -153,7 +157,8 @@ module Nanoc
           # Can only be a pattern match
           object_from_pattern_match = @objects.find { |i| i.identifier.to_s =~ arg }
         else
-          raise ArgumentError, "Unexpected argument #{arg.class} to []: Can only pass strings, identfiers, and regular expressions"
+          raise ArgumentError,
+                "Unexpected argument #{arg.class} to []: Can only pass strings, identfiers, and regular expressions"
         end
 
         unless object_from_exact_match

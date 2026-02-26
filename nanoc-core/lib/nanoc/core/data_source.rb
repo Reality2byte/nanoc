@@ -101,13 +101,15 @@ module Nanoc
 
       # @api private
       def item_changes
-        warn "Caution: Data source #{self.class.identifier.inspect} does not implement #item_changes; live compilation will not pick up changes in this data source."
+        warn "Caution: Data source #{self.class.identifier.inspect} does not " \
+             'implement #item_changes; live compilation will not pick up changes in this data source.'
         Enumerator.new { |_y| sleep }
       end
 
       # @api private
       def layout_changes
-        warn "Caution: Data source #{self.class.identifier.inspect} does not implement #layout_changes; live compilation will not pick up changes in this data source."
+        warn "Caution: Data source #{self.class.identifier.inspect} does not " \
+             'implement #layout_changes; live compilation will not pick up changes in this data source.'
         Enumerator.new { |_y| sleep }
       end
 
@@ -143,9 +145,16 @@ module Nanoc
       # @param [String, nil] content_checksum_data
       #
       # @param [String, nil] attributes_checksum_data
-      def new_item(content, attributes, identifier, binary: false, checksum_data: nil, content_checksum_data: nil, attributes_checksum_data: nil)
+      def new_item(
+        content, attributes, identifier,
+        binary: false, checksum_data: nil, content_checksum_data: nil,
+        attributes_checksum_data: nil
+      )
         content = Nanoc::Core::Content.create(content, binary:)
-        Nanoc::Core::Item.new(content, attributes, identifier, checksum_data:, content_checksum_data:, attributes_checksum_data:)
+        Nanoc::Core::Item.new(
+          content, attributes, identifier,
+          checksum_data:, content_checksum_data:, attributes_checksum_data:
+        )
       end
 
       # Creates a new in-memory layout instance. This is intended for use within
@@ -162,8 +171,15 @@ module Nanoc
       # @param [String, nil] content_checksum_data
       #
       # @param [String, nil] attributes_checksum_data
-      def new_layout(raw_content, attributes, identifier, checksum_data: nil, content_checksum_data: nil, attributes_checksum_data: nil)
-        Nanoc::Core::Layout.new(raw_content, attributes, identifier, checksum_data:, content_checksum_data:, attributes_checksum_data:)
+      def new_layout(
+        raw_content, attributes, identifier,
+        checksum_data: nil, content_checksum_data: nil,
+        attributes_checksum_data: nil
+      )
+        Nanoc::Core::Layout.new(
+          raw_content, attributes, identifier,
+          checksum_data:, content_checksum_data:, attributes_checksum_data:
+        )
       end
     end
   end

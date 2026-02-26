@@ -70,7 +70,8 @@ module Nanoc
       end
 
       UsesAlwaysOutdatedFilter = Generic.new(
-        'This item rep uses one or more filters that cannot track dependencies, and will thus always be considered as outdated.',
+        'This item rep uses one or more filters that cannot track ' \
+        'dependencies, and will thus always be considered as outdated.',
         Nanoc::Core::DependencyProps.new(raw_content: true, attributes: true, compiled_content: true),
       )
     end

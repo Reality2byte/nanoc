@@ -7,7 +7,8 @@ module Nanoc
     class Pruner
       include Nanoc::Core::ContractsSupport
 
-      contract Nanoc::Core::Configuration, Nanoc::Core::ItemRepRepo, C::KeywordArgs[dry_run: C::Optional[C::Bool], exclude: C::Optional[C::IterOf[String]]] => C::Any
+      contract Nanoc::Core::Configuration, Nanoc::Core::ItemRepRepo,
+               C::KeywordArgs[dry_run: C::Optional[C::Bool], exclude: C::Optional[C::IterOf[String]]] => C::Any
       def initialize(config, reps, dry_run: false, exclude: [])
         @config  = config
         @reps    = reps
