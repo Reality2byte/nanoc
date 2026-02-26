@@ -64,7 +64,7 @@ module Nanoc::Filters::SassCommon
 
     def self.raw_filename_to_item_map_for_config(config, items)
       @raw_filename_to_item_map ||= {}
-      @raw_filename_to_item_map[config.object_id] ||=
+      @raw_filename_to_item_map[[config, items]] ||=
         {}.tap do |map|
           items.each do |item|
             filename_without_registering_dependency = item._unwrap.content.filename

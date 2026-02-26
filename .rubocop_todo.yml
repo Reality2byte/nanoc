@@ -16,11 +16,6 @@ Lint/EmptyBlock:
     - 'nanoc/test/helper.rb'
     - 'nanoc/test/rule_dsl/test_compiler_dsl.rb'
 
-# Offense count: 1
-Lint/HashCompareByIdentity:
-  Exclude:
-    - 'nanoc/lib/nanoc/filters/sass/importer.rb'
-
 # Offense count: 58
 # Configuration parameters: AllowedParentClasses.
 Lint/MissingSuper:
