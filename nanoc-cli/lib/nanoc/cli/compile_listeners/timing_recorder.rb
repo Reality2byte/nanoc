@@ -2,6 +2,58 @@
 
 module Nanoc::CLI::CompileListeners
   class TimingRecorder < Abstract
+    class Table
+      def initialize(header_row, body_rows, footer_row)
+        @header_row = header_row
+        @body_rows = body_rows
+        @footer_row = footer_row
+
+        @rows = [header_row] + body_rows + [footer_row]
+      end
+
+      def to_s
+        columns = @rows.transpose
+        column_lengths = columns.map { |c| c.map(&:size).max }
+
+        [].tap do |lines|
+          # header
+          lines << row_to_s(@header_row, column_lengths)
+
+          # separator
+          lines << separator(column_lengths)
+
+          # body
+          rows = sort_rows(@body_rows)
+          lines.concat(rows.map { |r| row_to_s(r, column_lengths) })
+
+          # separator
+          lines << separator(column_lengths)
+
+          # footer
+          lines << row_to_s(@footer_row, column_lengths)
+        end.join("\n")
+      end
+
+      private
+
+      def sort_rows(rows)
+        rows.sort_by { |r| r.first.downcase }
+      end
+
+      def row_to_s(row, column_lengths)
+        values = row.zip(column_lengths).map { |text, length| text.rjust(length) }
+        "#{values[0]} │ #{values.drop(1).join('   ')}"
+      end
+
+      def separator(column_lengths)
+        (+'').tap do |s|
+          s << column_lengths.take(1).map { |l| '─' * l }.join('───')
+          s << '─┼─'
+          s << column_lengths.drop(1).map { |l| '─' * l }.join('───')
+        end
+      end
+    end
+
     attr_reader :stages_summary
     attr_reader :outdatedness_rules_summary
     attr_reader :filters_summary
@@ -70,9 +122,10 @@ module Nanoc::CLI::CompileListeners
     protected
 
     def table_for_summary(name, summary)
-      headers = [name.to_s, 'count', 'min', '.50', '.90', '.95', 'max', 'tot']
+      header_row = [name.to_s, 'count', 'min', '.50', '.90', '.95', 'max', 'tot']
 
-      rows = summary.map do |label, stats|
+      grand_total = 0.0
+      body_rows = summary.map do |label, stats|
         name = label.fetch(:name)
 
         count = stats.count
@@ -83,21 +136,29 @@ module Nanoc::CLI::CompileListeners
         tot   = stats.sum
         max   = stats.max
 
+        grand_total += tot
+
         [name, count.to_s] + [min, p50, p90, p95, max, tot].map { |r| "#{format('%4.2f', r)}s" }
       end
 
-      [headers] + rows
+      footer_row = ['tot', '', '', '', '', '', '', "#{format('%4.2f', grand_total)}s"]
+
+      Table.new(header_row, body_rows, footer_row)
     end
 
     def table_for_summary_durations(name, summary)
-      headers = [name.to_s, 'tot']
+      header_row = [name.to_s, 'tot']
 
-      rows = summary.map do |label, stats|
+      tot = 0.0
+      body_rows = summary.map do |label, stats|
         name = label.fetch(:name)
+        tot += stats.sum
         [name, "#{format('%4.2f', stats.sum)}s"]
       end
 
-      [headers] + rows
+      footer_row = ['tot', "#{format('%4.2f', tot)}s"]
+
+      Table.new(header_row, body_rows, footer_row)
     end
 
     def print_profiling_feedback
@@ -112,18 +173,14 @@ module Nanoc::CLI::CompileListeners
       return unless summary.any?
 
       puts
-      print_table(table_for_summary(name, summary))
+      puts table_for_summary(name, summary)
     end
 
     def print_table_for_summary_duration(name, summary)
       return unless summary.any?
 
       puts
-      print_table(table_for_summary_durations(name, summary))
-    end
-
-    def print_table(rows)
-      puts DDMetrics::Table.new(rows)
+      puts table_for_summary_durations(name, summary)
     end
   end
 end
