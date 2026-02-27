@@ -13,7 +13,7 @@ module Nanoc
           # FIXME: this decomposition is not generally usable
           str
             .unicode_normalize(:nfkd)
-            .tr('─┼“”‘’', '-+""\'\'')
+            .tr('─│┌┬┐├┼┤└┴┘“”‘’', '-|+++++++++""\'\'')
             .gsub('©', '(c)')
         end
       end

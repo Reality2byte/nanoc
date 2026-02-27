@@ -44,7 +44,7 @@ describe Nanoc::CLI::CompileListeners::TimingRecorder, :stdio do
     Nanoc::Core::NotificationCenter.post(:filtering_ended, rep, :erb)
 
     expect { listener.stop_safely }
-      .to output(/^\s*erb │     2   1\.00s   1\.50s   1\.90s   1\.95s   2\.00s   3\.00s$/).to_stdout
+      .to output(/^│ \s*erb │     2   1\.00s   1\.50s   1\.90s   1\.95s   2\.00s   3\.00s │$/).to_stdout
   end
 
   it 'records single from filtering_started to filtering_ended' do
@@ -111,14 +111,16 @@ describe Nanoc::CLI::CompileListeners::TimingRecorder, :stdio do
     Nanoc::Core::NotificationCenter.post(:stage_ran, 1.23, 'donkey_stage')
 
     expect { listener.stop_safely }
-      .to output(/^\s*donkey_stage │ 1\.23s$/).to_stdout
+      .to output(/^│ \s*donkey_stage │ 1\.23s │$/).to_stdout
   end
 
   it 'prints out outdatedness rule durations' do
     Nanoc::Core::NotificationCenter.post(:outdatedness_rule_ran, 1.0, Nanoc::Core::OutdatednessRules::CodeSnippetsModified)
 
     expect { listener.stop_safely }
-      .to output(/^\s*CodeSnippetsModified │     1   1\.00s   1\.00s   1\.00s   1\.00s   1\.00s   1\.00s$/).to_stdout
+      .to output(
+        /^│ \s*CodeSnippetsModified │     1   1\.00s   1\.00s   1\.00s   1\.00s   1\.00s   1\.00s │$/,
+      ).to_stdout
   end
 
   it 'records single outdatedness rule duration' do
@@ -146,14 +148,14 @@ describe Nanoc::CLI::CompileListeners::TimingRecorder, :stdio do
     Nanoc::Core::NotificationCenter.post(:store_loaded, 1.23, Nanoc::Core::ChecksumStore)
 
     expect { listener.stop_safely }
-      .to output(/^\s*Nanoc::Core::ChecksumStore │ 1\.23s$/).to_stdout
+      .to output(/^│ \s*Nanoc::Core::ChecksumStore │ 1\.23s │$/).to_stdout
   end
 
   it 'prints store store durations' do
     Nanoc::Core::NotificationCenter.post(:store_stored, 2.34, Nanoc::Core::ChecksumStore)
 
     expect { listener.stop_safely }
-      .to output(/^\s*Nanoc::Core::ChecksumStore │ 2\.34s$/).to_stdout
+      .to output(/^│ \s*Nanoc::Core::ChecksumStore │ 2\.34s │$/).to_stdout
   end
 
   it 'skips printing empty metrics' do

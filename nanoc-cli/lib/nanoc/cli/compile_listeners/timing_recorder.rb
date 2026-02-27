@@ -3,6 +3,10 @@
 module Nanoc::CLI::CompileListeners
   class TimingRecorder < Abstract
     class Table
+      TOP = 1
+      MIDDLE = 2
+      BOTTOM = 3
+
       def initialize(header_row, body_rows, footer_row)
         @header_row = header_row
         @body_rows = body_rows
@@ -17,20 +21,18 @@ module Nanoc::CLI::CompileListeners
 
         [].tap do |lines|
           # header
+          lines << separator(column_lengths, TOP)
           lines << row_to_s(@header_row, column_lengths)
-
-          # separator
-          lines << separator(column_lengths)
+          lines << separator(column_lengths, MIDDLE)
 
           # body
           rows = sort_rows(@body_rows)
           lines.concat(rows.map { |r| row_to_s(r, column_lengths) })
 
-          # separator
-          lines << separator(column_lengths)
-
           # footer
+          lines << separator(column_lengths, MIDDLE)
           lines << row_to_s(@footer_row, column_lengths)
+          lines << separator(column_lengths, BOTTOM)
         end.join("\n")
       end
 
@@ -42,14 +44,41 @@ module Nanoc::CLI::CompileListeners
 
       def row_to_s(row, column_lengths)
         values = row.zip(column_lengths).map { |text, length| text.rjust(length) }
-        "#{values[0]} │ #{values.drop(1).join('   ')}"
+        "│ #{values[0]} │ #{values.drop(1).join('   ')} │"
       end
 
-      def separator(column_lengths)
+      def separator(column_lengths, pos)
         (+'').tap do |s|
+          s << case pos
+               when TOP
+                 '┌─'
+               when MIDDLE
+                 '├─'
+               when BOTTOM
+                 '└─'
+               end
+
           s << column_lengths.take(1).map { |l| '─' * l }.join('───')
-          s << '─┼─'
+
+          s << case pos
+               when TOP
+                 '─┬─'
+               when MIDDLE
+                 '─┼─'
+               when BOTTOM
+                 '─┴─'
+               end
+
           s << column_lengths.drop(1).map { |l| '─' * l }.join('───')
+
+          s << case pos
+               when TOP
+                 '─┐'
+               when MIDDLE
+                 '─┤'
+               when BOTTOM
+                 '─┘'
+               end
         end
       end
     end
