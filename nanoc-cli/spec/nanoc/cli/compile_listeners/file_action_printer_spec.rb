@@ -1,12 +1,8 @@
 # frozen_string_literal: true
 
 describe Nanoc::CLI::CompileListeners::FileActionPrinter, :stdio do
-  let(:listener) { described_class.new(reps:) }
-  let(:reps) do
-    Nanoc::Core::ItemRepRepo.new.tap do |reps|
-      reps << rep
-    end
-  end
+  let(:listener) { described_class.new }
+
   let(:item) { Nanoc::Core::Item.new('<%= 1 + 2 %>', {}, '/hi.md') }
   let(:rep) do
     Nanoc::Core::ItemRep.new(item, :default).tap do |rep|
@@ -84,11 +80,6 @@ describe Nanoc::CLI::CompileListeners::FileActionPrinter, :stdio do
       Nanoc::CLI::Logger.instance.level = :high
     end
 
-    it 'does not print skipped (uncompiled) reps' do
-      expect { listener.stop_safely }
-        .not_to output(/skip/).to_stdout
-    end
-
     it 'prints nothing after compilation_started' do
       Nanoc::Core::NotificationCenter.post(:compilation_started, rep)
       mock_time(1)
@@ -111,11 +102,6 @@ describe Nanoc::CLI::CompileListeners::FileActionPrinter, :stdio do
     before do
       listener.start_safely
       Nanoc::CLI::Logger.instance.level = :low
-    end
-
-    it 'prints skipped (uncompiled) reps' do
-      expect { listener.stop_safely }
-        .to output(%r{skip.*/hi\.html}).to_stdout
     end
 
     it 'prints “identical” if not cached' do

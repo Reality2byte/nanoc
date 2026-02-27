@@ -18,6 +18,6 @@ EOS
 
   it 'skips the item on second try' do
     Nanoc::CLI.run(['compile'])
-    expect { Nanoc::CLI.run(['compile', '--verbose']) }.to output(%r{skip.*output/foo\.html$}).to_stdout
+    expect { Nanoc::CLI.run(['compile', '--verbose']) }.not_to output(%r{output/foo\.html$}).to_stdout
   end
 end

@@ -40,7 +40,7 @@ describe 'Partial recompilation', :site, :stdio do
     File.write('content/bar.md', '<% raise "boom" %>')
 
     expect { Nanoc::CLI.run(['compile', '--verbose', '--debug']) rescue nil }
-      .to output(%r{skip.*output/foo\.html}).to_stdout
+      .not_to output(%r{output/foo\.html}).to_stdout
 
     expect { Nanoc::CLI.run(['show-data', '--no-color']) }
       .to(output(%r{^item /foo\.md, rep default:\n  is not outdated}).to_stdout)

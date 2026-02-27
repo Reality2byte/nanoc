@@ -42,7 +42,7 @@ module Guard
       ::Nanoc::CLI.setup
 
       ::Nanoc::CLI::CompileListeners::FileActionPrinter
-        .new(reps: [])
+        .new
         .start_safely
     end
 

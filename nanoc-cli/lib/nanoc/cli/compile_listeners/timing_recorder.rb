@@ -11,11 +11,8 @@ module Nanoc::CLI::CompileListeners
       Nanoc::CLI.verbosity >= 1
     end
 
-    # @param [Enumerable<Nanoc::Core::ItemRep>] reps
-    def initialize(reps:)
-      super()
-
-      @reps = reps
+    def initialize
+      super
 
       @stages_summary = DDMetrics::Summary.new
       @outdatedness_rules_summary = DDMetrics::Summary.new

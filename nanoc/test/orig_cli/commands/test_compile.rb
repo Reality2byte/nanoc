@@ -137,7 +137,7 @@ class Nanoc::CLI::Commands::CompileTest < Nanoc::TestCase
     rep.compiled = true
 
     # Listen
-    listener = new_file_action_printer([rep])
+    listener = new_file_action_printer
     listener.start_safely
     Nanoc::Core::NotificationCenter.post(:compilation_started, rep)
     Nanoc::Core::NotificationCenter.post(:rep_write_ended, rep, false, rep.raw_path, false, true)
@@ -158,30 +158,27 @@ class Nanoc::CLI::Commands::CompileTest < Nanoc::TestCase
     rep.raw_paths[:last] = ['output/foo.txt']
 
     # Listen
-    listener = new_file_action_printer([rep])
+    listener = new_file_action_printer
     listener.start_safely
     Nanoc::Core::NotificationCenter.post(:compilation_started, rep)
     listener.stop_safely
 
     # Check
-    assert_equal 1, listener.events.size
-    assert_equal :low,             listener.events[0][:level]
-    assert_equal :skip,            listener.events[0][:action]
-    assert_equal 'output/foo.txt', listener.events[0][:path]
-    assert_nil listener.events[0][:duration]
+    assert_equal 0, listener.events.size
   end
 
-  def new_file_action_printer(reps)
+  def new_file_action_printer
     # Ensure CLI is loaded
     begin
       Nanoc::CLI.run(['help', '%'])
     rescue SystemExit
     end
 
-    listener = Nanoc::CLI::CompileListeners::FileActionPrinter.new(reps:)
+    listener = Nanoc::CLI::CompileListeners::FileActionPrinter.new
+
+    listener.instance_eval { @events = [] }
 
     def listener.log(level, action, path, duration)
-      @events ||= []
       @events << {
         level:,
         action:,

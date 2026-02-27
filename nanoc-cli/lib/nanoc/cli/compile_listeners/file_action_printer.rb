@@ -2,10 +2,8 @@
 
 module Nanoc::CLI::CompileListeners
   class FileActionPrinter < Abstract
-    def initialize(reps:)
-      super()
-
-      @reps = reps
+    def initialize
+      super
 
       @stopwatches = {}
     end
@@ -82,16 +80,6 @@ module Nanoc::CLI::CompileListeners
         end
 
         Nanoc::CLI::Logger.instance.file(:high, :delete, "(dry run) #{path}")
-      end
-    end
-
-    # @see Listener#stop
-    def stop
-      @reps.reject(&:compiled?).each do |rep|
-        raw_paths = rep.raw_paths.values.flatten.uniq
-        raw_paths.each do |raw_path|
-          log(:low, :skip, raw_path, nil)
-        end
       end
     end
 
