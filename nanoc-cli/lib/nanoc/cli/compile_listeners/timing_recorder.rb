@@ -3,7 +3,6 @@
 module Nanoc::CLI::CompileListeners
   class TimingRecorder < Abstract
     attr_reader :stages_summary
-    attr_reader :phases_summary
     attr_reader :outdatedness_rules_summary
     attr_reader :filters_summary
 
@@ -19,7 +18,6 @@ module Nanoc::CLI::CompileListeners
       @reps = reps
 
       @stages_summary = DDMetrics::Summary.new
-      @phases_summary = DDMetrics::Summary.new
       @outdatedness_rules_summary = DDMetrics::Summary.new
       @filters_summary = DDMetrics::Summary.new
       @load_stores_summary = DDMetrics::Summary.new
@@ -63,8 +61,6 @@ module Nanoc::CLI::CompileListeners
       on(:store_stored) do |duration, klass|
         @store_stores_summary.observe(duration, name: klass.to_s)
       end
-
-      setup_phase_notifications
     end
 
     # @see Listener#stop
@@ -75,43 +71,6 @@ module Nanoc::CLI::CompileListeners
     end
 
     protected
-
-    def setup_phase_notifications
-      stopwatches = {}
-
-      on(:phase_started) do |phase_name, rep|
-        stopwatch = stopwatches[[phase_name, rep]] = DDMetrics::Stopwatch.new
-        stopwatch.start
-      end
-
-      on(:phase_ended) do |phase_name, rep|
-        stopwatch = stopwatches[[phase_name, rep]]
-        stopwatch.stop
-
-        @phases_summary.observe(stopwatch.duration, name: phase_name)
-      end
-
-      on(:phase_yielded) do |phase_name, rep|
-        stopwatch = stopwatches[[phase_name, rep]]
-        stopwatch.stop
-      end
-
-      on(:phase_resumed) do |phase_name, rep|
-        # It probably looks weird that a phase can be resumed even though it was
-        # not suspended earlier. This can happen when compilation is suspended,
-        # where you’d get the sequence started -> suspended -> started ->
-        # resumed.
-        stopwatch = stopwatches[[phase_name, rep]]
-        stopwatch.start unless stopwatch.running?
-      end
-
-      on(:phase_aborted) do |phase_name, rep|
-        stopwatch = stopwatches[[phase_name, rep]]
-        stopwatch.stop if stopwatch.running?
-
-        @phases_summary.observe(stopwatch.duration, name: phase_name)
-      end
-    end
 
     def table_for_summary(name, summary)
       headers = [name.to_s, 'count', 'min', '.50', '.90', '.95', 'max', 'tot']
@@ -146,7 +105,6 @@ module Nanoc::CLI::CompileListeners
 
     def print_profiling_feedback
       print_table_for_summary(:filters, @filters_summary)
-      print_table_for_summary(:phases, @phases_summary) if Nanoc::CLI.verbosity >= 2
       print_table_for_summary_duration(:stages, @stages_summary) if Nanoc::CLI.verbosity >= 2
       print_table_for_summary(:outdatedness_rules, @outdatedness_rules_summary) if Nanoc::CLI.verbosity >= 2
       print_table_for_summary_duration(:load_stores, @load_stores_summary) if Nanoc::CLI.verbosity >= 2

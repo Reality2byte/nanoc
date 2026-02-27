@@ -12,7 +12,6 @@ module Nanoc::CLI::CompileListeners
       'content' => :green,
       'filtering' => :yellow,
       'dependency_tracking' => :blue,
-      'phase' => :magenta,
       'stage' => :cyan,
     }.freeze
 
@@ -49,26 +48,6 @@ module Nanoc::CLI::CompileListeners
 
       on(:dependency_created) do |src, dst|
         log('dependency_tracking', "Dependency created from #{src.inspect} onto #{dst.inspect}")
-      end
-
-      on(:phase_started) do |phase_name, rep|
-        log('phase', "Phase started: #{phase_name} (rep: #{rep})")
-      end
-
-      on(:phase_yielded) do |phase_name, rep|
-        log('phase', "Phase yielded: #{phase_name} (rep: #{rep})")
-      end
-
-      on(:phase_resumed) do |phase_name, rep|
-        log('phase', "Phase resumed: #{phase_name} (rep: #{rep})")
-      end
-
-      on(:phase_ended) do |phase_name, rep|
-        log('phase', "Phase ended: #{phase_name} (rep: #{rep})")
-      end
-
-      on(:phase_aborted) do |phase_name, rep|
-        log('phase', "Phase aborted: #{phase_name} (rep: #{rep})")
       end
 
       on(:stage_started) do |stage_name|

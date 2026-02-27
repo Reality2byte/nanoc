@@ -104,72 +104,6 @@ describe Nanoc::CLI::CompileListeners::TimingRecorder, :stdio do
     expect(listener.filters_summary.get(name: 'outer').count).to eq(1.00)
   end
 
-  it 'records single phase start+stop' do
-    mock_time(0)
-    Nanoc::Core::NotificationCenter.post(:phase_started, 'donkey', rep)
-    mock_time(1)
-    Nanoc::Core::NotificationCenter.post(:phase_ended, 'donkey', rep)
-
-    expect(listener.phases_summary.get(name: 'donkey').min).to eq(1.00)
-    expect(listener.phases_summary.get(name: 'donkey').avg).to eq(1.00)
-    expect(listener.phases_summary.get(name: 'donkey').max).to eq(1.00)
-    expect(listener.phases_summary.get(name: 'donkey').sum).to eq(1.00)
-    expect(listener.phases_summary.get(name: 'donkey').count).to eq(1.00)
-  end
-
-  it 'records multiple phase start+stop' do
-    mock_time(0)
-    Nanoc::Core::NotificationCenter.post(:phase_started, 'donkey', rep)
-    mock_time(1)
-    Nanoc::Core::NotificationCenter.post(:phase_ended, 'donkey', rep)
-    mock_time(100)
-    Nanoc::Core::NotificationCenter.post(:phase_started, 'donkey', rep)
-    mock_time(102)
-    Nanoc::Core::NotificationCenter.post(:phase_ended, 'donkey', rep)
-
-    expect(listener.phases_summary.get(name: 'donkey').min).to eq(1.00)
-    expect(listener.phases_summary.get(name: 'donkey').avg).to eq(1.50)
-    expect(listener.phases_summary.get(name: 'donkey').max).to eq(2.00)
-    expect(listener.phases_summary.get(name: 'donkey').sum).to eq(3.00)
-    expect(listener.phases_summary.get(name: 'donkey').count).to eq(2.00)
-  end
-
-  it 'records single phase start+yield+resume+stop' do
-    mock_time(0)
-    Nanoc::Core::NotificationCenter.post(:phase_started, 'donkey', rep)
-    mock_time(1)
-    Nanoc::Core::NotificationCenter.post(:phase_yielded, 'donkey', rep)
-    mock_time(100)
-    Nanoc::Core::NotificationCenter.post(:phase_resumed, 'donkey', rep)
-    mock_time(102)
-    Nanoc::Core::NotificationCenter.post(:phase_ended, 'donkey', rep)
-
-    expect(listener.phases_summary.get(name: 'donkey').min).to eq(3.00)
-    expect(listener.phases_summary.get(name: 'donkey').avg).to eq(3.00)
-    expect(listener.phases_summary.get(name: 'donkey').max).to eq(3.00)
-    expect(listener.phases_summary.get(name: 'donkey').sum).to eq(3.00)
-    expect(listener.phases_summary.get(name: 'donkey').count).to eq(1.00)
-  end
-
-  it 'records single phase start+yield+abort+start+stop' do
-    mock_time(0)
-    Nanoc::Core::NotificationCenter.post(:phase_started, 'donkey', rep)
-    mock_time(1)
-    Nanoc::Core::NotificationCenter.post(:phase_yielded, 'donkey', rep)
-    mock_time(100)
-    Nanoc::Core::NotificationCenter.post(:phase_aborted, 'donkey', rep)
-    mock_time(200)
-    Nanoc::Core::NotificationCenter.post(:phase_started, 'donkey', rep)
-    mock_time(203)
-    Nanoc::Core::NotificationCenter.post(:phase_ended, 'donkey', rep)
-
-    expect(listener.phases_summary.get(name: 'donkey').min).to eq(1.00)
-    expect(listener.phases_summary.get(name: 'donkey').avg).to eq(2.00)
-    expect(listener.phases_summary.get(name: 'donkey').max).to eq(3.00)
-    expect(listener.phases_summary.get(name: 'donkey').sum).to eq(4.00)
-    expect(listener.phases_summary.get(name: 'donkey').count).to eq(2.00)
-  end
-
   it 'records stage duration' do
     Nanoc::Core::NotificationCenter.post(:stage_ran, 1.23, 'donkey_stage')
 
@@ -228,6 +162,6 @@ describe Nanoc::CLI::CompileListeners::TimingRecorder, :stdio do
 
   it 'skips printing empty metrics' do
     expect { listener.stop_safely }
-      .not_to output(/filters|phases|stages/).to_stdout
+      .not_to output(/filters|stages/).to_stdout
   end
 end

@@ -20,7 +20,6 @@ lib/nanoc/core/checksum_store.rb
 lib/nanoc/core/checksummer.rb
 lib/nanoc/core/code_snippet.rb
 lib/nanoc/core/compilation_context.rb
-lib/nanoc/core/compilation_phases/abstract.rb
 lib/nanoc/core/compilation_stage.rb
 lib/nanoc/core/compilation_stages/build_reps.rb
 lib/nanoc/core/compilation_stages/calculate_checksums.rb

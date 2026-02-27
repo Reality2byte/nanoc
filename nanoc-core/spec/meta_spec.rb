@@ -14,8 +14,6 @@ describe 'meta', chdir: false do
       'assertions',
       'checksum_collection',
       'compilation_context',
-      'compilation_phases/recalculate',
-      'compilation_phases/write',
       'compiler_loader',
       'contracts_support',
       'dependency',
