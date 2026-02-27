@@ -7,7 +7,7 @@ module Nanoc::CLI::CompileListeners
     attr_reader :filters_summary
 
     # @see Listener#enable_for?
-    def self.enable_for?(_command_runner, _site)
+    def self.enable_for?(_command_runner, _config)
       Nanoc::CLI.verbosity >= 1
     end
 

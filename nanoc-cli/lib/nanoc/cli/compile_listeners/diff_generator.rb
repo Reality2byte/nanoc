@@ -46,8 +46,8 @@ module Nanoc::CLI::CompileListeners
     end
 
     # @see Listener#enable_for?
-    def self.enable_for?(command_runner, site)
-      site.config[:enable_output_diff] || command_runner.options[:diff]
+    def self.enable_for?(command_runner, config)
+      config[:enable_output_diff] || command_runner.options[:diff]
     end
 
     # @see Listener#start

@@ -2,21 +2,13 @@
 
 describe Nanoc::CLI::CompileListeners::DiffGenerator do
   describe '.enable_for?' do
-    subject { described_class.enable_for?(command_runner, site) }
+    subject { described_class.enable_for?(command_runner, config) }
 
     let(:options) { {} }
     let(:config_hash) { {} }
 
     let(:arguments) { double(:arguments) }
     let(:command) { double(:command) }
-
-    let(:site) do
-      Nanoc::Core::Site.new(
-        config:,
-        code_snippets:,
-        data_source: Nanoc::Core::InMemoryDataSource.new(items, layouts),
-      )
-    end
 
     let(:config) { Nanoc::Core::Configuration.new(dir: Dir.getwd, hash: config_hash).with_defaults }
     let(:items) { Nanoc::Core::ItemCollection.new(config, []) }

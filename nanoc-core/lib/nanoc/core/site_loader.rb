@@ -10,7 +10,7 @@ module Nanoc
       end
 
       def new_from_cwd
-        site_from_config(Nanoc::Core::ConfigLoader.new.new_from_cwd)
+        new_from_config(Nanoc::Core::ConfigLoader.new.new_from_cwd)
       end
 
       def gen_data_source_for_config(config)
@@ -24,20 +24,22 @@ module Nanoc
         Nanoc::Core::AggregateDataSource.new(data_sources_to_aggregate, config)
       end
 
-      private
+      def new_from_config(config)
+        Nanoc::Core::Instrumentor.call(:stage_ran, 'LoadSite') do
+          code_snippets = code_snippets_from_config(config)
+          code_snippets.each(&:load)
 
-      def site_from_config(config)
-        code_snippets = code_snippets_from_config(config)
-        code_snippets.each(&:load)
+          data_source = gen_data_source_for_config(config)
 
-        data_source = gen_data_source_for_config(config)
-
-        Nanoc::Core::Site.new(
-          config:,
-          code_snippets:,
-          data_source:,
-        )
+          Nanoc::Core::Site.new(
+            config:,
+            code_snippets:,
+            data_source:,
+          )
+        end
       end
+
+      private
 
       def with_data_sources(config, &)
         data_sources = create_data_sources(config)

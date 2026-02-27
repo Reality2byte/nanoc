@@ -96,7 +96,7 @@ module Nanoc
         compiler = Nanoc::Core::Compiler.new_for(site, focus:)
         listener = Nanoc::CLI::CompileListeners::Aggregate.new(
           command_runner:,
-          site:,
+          config: site.config,
         )
         listener.run_while do
           compiler.run_until_end

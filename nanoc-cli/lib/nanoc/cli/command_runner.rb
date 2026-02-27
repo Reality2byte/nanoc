@@ -58,7 +58,8 @@ module Nanoc
 
         $stderr.print 'Loading site… '
         $stderr.flush
-        site = Nanoc::Core::SiteLoader.new.new_from_cwd
+        config = Nanoc::Core::ConfigLoader.new.new_from_cwd
+        site = Nanoc::Core::SiteLoader.new.new_from_config(config)
 
         $stderr.puts 'done'
         site

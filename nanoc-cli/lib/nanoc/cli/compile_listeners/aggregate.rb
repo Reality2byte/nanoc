@@ -2,10 +2,10 @@
 
 module Nanoc::CLI::CompileListeners
   class Aggregate < Abstract
-    def initialize(command_runner:, site:)
+    def initialize(command_runner:, config:)
       super()
 
-      @site = site
+      @config = config
       @command_runner = command_runner
 
       @listener_classes = self.class.default_listener_classes
@@ -33,7 +33,7 @@ module Nanoc::CLI::CompileListeners
     def setup_listeners
       @listeners =
         @listener_classes
-        .select { |klass| klass.enable_for?(@command_runner, @site) }
+        .select { |klass| klass.enable_for?(@command_runner, @config) }
         .map(&:new)
 
       @listeners.each(&:start_safely)

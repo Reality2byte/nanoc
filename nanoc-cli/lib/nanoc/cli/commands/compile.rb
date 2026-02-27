@@ -33,15 +33,18 @@ module Nanoc::CLI::Commands
     def run_once
       time_before = Time.now
 
-      @site = load_site
+      config = Nanoc::Core::ConfigLoader.new.new_from_cwd
 
-      puts 'Compiling site…'
-      compiler = Nanoc::Core::Compiler.new_for(@site, focus: options[:focus])
       listener = Nanoc::CLI::CompileListeners::Aggregate.new(
         command_runner: self,
-        site: @site,
+        config:,
       )
       listener.run_while do
+        puts 'Loading site…'
+        site = Nanoc::Core::SiteLoader.new.new_from_config(config)
+
+        puts 'Compiling site…'
+        compiler = Nanoc::Core::Compiler.new_for(site, focus: options[:focus])
         compiler.run_until_end
       end
 
