@@ -76,6 +76,8 @@ module Nanoc
 
           phase_stack.call(rep, is_outdated:)
 
+          @outdatedness_store.remove(rep)
+
           Nanoc::Core::NotificationCenter.post(:compilation_ended, rep)
         rescue Nanoc::Core::Errors::UnmetDependency
           Nanoc::Core::NotificationCenter.post(:compilation_suspended, rep)
@@ -95,14 +97,9 @@ module Nanoc
             wrapped: recalculate_phase,
           )
 
-          write_phase = Nanoc::Core::CompilationPhases::Write.new(
+          Nanoc::Core::CompilationPhases::Write.new(
             compiled_content_repo: @compilation_context.compiled_content_repo,
             wrapped: cache_phase,
-          )
-
-          Nanoc::Core::CompilationPhases::MarkDone.new(
-            wrapped: write_phase,
-            outdatedness_store: @outdatedness_store,
           )
         end
       end
