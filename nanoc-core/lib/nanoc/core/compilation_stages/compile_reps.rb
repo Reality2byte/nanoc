@@ -48,10 +48,9 @@ module Nanoc
             dependency_store: @dependency_store,
           )
 
-          phase_stack = build_phase_stack
           selector.each do |rep|
             handle_errors_while(rep) do
-              compile_rep(rep, phase_stack:, is_outdated: @outdatedness_store.include?(rep))
+              compile_rep(rep)
             end
           end
 
@@ -75,12 +74,11 @@ module Nanoc
           raise Nanoc::Core::Errors::CompilationError.new(e, item_rep)
         end
 
-        def compile_rep(rep, phase_stack:, is_outdated:)
+        def compile_rep(rep)
           Nanoc::Core::NotificationCenter.post(:compilation_started, rep)
 
           unless rep.compiled?
-            phase_stack.call(rep, is_outdated:)
-
+            recalculate_rep(rep)
             @compiled_content_cache[rep] = @compiled_content_repo.get_all(rep)
             rep.compiled = true
           end
@@ -99,12 +97,41 @@ module Nanoc
           raise
         end
 
-        def build_phase_stack
-          Nanoc::Core::CompilationPhases::Recalculate.new(
-            action_sequences: @action_sequences,
-            dependency_store: @dependency_store,
-            compilation_context: @compilation_context,
-          )
+        def recalculate_rep(rep)
+          dependency_tracker = Nanoc::Core::DependencyTracker.new(@dependency_store, root: rep.item)
+
+          executor = Nanoc::Core::Executor.new(rep, @compilation_context, dependency_tracker)
+
+          # Set initial content, if not already present
+          compiled_content_repo = @compilation_context.compiled_content_repo
+          unless compiled_content_repo.get_current(rep)
+            compiled_content_repo.set_current(rep, rep.item.content)
+          end
+
+          actions = pending_action_sequence_for(rep:)
+          until actions.empty?
+            action = actions.first
+
+            case action
+            when Nanoc::Core::ProcessingActions::Filter
+              executor.filter(action.filter_name, action.params)
+            when Nanoc::Core::ProcessingActions::Layout
+              executor.layout(action.layout_identifier, action.params)
+            when Nanoc::Core::ProcessingActions::Snapshot
+              action.snapshot_names.each do |snapshot_name|
+                executor.snapshot(snapshot_name)
+              end
+            else
+              raise Nanoc::Core::Errors::InternalInconsistency, "unknown action #{action.inspect}"
+            end
+
+            actions.shift
+          end
+        end
+
+        def pending_action_sequence_for(rep:)
+          @_pending_action_sequences ||= {}
+          @_pending_action_sequences[rep] ||= @action_sequences[rep].to_a
         end
       end
     end
