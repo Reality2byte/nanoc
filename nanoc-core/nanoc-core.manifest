@@ -21,7 +21,6 @@ lib/nanoc/core/checksummer.rb
 lib/nanoc/core/code_snippet.rb
 lib/nanoc/core/compilation_context.rb
 lib/nanoc/core/compilation_phases/abstract.rb
-lib/nanoc/core/compilation_phases/cache.rb
 lib/nanoc/core/compilation_phases/recalculate.rb
 lib/nanoc/core/compilation_stage.rb
 lib/nanoc/core/compilation_stages/build_reps.rb
