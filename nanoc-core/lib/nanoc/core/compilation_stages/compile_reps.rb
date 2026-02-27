@@ -44,11 +44,10 @@ module Nanoc
             dependency_store: @dependency_store,
           )
 
-          run_phase_stack do |phase_stack|
-            selector.each do |rep|
-              handle_errors_while(rep) do
-                compile_rep(rep, phase_stack:, is_outdated: @outdatedness_store.include?(rep))
-              end
+          phase_stack = build_phase_stack
+          selector.each do |rep|
+            handle_errors_while(rep) do
+              compile_rep(rep, phase_stack:, is_outdated: @outdatedness_store.include?(rep))
             end
           end
 
@@ -74,14 +73,6 @@ module Nanoc
 
         def compile_rep(rep, phase_stack:, is_outdated:)
           phase_stack.call(rep, is_outdated:)
-        end
-
-        def run_phase_stack
-          phase_stack = build_phase_stack
-          phase_stack.start
-          yield(phase_stack)
-        ensure
-          phase_stack.stop
         end
 
         def build_phase_stack
