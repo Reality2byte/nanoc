@@ -6,14 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 15
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Lint/InterpolationCheck:
-  Exclude:
-    - 'nanoc/spec/nanoc/filters/erb_spec.rb'
-    - 'nanoc/test/filters/test_erubi.rb'
-    - 'nanoc/test/filters/test_erubis.rb'
-
 # Offense count: 5
 RSpec/AnyInstance:
   Exclude:
