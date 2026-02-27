@@ -72,7 +72,14 @@ module Nanoc
         end
 
         def compile_rep(rep, phase_stack:, is_outdated:)
+          Nanoc::Core::NotificationCenter.post(:compilation_started, rep)
+
           phase_stack.call(rep, is_outdated:)
+
+          Nanoc::Core::NotificationCenter.post(:compilation_ended, rep)
+        rescue Nanoc::Core::Errors::UnmetDependency
+          Nanoc::Core::NotificationCenter.post(:compilation_suspended, rep)
+          raise
         end
 
         def build_phase_stack
@@ -93,13 +100,9 @@ module Nanoc
             wrapped: cache_phase,
           )
 
-          mark_done_phase = Nanoc::Core::CompilationPhases::MarkDone.new(
+          Nanoc::Core::CompilationPhases::MarkDone.new(
             wrapped: write_phase,
             outdatedness_store: @outdatedness_store,
-          )
-
-          Nanoc::Core::CompilationPhases::Notify.new(
-            wrapped: mark_done_phase,
           )
         end
       end
