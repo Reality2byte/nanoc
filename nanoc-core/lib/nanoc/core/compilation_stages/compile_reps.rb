@@ -20,6 +20,8 @@ module Nanoc
           @compilation_context = compilation_context
           @compiled_content_cache = compiled_content_cache
           @focus = focus
+
+          @writer = Nanoc::Core::ItemRepWriter.new
         end
 
         def run
@@ -76,6 +78,12 @@ module Nanoc
 
           phase_stack.call(rep, is_outdated:)
 
+          # Caution: Notification must be posted before enqueueing the rep,
+          # or we risk a race condition where the :rep_write_ended
+          # notification happens before the :rep_write_enqueued one.
+          Nanoc::Core::NotificationCenter.post(:rep_write_enqueued, rep)
+          @writer.write_all(rep, @compilation_context.compiled_content_repo)
+
           @outdatedness_store.remove(rep)
 
           Nanoc::Core::NotificationCenter.post(:compilation_ended, rep)
@@ -91,15 +99,10 @@ module Nanoc
             compilation_context: @compilation_context,
           )
 
-          cache_phase = Nanoc::Core::CompilationPhases::Cache.new(
+          Nanoc::Core::CompilationPhases::Cache.new(
             compiled_content_cache: @compiled_content_cache,
             compiled_content_repo: @compilation_context.compiled_content_repo,
             wrapped: recalculate_phase,
-          )
-
-          Nanoc::Core::CompilationPhases::Write.new(
-            compiled_content_repo: @compilation_context.compiled_content_repo,
-            wrapped: cache_phase,
           )
         end
       end
