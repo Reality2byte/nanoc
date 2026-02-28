@@ -238,6 +238,12 @@ RSpec/MultipleExpectations:
 RSpec/ExampleLength:
   Enabled: false
 
+RSpec/NestedGroups:
+  Enabled: false
+
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+
 Minitest/MultipleAssertions:
   Enabled: false
 
