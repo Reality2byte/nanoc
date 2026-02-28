@@ -144,10 +144,10 @@ module Nanoc
 
           active = status.props.active & dependency.props.active
           if attributes_unaffected?(status, dependency)
-            active.delete(:attributes)
+            active &= ~DependencyProps::BIT_PATTERN_ATTRIBUTES
           end
 
-          !active.empty?
+          active != 0x00
         end
       end
 

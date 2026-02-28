@@ -166,56 +166,56 @@ describe Nanoc::Core::DependencyProps do
       let(:props) { described_class.new }
       let(:other_props) { described_class.new }
 
-      it { is_expected.to eql(Set.new) }
+      it { is_expected.to be(0x00) }
     end
 
     context 'nothing + some' do
       let(:props) { described_class.new }
       let(:other_props) { described_class.new(raw_content: true) }
 
-      it { is_expected.to eql(Set.new([:raw_content])) }
+      it { is_expected.to be(0x01) }
     end
 
     context 'nothing + all' do
       let(:props) { described_class.new }
       let(:other_props) { props_all }
 
-      it { is_expected.to eql(Set.new([:raw_content, :attributes, :compiled_content, :path])) }
+      it { is_expected.to be(0x01 | 0x02 | 0x04 | 0x08) }
     end
 
     context 'some + nothing' do
       let(:props) { described_class.new(compiled_content: true) }
       let(:other_props) { described_class.new }
 
-      it { is_expected.to eql(Set.new([:compiled_content])) }
+      it { is_expected.to be(0x04) }
     end
 
     context 'some + others' do
       let(:props) { described_class.new(compiled_content: true) }
       let(:other_props) { described_class.new(raw_content: true) }
 
-      it { is_expected.to eql(Set.new([:raw_content, :compiled_content])) }
+      it { is_expected.to be(0x01 | 0x04) }
     end
 
     context 'some + all' do
       let(:props) { described_class.new(compiled_content: true) }
       let(:other_props) { props_all }
 
-      it { is_expected.to eql(Set.new([:raw_content, :attributes, :compiled_content, :path])) }
+      it { is_expected.to be(0x01 | 0x02 | 0x04 | 0x08) }
     end
 
     context 'all + nothing' do
       let(:props) { props_all }
       let(:other_props) { described_class.new }
 
-      it { is_expected.to eql(Set.new([:raw_content, :attributes, :compiled_content, :path])) }
+      it { is_expected.to be(0x01 | 0x02 | 0x04 | 0x08) }
     end
 
     context 'all + all' do
       let(:props) { props_all }
       let(:other_props) { props_all }
 
-      it { is_expected.to eql(Set.new([:raw_content, :attributes, :compiled_content, :path])) }
+      it { is_expected.to be(0x01 | 0x02 | 0x04 | 0x08) }
     end
   end
 
@@ -397,37 +397,37 @@ describe Nanoc::Core::DependencyProps do
     context 'nothing active' do
       let(:props) { described_class.new }
 
-      it { is_expected.to eql(Set.new) }
+      it { is_expected.to be(0x00) }
     end
 
     context 'raw_content active' do
       let(:props) { described_class.new(raw_content: true) }
 
-      it { is_expected.to eql(Set.new([:raw_content])) }
+      it { is_expected.to be(0x01) }
     end
 
     context 'attributes active' do
       let(:props) { described_class.new(attributes: true) }
 
-      it { is_expected.to eql(Set.new([:attributes])) }
+      it { is_expected.to be(0x02) }
     end
 
     context 'compiled_content active' do
       let(:props) { described_class.new(compiled_content: true) }
 
-      it { is_expected.to eql(Set.new([:compiled_content])) }
+      it { is_expected.to be(0x04) }
     end
 
     context 'path active' do
       let(:props) { described_class.new(path: true) }
 
-      it { is_expected.to eql(Set.new([:path])) }
+      it { is_expected.to be(0x08) }
     end
 
     context 'attributes and compiled_content active' do
       let(:props) { described_class.new(attributes: true, compiled_content: true) }
 
-      it { is_expected.to eql(Set.new([:attributes, :compiled_content])) }
+      it { is_expected.to be(0x02 | 0x04) }
     end
 
     context 'all active' do
@@ -435,7 +435,7 @@ describe Nanoc::Core::DependencyProps do
         described_class.new(raw_content: true, attributes: true, compiled_content: true, path: true)
       end
 
-      it { is_expected.to eql(Set.new([:raw_content, :attributes, :compiled_content, :path])) }
+      it { is_expected.to be(0x01 | 0x02 | 0x04 | 0x08) }
     end
   end
 

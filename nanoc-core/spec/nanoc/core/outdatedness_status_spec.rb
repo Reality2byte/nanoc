@@ -40,7 +40,7 @@ describe Nanoc::Core::OutdatednessStatus do
     subject { status.props.active }
 
     context 'default' do
-      it { is_expected.to eql(Set.new) }
+      it { is_expected.to be(0x00) }
     end
 
     context 'specific one passed in' do
@@ -50,7 +50,7 @@ describe Nanoc::Core::OutdatednessStatus do
 
       let(:status) { described_class.new(props:) }
 
-      it { is_expected.to eql(Set.new([:attributes])) }
+      it { is_expected.to be(0x02) }
     end
   end
 
@@ -118,7 +118,7 @@ describe Nanoc::Core::OutdatednessStatus do
       let(:status) { described_class.new(props: Nanoc::Core::DependencyProps.new(attributes: true)) }
 
       it 'updates props' do
-        expect(subject.props.active).to eql(Set.new([:raw_content, :attributes, :compiled_content]))
+        expect(subject.props.active).to be(0x01 | 0x02 | 0x04)
       end
     end
   end

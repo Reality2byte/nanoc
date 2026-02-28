@@ -6,6 +6,11 @@ module Nanoc
     class DependencyProps
       include Nanoc::Core::ContractsSupport
 
+      BIT_PATTERN_RAW_CONTENT      = 0x01
+      BIT_PATTERN_ATTRIBUTES       = 0x02
+      BIT_PATTERN_COMPILED_CONTENT = 0x04
+      BIT_PATTERN_PATH             = 0x08
+
       attr_reader :attributes
       attr_reader :raw_content
 
@@ -158,14 +163,16 @@ module Nanoc
         end
       end
 
-      contract C::None => Set
+      contract C::None => C::Num
       def active
-        Set.new.tap do |pr|
-          pr << :raw_content if raw_content?
-          pr << :attributes if attributes?
-          pr << :compiled_content if compiled_content?
-          pr << :path if path?
-        end
+        res = 0x00
+
+        res |= BIT_PATTERN_RAW_CONTENT if raw_content?
+        res |= BIT_PATTERN_ATTRIBUTES if attributes?
+        res |= BIT_PATTERN_COMPILED_CONTENT if compiled_content?
+        res |= BIT_PATTERN_PATH if path?
+
+        res
       end
 
       def attribute_keys
