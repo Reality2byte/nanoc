@@ -12,11 +12,23 @@ module Nanoc
       attr_writer :checksums
       attr_accessor :objects
 
-      c_obj = C::Or[Nanoc::Core::Item, Nanoc::Core::Layout, Nanoc::Core::Configuration, Nanoc::Core::CodeSnippet]
+      c_obj = C::Or[
+        Nanoc::Core::Item,
+        Nanoc::Core::Layout,
+        Nanoc::Core::Configuration,
+        Nanoc::Core::CodeSnippet]
 
-      contract C::KeywordArgs[config: Nanoc::Core::Configuration, objects: C::IterOf[c_obj]] => C::Any
+      contract C::KeywordArgs[
+        config: Nanoc::Core::Configuration,
+        objects: C::IterOf[c_obj]] => C::Any
       def initialize(config:, objects:)
-        super(Nanoc::Core::Store.tmp_path_for(config:, store_name: 'checksums'), 3)
+        super(
+          Nanoc::Core::Store.tmp_path_for(
+            config:,
+            store_name: 'checksums',
+          ),
+          3,
+        )
 
         @objects = objects
 
@@ -33,11 +45,14 @@ module Nanoc
       contract c_obj => self
       def add(obj)
         if obj.is_a?(Nanoc::Core::Document)
-          @checksums[[obj.reference, :content]] = Nanoc::Core::Checksummer.calc_for_content_of(obj)
+          @checksums[[obj.reference, :content]] =
+            Nanoc::Core::Checksummer.calc_for_content_of(obj)
         end
 
-        if obj.is_a?(Nanoc::Core::Document) || obj.is_a?(Nanoc::Core::Configuration)
-          @checksums[[obj.reference, :each_attribute]] = Nanoc::Core::Checksummer.calc_for_each_attribute_of(obj)
+        if obj.is_a?(Nanoc::Core::Document) ||
+           obj.is_a?(Nanoc::Core::Configuration)
+          @checksums[[obj.reference, :each_attribute]] =
+            Nanoc::Core::Checksummer.calc_for_each_attribute_of(obj)
         end
 
         @checksums[obj.reference] = Nanoc::Core::Checksummer.calc(obj)
@@ -52,7 +67,8 @@ module Nanoc
 
       contract c_obj => C::Maybe[C::HashOf[Symbol, String]]
       def attributes_checksum_for(obj)
-        @_attribute_checksums[obj] ||= @checksums[[obj.reference, :each_attribute]]
+        @_attribute_checksums[obj] ||=
+          @checksums[[obj.reference, :each_attribute]]
       end
 
       protected
@@ -68,7 +84,8 @@ module Nanoc
 
         @checksums = {}
         new_data.each_pair do |key, checksum|
-          if references.include?(key) || (key.respond_to?(:first) && references.include?(key.first))
+          if references.include?(key) ||
+             (key.respond_to?(:first) && references.include?(key.first))
             @checksums[key] = checksum
           end
         end

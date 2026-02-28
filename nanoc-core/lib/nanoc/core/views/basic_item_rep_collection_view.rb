@@ -31,7 +31,8 @@ module Nanoc
         @item_reps.map { |ir| view_class.new(ir, @context) }
       end
 
-      # Calls the given block once for each item rep, passing that item rep as a parameter.
+      # Calls the given block once for each item rep, passing that item rep as a
+      # parameter.
       #
       # @yieldparam [Object] item rep view
       #
@@ -54,7 +55,8 @@ module Nanoc
       #
       # @return [nil] if no item rep with the given name was found
       #
-      # @return [Nanoc::Core::BasicItemRepView] if an item rep with the given name was found
+      # @return [Nanoc::Core::BasicItemRepView] if an item rep with the given
+      #   name was found
       def [](rep_name)
         case rep_name
         when Symbol
@@ -63,9 +65,12 @@ module Nanoc
         when Integer
           raise ArgumentError,
                 'expected BasicItemRepCollectionView#[] to be called with a ' \
-                "symbol (you likely want `.reps[:default]` rather than `.reps[#{rep_name}]`)"
+                'symbol (you likely want `.reps[:default]` rather than ' \
+                "`.reps[#{rep_name}]`)"
         else
-          raise ArgumentError, 'expected BasicItemRepCollectionView#[] to be called with a symbol'
+          raise ArgumentError,
+                'expected BasicItemRepCollectionView#[] to be called with a ' \
+                'symbol'
         end
       end
 

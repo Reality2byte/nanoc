@@ -29,7 +29,10 @@ module Nanoc
           snapshot_names: C::Optional[C::IterOf[Symbol]],
           paths: C::Optional[C::IterOf[String]]] => self
         def update(snapshot_names: [], paths: [])
-          self.class.new(@snapshot_names + snapshot_names.to_a, @paths + paths.to_a)
+          self.class.new(
+            @snapshot_names + snapshot_names.to_a,
+            @paths + paths.to_a,
+          )
         end
 
         contract C::None => String
@@ -42,7 +45,9 @@ module Nanoc
         end
 
         def ==(other)
-          self.class == other.class && snapshot_names == other.snapshot_names && paths == other.paths
+          self.class == other.class &&
+            snapshot_names == other.snapshot_names &&
+            paths == other.paths
         end
 
         def eql?(other)

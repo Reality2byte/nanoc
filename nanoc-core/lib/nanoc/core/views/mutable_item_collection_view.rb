@@ -16,7 +16,8 @@ module Nanoc
       #
       # @param [Hash] attributes A hash containing this item's attributes.
       #
-      # @param [Nanoc::Core::Identifier, String] identifier This item's identifier.
+      # @param [Nanoc::Core::Identifier, String] identifier This item's
+      #   identifier.
       #
       # @param [Boolean] binary Whether or not this item is binary
       #
@@ -26,7 +27,9 @@ module Nanoc
       # @return [self]
       def create(content, attributes, identifier, binary: false, filename: nil)
         content = Nanoc::Core::Content.create(content, binary:, filename:)
-        @objects = @objects.add(Nanoc::Core::Item.new(content, attributes, identifier))
+        @objects = @objects.add(
+          Nanoc::Core::Item.new(content, attributes, identifier),
+        )
         self
       end
     end

@@ -6,7 +6,9 @@ module Nanoc
     class ItemRepBuilder
       include Nanoc::Core::ContractsSupport
 
-      contract Nanoc::Core::ActionSequence, Nanoc::Core::ItemRep => C::ArrayOf[Nanoc::Core::SnapshotDef]
+      contract Nanoc::Core::ActionSequence,
+               Nanoc::Core::ItemRep =>
+               C::ArrayOf[Nanoc::Core::SnapshotDef]
       def self.snapshot_defs_for(action_sequence, rep)
         is_binary = rep.item.content.binary?
         snapshot_defs = []
@@ -15,7 +17,8 @@ module Nanoc
           case action
           when Nanoc::Core::ProcessingActions::Snapshot
             action.snapshot_names.each do |snapshot_name|
-              snapshot_defs << Nanoc::Core::SnapshotDef.new(snapshot_name, binary: is_binary)
+              snapshot_defs <<
+                Nanoc::Core::SnapshotDef.new(snapshot_name, binary: is_binary)
             end
           when Nanoc::Core::ProcessingActions::Filter
             is_binary = Nanoc::Core::Filter.named!(action.filter_name).to_binary?
@@ -27,7 +30,9 @@ module Nanoc
 
       attr_reader :reps
 
-      contract Nanoc::Core::Site, Nanoc::Core::ActionProvider, Nanoc::Core::ItemRepRepo => C::Any
+      contract Nanoc::Core::Site,
+               Nanoc::Core::ActionProvider,
+               Nanoc::Core::ItemRepRepo => C::Any
       def initialize(site, action_provider, reps)
         @site = site
         @action_provider = action_provider
@@ -41,10 +46,14 @@ module Nanoc
           end
         end
 
-        action_sequences = Nanoc::Core::ItemRepRouter.new(@reps, @action_provider, @site).run
+        action_sequences = Nanoc::Core::ItemRepRouter.new(
+          @reps, @action_provider, @site
+        ).run
 
         @reps.each do |rep|
-          rep.snapshot_defs = self.class.snapshot_defs_for(action_sequences[rep], rep)
+          rep.snapshot_defs = self.class.snapshot_defs_for(
+            action_sequences[rep], rep
+          )
         end
 
         action_sequences

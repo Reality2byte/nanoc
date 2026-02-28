@@ -18,11 +18,23 @@ module Nanoc
 
       def write(item_rep, compiled_content_repo, snapshot_name, written_paths)
         item_rep.raw_paths.fetch(snapshot_name, []).each do |raw_path|
-          write_single(item_rep, compiled_content_repo, snapshot_name, raw_path, written_paths)
+          write_single(
+            item_rep,
+            compiled_content_repo,
+            snapshot_name,
+            raw_path,
+            written_paths,
+          )
         end
       end
 
-      def write_single(item_rep, compiled_content_repo, snapshot_name, raw_path, written_paths)
+      def write_single(
+        item_rep,
+        compiled_content_repo,
+        snapshot_name,
+        raw_path,
+        written_paths
+      )
         assert Nanoc::Core::Assertions::PathIsAbsolute.new(path: raw_path)
 
         # Don’t write twice
@@ -56,7 +68,10 @@ module Nanoc
         # Notify ready for diff generation
         if !is_created && is_modified && !content.binary?
           Nanoc::Core::NotificationCenter.post(
-            :rep_ready_for_diff, raw_path, File.read(raw_path, encoding: 'UTF-8'), content.string
+            :rep_ready_for_diff,
+            raw_path,
+            File.read(raw_path, encoding: 'UTF-8'),
+            content.string,
           )
         end
 
@@ -69,7 +84,12 @@ module Nanoc
 
         # Notify
         Nanoc::Core::NotificationCenter.post(
-          :rep_write_ended, item_rep, content.binary?, raw_path, is_created, is_modified
+          :rep_write_ended,
+          item_rep,
+          content.binary?,
+          raw_path,
+          is_created,
+          is_modified,
         )
       end
 
@@ -84,7 +104,10 @@ module Nanoc
           begin
             res = Clonefile.always(from, to)
             return if res
-          rescue Clonefile::UnsupportedPlatform, Errno::ENOTSUP, Errno::EXDEV, Errno::EINVAL
+          rescue Clonefile::UnsupportedPlatform,
+                 Errno::ENOTSUP,
+                 Errno::EXDEV,
+                 Errno::EINVAL
           end
         end
 

@@ -5,17 +5,26 @@ module Nanoc
     # @api private
     class CompilerLoader
       def load(site, focus: nil, action_provider: nil)
-        action_sequence_store = Nanoc::Core::ActionSequenceStore.new(config: site.config)
+        action_sequence_store =
+          Nanoc::Core::ActionSequenceStore.new(config: site.config)
 
         dependency_store =
-          Nanoc::Core::DependencyStore.new(site.items, site.layouts, site.config)
+          Nanoc::Core::DependencyStore.new(
+            site.items, site.layouts, site.config
+          )
 
-        objects = site.items.to_a + site.layouts.to_a + site.code_snippets + [site.config]
+        objects = site.items.to_a +
+                  site.layouts.to_a +
+                  site.code_snippets +
+                  [site.config]
 
         checksum_store =
           Nanoc::Core::ChecksumStore.new(config: site.config, objects:)
 
-        action_provider ||= Nanoc::Core::ActionProvider.named(site.config.action_provider).for(site)
+        action_provider ||=
+          Nanoc::Core::ActionProvider
+          .named(site.config.action_provider)
+          .for(site)
 
         outdatedness_store =
           Nanoc::Core::OutdatednessStore.new(config: site.config)

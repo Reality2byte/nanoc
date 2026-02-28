@@ -5,7 +5,11 @@ module Nanoc
     class ChecksumCollection
       include Nanoc::Core::ContractsSupport
 
-      c_obj = C::Or[Nanoc::Core::Item, Nanoc::Core::Layout, Nanoc::Core::Configuration, Nanoc::Core::CodeSnippet]
+      c_obj = C::Or[
+        Nanoc::Core::Item,
+        Nanoc::Core::Layout,
+        Nanoc::Core::Configuration,
+        Nanoc::Core::CodeSnippet]
 
       def initialize(checksums)
         @checksums = checksums
@@ -25,7 +29,8 @@ module Nanoc
 
       contract c_obj => C::Maybe[C::HashOf[Symbol, String]]
       def attributes_checksum_for(obj)
-        @_attribute_checksums[obj] ||= @checksums[[obj.reference, :each_attribute]]
+        @_attribute_checksums[obj] ||=
+          @checksums[[obj.reference, :each_attribute]]
       end
 
       def to_h

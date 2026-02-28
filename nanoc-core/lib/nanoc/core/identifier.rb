@@ -8,37 +8,48 @@ module Nanoc
 
       class InvalidIdentifierError < ::Nanoc::Core::Error
         def initialize(string)
-          super("Invalid identifier (does not start with a slash): #{string.inspect}")
+          super(
+            'Invalid identifier (does not start with a slash): ' \
+            "#{string.inspect}")
         end
       end
 
       class InvalidFullIdentifierError < ::Nanoc::Core::Error
         def initialize(string)
-          super("Invalid full identifier (ends with a slash): #{string.inspect}")
+          super(
+            'Invalid full identifier (ends with a slash): ' \
+            "#{string.inspect}")
         end
       end
 
       class InvalidTypeError < ::Nanoc::Core::Error
         def initialize(type)
-          super("Invalid type for identifier: #{type.inspect} (can be :full or :legacy)")
+          super(
+            "Invalid type for identifier: #{type.inspect} " \
+            '(can be :full or :legacy)')
         end
       end
 
       class InvalidPrefixError < ::Nanoc::Core::Error
         def initialize(string)
-          super("Invalid prefix (does not start with a slash): #{string.inspect}")
+          super(
+            'Invalid prefix (does not start with a slash): ' \
+            "#{string.inspect}")
         end
       end
 
       class UnsupportedLegacyOperationError < ::Nanoc::Core::Error
         def initialize
-          super('Cannot use this method on legacy identifiers')
+          super(
+            'Cannot use this method on legacy identifiers')
         end
       end
 
       class NonCoercibleObjectError < ::Nanoc::Core::Error
         def initialize(obj)
-          super("#{obj.inspect} cannot be converted into a Nanoc::Core::Identifier")
+          super(
+            "#{obj.inspect} cannot be converted into a " \
+            'Nanoc::Core::Identifier')
         end
       end
 
@@ -113,7 +124,8 @@ module Nanoc
       end
 
       contract C::None => C::Bool
-      # Whether or not this is a legacy identifier (i.e. does not include the extension).
+      # Whether or not this is a legacy identifier (i.e. does not include the
+      # extension).
       def legacy?
         @type == :legacy
       end
@@ -137,7 +149,10 @@ module Nanoc
           raise InvalidPrefixError.new(string)
         end
 
-        Nanoc::Core::Identifier.new(string.sub(%r{/+\z}, '') + @string, type: @type)
+        Nanoc::Core::Identifier.new(
+          string.sub(%r{/+\z}, '') + @string,
+          type: @type,
+        )
       end
 
       contract C::None => String

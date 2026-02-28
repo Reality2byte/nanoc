@@ -10,7 +10,9 @@ module Nanoc
 
       class IdenticalRoutesError < ::Nanoc::Core::Error
         def initialize(output_path, rep_a, rep_b)
-          super("The item representations #{rep_a} and #{rep_b} are both routed to #{output_path}.")
+          super(
+            "The item representations #{rep_a} and #{rep_b} are both " \
+            "routed to #{output_path}.")
         end
       end
 
@@ -22,7 +24,8 @@ module Nanoc
         end
       end
 
-      contract Nanoc::Core::ItemRepRepo, Nanoc::Core::ActionProvider, Nanoc::Core::Site => C::Any
+      contract Nanoc::Core::ItemRepRepo, Nanoc::Core::ActionProvider,
+               Nanoc::Core::Site => C::Any
       def initialize(reps, action_provider, site)
         @reps = reps
         @action_provider = action_provider
@@ -33,12 +36,14 @@ module Nanoc
         action_sequences = {}
         assigned_paths = {}
         @reps.each do |rep|
-          # Sigh. We route reps twice, because the first time, the paths might not have converged
-          # yet. This isn’t ideal, but it’s the only way to work around the divergence issues that
-          # I can think of. For details, see
-          # https://github.com/nanoc/nanoc/pull/1085#issuecomment-280628426.
+          # Sigh. We route reps twice, because the first time, the paths might
+          # not have converged yet. This isn’t ideal, but it’s the only way to
+          # work around the divergence issues that I can think of. For details,
+          # see https://github.com/nanoc/nanoc/pull/1085#issuecomment-280628426.
 
-          @action_provider.action_sequence_for(rep).paths.each do |(snapshot_names, paths)|
+          @action_provider
+            .action_sequence_for(rep)
+            .paths.each do |(snapshot_names, paths)|
             route_rep(rep, paths, snapshot_names, {})
           end
 
@@ -69,7 +74,9 @@ module Nanoc
           # Validate uniqueness
           if assigned_paths.include?(path)
             # TODO: Include snapshot names in error message
-            reps = [assigned_paths[path], rep].sort_by { |r| [r.item.identifier, r.name] }
+            reps = [assigned_paths[path], rep].sort_by do |r|
+              [r.item.identifier, r.name]
+            end
             raise IdenticalRoutesError.new(path, *reps)
           end
           assigned_paths[path] = rep
@@ -77,8 +84,12 @@ module Nanoc
 
         # Assign
         snapshot_names.each do |snapshot_name|
-          rep.raw_paths[snapshot_name] = paths.map { |path| @site.config.output_dir + path }
-          rep.paths[snapshot_name] = paths.map { |path| strip_index_filename(path) }
+          rep.raw_paths[snapshot_name] = paths.map do |path|
+            @site.config.output_dir + path
+          end
+          rep.paths[snapshot_name] = paths.map do |path|
+            strip_index_filename(path)
+          end
         end
       end
 

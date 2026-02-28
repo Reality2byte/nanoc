@@ -4,7 +4,9 @@ module Nanoc
   module Core
     class PostCompileItemView < Nanoc::Core::CompilationItemView
       def reps
-        Nanoc::Core::PostCompileItemRepCollectionView.new(@context.reps[_unwrap], @context)
+        Nanoc::Core::PostCompileItemRepCollectionView.new(
+          @context.reps[_unwrap], @context
+        )
       end
 
       # @deprecated Use {#modified_reps} instead

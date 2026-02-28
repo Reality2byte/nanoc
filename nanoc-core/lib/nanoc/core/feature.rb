@@ -70,7 +70,8 @@ module Nanoc
 
       # @api private
       def self.enabled_features
-        @_enabled_features ||= Set.new(ENV.fetch('NANOC_FEATURES', '').split(','))
+        @_enabled_features ||=
+          Set.new(ENV.fetch('NANOC_FEATURES', '').split(','))
       end
 
       # @api private

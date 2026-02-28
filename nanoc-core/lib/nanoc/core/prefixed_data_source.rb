@@ -12,11 +12,15 @@ module Nanoc
       end
 
       def items
-        @data_source.items.map { |d| d.with_identifier_prefix(@items_prefix) }
+        @data_source.items.map do |d|
+          d.with_identifier_prefix(@items_prefix)
+        end
       end
 
       def layouts
-        @data_source.layouts.map { |d| d.with_identifier_prefix(@layouts_prefix) }
+        @data_source.layouts.map do |d|
+          d.with_identifier_prefix(@layouts_prefix)
+        end
       end
 
       def item_changes

@@ -58,7 +58,10 @@ module Nanoc
 
         @vertices.each_pair do |v2, _|
           direct_predecessors_of(v2).each do |v1|
-            s << ["#{v1.inspect} -> #{v2.inspect} props=#{@edge_props[[v1, v2]].inspect}"]
+            s << [
+              "#{v1.inspect} -> #{v2.inspect} " \
+              "props=#{@edge_props[[v1, v2]].inspect}",
+            ]
           end
         end
 
@@ -135,7 +138,8 @@ module Nanoc
       #
       # @return [Array] Predecessors of the given vertex
       def predecessors_of(to)
-        @predecessors[to] ||= recursively_find_vertices(to, :direct_predecessors_of)
+        @predecessors[to] ||=
+          recursively_find_vertices(to, :direct_predecessors_of)
       end
 
       def props_for(from, to)
@@ -154,9 +158,11 @@ module Nanoc
       def edges
         result = []
         @vertices.each_pair do |v2, i2|
-          direct_predecessors_of(v2).map { |v1| [@vertices[v1], v1] }.each do |i1, v1|
-            result << [i1, i2, @edge_props[[v1, v2]]]
-          end
+          direct_predecessors_of(v2)
+            .map { |v1| [@vertices[v1], v1] }
+            .each do |i1, v1|
+              result << [i1, i2, @edge_props[[v1, v2]]]
+            end
         end
         result
       end

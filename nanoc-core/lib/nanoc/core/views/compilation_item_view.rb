@@ -40,7 +40,9 @@ module Nanoc
       #
       # @return [Nanoc::Core::BasicItemRepCollectionView]
       def reps
-        Nanoc::Core::CompilationItemRepCollectionView.new(@context.reps[_unwrap], @context)
+        Nanoc::Core::CompilationItemRepCollectionView.new(
+          @context.reps[_unwrap], @context
+        )
       end
     end
   end

@@ -11,12 +11,19 @@ module Nanoc
 
       contract C::KeywordArgs[config: Nanoc::Core::Configuration] => C::Any
       def initialize(config:)
-        super(Nanoc::Core::Store.tmp_path_for(config:, store_name: 'compiled_content'), 4)
+        super(
+          Nanoc::Core::Store.tmp_path_for(
+            config:,
+            store_name: 'compiled_content',
+          ),
+          4,
+        )
 
         @cache = {}
       end
 
-      contract Nanoc::Core::ItemRep => C::Maybe[C::HashOf[Symbol => Nanoc::Core::Content]]
+      contract Nanoc::Core::ItemRep =>
+        C::Maybe[C::HashOf[Symbol => Nanoc::Core::Content]]
       # Returns the cached compiled content for the given item representation.
       #
       # This cached compiled content is a hash where the keys are the snapshot
@@ -32,7 +39,8 @@ module Nanoc
         item_cache.key?(rep.name)
       end
 
-      contract Nanoc::Core::ItemRep, C::HashOf[Symbol => Nanoc::Core::TextualContent] => C::Any
+      contract Nanoc::Core::ItemRep,
+               C::HashOf[Symbol => Nanoc::Core::TextualContent] => C::Any
       # Sets the compiled content for the given representation.
       #
       # This cached compiled content is a hash where the keys are the snapshot

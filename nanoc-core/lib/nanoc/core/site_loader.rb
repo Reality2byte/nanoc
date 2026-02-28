@@ -3,7 +3,9 @@
 module Nanoc
   module Core
     class SiteLoader
-      ENCODING_REGEX = /\A#\s+(-\*-\s+)?(en)?coding: (?<encoding>[^\s]+)(\s+-\*-\s*)?\n{0,2}/
+      ENCODING_REGEX =
+        /\A#\s+(-\*-\s+)?(en)?coding: (?<encoding>[^\s]+)(\s+-\*-\s*)?\n{0,2}/
+
       # @return [Boolean]
       def self.cwd_is_nanoc_site?
         Nanoc::Core::ConfigLoader.cwd_is_nanoc_site?
@@ -17,7 +19,9 @@ module Nanoc
         data_sources_to_aggregate =
           with_data_sources(config) do |data_sources|
             data_sources.map do |ds|
-              Nanoc::Core::PrefixedDataSource.new(ds, ds.items_root, ds.layouts_root)
+              Nanoc::Core::PrefixedDataSource.new(
+                ds, ds.items_root, ds.layouts_root
+              )
             end
           end
 
@@ -55,9 +59,11 @@ module Nanoc
       def create_data_sources(config)
         config[:data_sources].map do |data_source_hash|
           # Get data source class
-          data_source_class = Nanoc::Core::DataSource.named(data_source_hash[:type].to_sym)
+          data_source_class =
+            Nanoc::Core::DataSource.named(data_source_hash[:type].to_sym)
           if data_source_class.nil?
-            raise Nanoc::Core::Errors::UnknownDataSource.new(data_source_hash[:type])
+            raise Nanoc::Core::Errors::UnknownDataSource
+              .new(data_source_hash[:type])
           end
 
           # Create data source

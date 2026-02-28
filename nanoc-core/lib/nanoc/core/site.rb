@@ -4,10 +4,12 @@ module Nanoc
   module Core
     # @api private
     class Site
-      # Error that is raised when multiple items or layouts with the same identifier exist.
+      # Error that is raised when multiple items or layouts with the same
+      # identifier exist.
       class DuplicateIdentifierError < ::Nanoc::Core::Error
         def initialize(identifier, type)
-          super("There are multiple #{type}s with the #{identifier} identifier.")
+          super(
+            "There are multiple #{type}s with the #{identifier} identifier.")
         end
       end
 
@@ -57,7 +59,8 @@ module Nanoc
         self
       end
 
-      contract C::IterOf[C::Or[Nanoc::Core::Item, Nanoc::Core::Layout]], String => self
+      contract C::IterOf[C::Or[Nanoc::Core::Item, Nanoc::Core::Layout]],
+               String => self
       def ensure_identifier_uniqueness(objects, type)
         seen = Set.new
         objects.each do |obj|

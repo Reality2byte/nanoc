@@ -13,7 +13,9 @@ module Nanoc
         filter = filter_for_filtering(filter_name)
 
         begin
-          Nanoc::Core::NotificationCenter.post(:filtering_started, @rep, filter_name)
+          Nanoc::Core::NotificationCenter.post(
+            :filtering_started, @rep, filter_name
+          )
 
           # Run filter
           last = @compilation_context.compiled_content_repo.get_current(@rep)
@@ -30,16 +32,20 @@ module Nanoc
           # Store
           @compilation_context.compiled_content_repo.set_current(@rep, last)
         ensure
-          Nanoc::Core::NotificationCenter.post(:filtering_ended, @rep, filter_name)
+          Nanoc::Core::NotificationCenter.post(
+            :filtering_ended, @rep, filter_name
+          )
         end
       end
 
       def layout(layout_identifier, extra_filter_args = nil)
         layout = find_layout(layout_identifier)
-        filter_name_and_args = @compilation_context.filter_name_and_args_for_layout(layout)
+        filter_name_and_args =
+          @compilation_context.filter_name_and_args_for_layout(layout)
         filter_name = filter_name_and_args.name
         if filter_name.nil?
-          raise Nanoc::Core::Errors::CannotDetermineFilter.new(layout_identifier)
+          raise Nanoc::Core::Errors::CannotDetermineFilter
+            .new(layout_identifier)
         end
 
         filter_args = filter_name_and_args.args
@@ -48,7 +54,9 @@ module Nanoc
 
         # Check whether item can be laid out
         last = @compilation_context.compiled_content_repo.get_current(@rep)
-        raise Nanoc::Core::Errors::CannotLayoutBinaryItem.new(@rep) if last.binary?
+        if last.binary?
+          raise Nanoc::Core::Errors::CannotLayoutBinaryItem.new(@rep)
+        end
 
         # Create filter
         klass = Nanoc::Core::Filter.named!(filter_name)
@@ -59,7 +67,9 @@ module Nanoc
         @dependency_tracker.bounce(layout, raw_content: true)
 
         begin
-          Nanoc::Core::NotificationCenter.post(:filtering_started, @rep, filter_name)
+          Nanoc::Core::NotificationCenter.post(
+            :filtering_started, @rep, filter_name
+          )
 
           # Layout
           content = layout.content
@@ -70,14 +80,21 @@ module Nanoc
           last = Nanoc::Core::TextualContent.new(res).tap(&:freeze)
           @compilation_context.compiled_content_repo.set_current(@rep, last)
         ensure
-          Nanoc::Core::NotificationCenter.post(:filtering_ended, @rep, filter_name)
+          Nanoc::Core::NotificationCenter.post(
+            :filtering_ended, @rep, filter_name
+          )
         end
       end
 
       def snapshot(snapshot_name)
         last = @compilation_context.compiled_content_repo.get_current(@rep)
-        @compilation_context.compiled_content_repo.set(@rep, snapshot_name, last)
-        Nanoc::Core::NotificationCenter.post(:snapshot_created, @rep, snapshot_name)
+        @compilation_context.compiled_content_repo.set(
+          @rep, snapshot_name,
+          last
+        )
+        Nanoc::Core::NotificationCenter.post(
+          :snapshot_created, @rep, snapshot_name
+        )
       end
 
       def assigns

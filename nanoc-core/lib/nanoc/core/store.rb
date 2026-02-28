@@ -15,7 +15,10 @@ module Nanoc
 
       # Logic for building tmp path from active environment and store name
       # @api private
-      contract C::KeywordArgs[config: Nanoc::Core::Configuration, store_name: String] => C::AbsolutePathString
+      contract C::KeywordArgs[
+        config: Nanoc::Core::Configuration,
+        store_name: String,
+      ] => C::AbsolutePathString
       def self.tmp_path_for(store_name:, config:)
         File.absolute_path(
           File.join(tmp_path_prefix(config.output_dir), store_name),
@@ -57,7 +60,9 @@ module Nanoc
       #
       # @abstract This method must be implemented by the subclass.
       def data
-        raise NotImplementedError.new('Nanoc::Core::Store subclasses must implement #data and #data=')
+        raise NotImplementedError.new(
+          'Nanoc::Core::Store subclasses must implement #data and #data=',
+        )
       end
 
       # @param new_data The data that has been loaded from the disk
@@ -66,7 +71,9 @@ module Nanoc
       #
       # @return [void]
       def data=(new_data) # rubocop:disable Lint/UnusedMethodArgument
-        raise NotImplementedError.new('Nanoc::Core::Store subclasses must implement #data and #data=')
+        raise NotImplementedError.new(
+          'Nanoc::Core::Store subclasses must implement #data and #data=',
+        )
       end
 
       # Loads the data from the filesystem into memory. This method will set the

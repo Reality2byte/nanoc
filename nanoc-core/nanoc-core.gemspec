@@ -12,7 +12,10 @@ Gem::Specification.new do |s|
   s.email       = 'denis+rubygems@denis.ws'
   s.license     = 'MIT'
 
-  s.files         = ['NEWS.md', 'README.md'] + Dir['lib/**/*.rb'] + Dir['lib/**/*-schema.json']
+  s.files =
+    ['NEWS.md', 'README.md'] +
+    Dir['lib/**/*.rb'] +
+    Dir['lib/**/*-schema.json']
   s.require_paths = ['lib']
 
   s.required_ruby_version = '>= 3.2'
@@ -29,7 +32,9 @@ Gem::Specification.new do |s|
   s.add_dependency('zeitwerk', '~> 2.1')
 
   s.metadata = {
-    'rubygems_mfa_required' => 'true',
-    'source_code_uri' => "https://github.com/nanoc/nanoc/tree/#{s.name}-v#{s.version}/#{s.name}",
+    'rubygems_mfa_required' =>
+      'true',
+    'source_code_uri' =>
+      "https://github.com/nanoc/nanoc/tree/#{s.name}-v#{s.version}/#{s.name}",
   }
 end

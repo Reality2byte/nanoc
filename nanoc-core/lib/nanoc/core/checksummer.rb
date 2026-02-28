@@ -4,8 +4,8 @@ module Nanoc
   module Core
     # Creates checksums for given objects.
     #
-    # A checksum is a string, such as “mL+TaqNsEeiPkWloPgCtAofT1yg=”, that is used
-    # to determine whether a piece of data has changed.
+    # A checksum is a string, such as “mL+TaqNsEeiPkWloPgCtAofT1yg=”, that is
+    # used to determine whether a piece of data has changed.
     class Checksummer
       class VerboseDigest
         def initialize
@@ -46,7 +46,9 @@ module Nanoc
         end
 
         def calc_for_content_of(obj)
-          obj.content_checksum_data || obj.checksum_data || Nanoc::Core::Checksummer.calc(obj.content)
+          obj.content_checksum_data ||
+            obj.checksum_data ||
+            Nanoc::Core::Checksummer.calc(obj.content)
         end
 
         def calc_for_each_attribute_of(obj, digest_class = CompactDigest)
@@ -64,7 +66,8 @@ module Nanoc
         def update(obj, digest, visited = {})
           num = visited[obj]
           if num
-            # If there already is an entry for this object, refer to it by its number.
+            # If there already is an entry for this object, refer to it by its
+            # number.
             digest.update("@#{num}")
           else
             # This object isn’t known yet. Assign it a new number.
@@ -73,7 +76,9 @@ module Nanoc
 
             digest.update(obj.class.to_s)
             digest.update("##{num}<")
-            behavior_for(obj).update(obj, digest) { |o| update(o, digest, visited) }
+            behavior_for(obj).update(obj, digest) do |o|
+              update(o, digest, visited)
+            end
             digest.update('>')
           end
         end
@@ -86,29 +91,51 @@ module Nanoc
           # NOTE: Other behaviors are registered elsewhere
           # (search for `define_behavior`).
 
-          define_behavior(Array, CollectionUpdateBehavior)
-          define_behavior(Set, SetUpdateBehavior)
-          define_behavior(FalseClass, NoUpdateBehavior)
-          define_behavior(Hash, HashUpdateBehavior)
-          define_behavior(NilClass, NoUpdateBehavior)
-          define_behavior(Numeric, RawUpdateBehavior)
-          define_behavior(Pathname, PathnameUpdateBehavior)
-          define_behavior(String, RawUpdateBehavior)
-          define_behavior(Symbol, RawUpdateBehavior)
-          define_behavior(Time, ToIToSUpdateBehavior)
-          define_behavior(TrueClass, NoUpdateBehavior)
+          define_behavior(Array,
+                          CollectionUpdateBehavior)
+          define_behavior(Set,
+                          SetUpdateBehavior)
+          define_behavior(FalseClass,
+                          NoUpdateBehavior)
+          define_behavior(Hash,
+                          HashUpdateBehavior)
+          define_behavior(NilClass,
+                          NoUpdateBehavior)
+          define_behavior(Numeric,
+                          RawUpdateBehavior)
+          define_behavior(Pathname,
+                          PathnameUpdateBehavior)
+          define_behavior(String,
+                          RawUpdateBehavior)
+          define_behavior(Symbol,
+                          RawUpdateBehavior)
+          define_behavior(Time,
+                          ToIToSUpdateBehavior)
+          define_behavior(TrueClass,
+                          NoUpdateBehavior)
 
-          define_behavior(Nanoc::Core::BinaryContent, BinaryContentUpdateBehavior)
-          define_behavior(Nanoc::Core::Configuration, HashUpdateBehavior)
-          define_behavior(Nanoc::Core::Context, ContextUpdateBehavior)
-          define_behavior(Nanoc::Core::CodeSnippet, DataUpdateBehavior)
-          define_behavior(Nanoc::Core::IdentifiableCollection, CollectionUpdateBehavior)
-          define_behavior(Nanoc::Core::Identifier, ToSUpdateBehavior)
-          define_behavior(Nanoc::Core::Item, DocumentUpdateBehavior)
-          define_behavior(Nanoc::Core::ItemRep, ItemRepUpdateBehavior)
-          define_behavior(Nanoc::Core::Layout, DocumentUpdateBehavior)
-          define_behavior(Nanoc::Core::TextualContent, StringUpdateBehavior)
-          define_behavior(Nanoc::Core::View, UnwrapUpdateBehavior)
+          define_behavior(Nanoc::Core::BinaryContent,
+                          BinaryContentUpdateBehavior)
+          define_behavior(Nanoc::Core::Configuration,
+                          HashUpdateBehavior)
+          define_behavior(Nanoc::Core::Context,
+                          ContextUpdateBehavior)
+          define_behavior(Nanoc::Core::CodeSnippet,
+                          DataUpdateBehavior)
+          define_behavior(Nanoc::Core::IdentifiableCollection,
+                          CollectionUpdateBehavior)
+          define_behavior(Nanoc::Core::Identifier,
+                          ToSUpdateBehavior)
+          define_behavior(Nanoc::Core::Item,
+                          DocumentUpdateBehavior)
+          define_behavior(Nanoc::Core::ItemRep,
+                          ItemRepUpdateBehavior)
+          define_behavior(Nanoc::Core::Layout,
+                          DocumentUpdateBehavior)
+          define_behavior(Nanoc::Core::TextualContent,
+                          StringUpdateBehavior)
+          define_behavior(Nanoc::Core::View,
+                          UnwrapUpdateBehavior)
 
           @behaviors
         end
@@ -233,14 +260,18 @@ module Nanoc
             digest.update("checksum_data=#{obj.checksum_data}")
           else
             if obj.content_checksum_data
-              digest.update("content_checksum_data=#{obj.content_checksum_data}")
+              digest.update(
+                "content_checksum_data=#{obj.content_checksum_data}",
+              )
             else
               digest.update('content=')
               yield(obj.content)
             end
 
             if obj.attributes_checksum_data
-              digest.update(",attributes_checksum_data=#{obj.attributes_checksum_data}")
+              digest.update(
+                ",attributes_checksum_data=#{obj.attributes_checksum_data}",
+              )
             else
               digest.update(',attributes=')
               yield(obj.attributes)

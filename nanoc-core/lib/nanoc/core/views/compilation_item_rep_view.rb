@@ -48,7 +48,10 @@ module Nanoc
       def compiled_content(snapshot: nil)
         compiled_content_repo = @context.compiled_content_repo
 
-        @context.dependency_tracker.bounce(@item_rep.item, compiled_content: true)
+        @context.dependency_tracker.bounce(
+          @item_rep.item,
+          compiled_content: true,
+        )
 
         begin
           compiled_content_repo.compiled_content(rep: @item_rep, snapshot:)
@@ -77,13 +80,18 @@ module Nanoc
         outdated = compilation_context.outdatedness_store.include?(@item_rep)
         return false if outdated
 
-        # Requirement: The compiled content cache must have a cache entry for this item rep.
-        cache_available = compiled_content_cache.full_cache_available?(@item_rep)
+        # Requirement: The compiled content cache must have a cache entry for
+        # this item rep.
+        cache_available =
+          compiled_content_cache.full_cache_available?(@item_rep)
         return false unless cache_available
 
         # Load the compiled content from the cache
         Nanoc::Core::NotificationCenter.post(:cached_content_used, @item_rep)
-        compiled_content_repo.set_all(@item_rep, compiled_content_cache[@item_rep])
+        compiled_content_repo.set_all(
+          @item_rep,
+          compiled_content_cache[@item_rep],
+        )
 
         # Mark as compiled
         @item_rep.compiled = true

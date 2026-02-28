@@ -43,7 +43,10 @@ module Nanoc
         ]
 
       contract C_ARGS => C::Any
-      def initialize(raw_content: false, attributes: false, compiled_content: false, path: false)
+      def initialize(
+        raw_content: false, attributes: false,
+        compiled_content: false, path: false
+      )
         @raw_content = raw_content
         @attributes = attributes
         @compiled_content = compiled_content

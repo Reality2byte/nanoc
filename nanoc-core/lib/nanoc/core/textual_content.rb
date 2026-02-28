@@ -3,7 +3,10 @@
 module Nanoc
   module Core
     class TextualContent < Content
-      contract C::Or[String, Proc], C::KeywordArgs[filename: C::Optional[C::Maybe[String]]] => C::Any
+      contract C::Or[String, Proc],
+               C::KeywordArgs[
+                 filename: C::Optional[C::Maybe[String]],
+               ] => C::Any
       def initialize(string, filename: nil)
         super(filename)
         @string = Nanoc::Core::LazyValue.new(string)

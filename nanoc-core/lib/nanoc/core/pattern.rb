@@ -17,7 +17,10 @@ module Nanoc
         when Symbol
           Nanoc::Core::StringPattern.new(obj.to_s)
         else
-          raise ArgumentError, "Do not know how to convert `#{obj.inspect}` into a Nanoc::Pattern"
+          raise(
+            ArgumentError,
+            "Do not know how to convert `#{obj.inspect}` into a Nanoc::Pattern",
+          )
         end
       end
 

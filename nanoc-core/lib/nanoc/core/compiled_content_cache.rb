@@ -36,7 +36,8 @@ module Nanoc
         textual_content_map.merge(binary_content_map)
       end
 
-      contract Nanoc::Core::ItemRep, C::HashOf[Symbol => Nanoc::Core::Content] => C::Any
+      contract Nanoc::Core::ItemRep,
+               C::HashOf[Symbol => Nanoc::Core::Content] => C::Any
       # Sets the compiled content for the given representation.
       #
       # This cached compiled content is a hash where the keys are the snapshot

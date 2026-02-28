@@ -21,7 +21,10 @@ module Nanoc
 
       # @see Object#==
       def ==(other)
-        other.respond_to?(:item) && other.respond_to?(:name) && item == other.item && name == other.name
+        other.respond_to?(:item) &&
+          other.respond_to?(:name) &&
+          item == other.item &&
+          name == other.name
       end
 
       # @see Object#eql?
@@ -70,7 +73,11 @@ module Nanoc
       # @api private
       def binary?
         snapshot_def = _unwrap.snapshot_defs.find { |sd| sd.name == :last }
-        raise Nanoc::Core::Errors::NoSuchSnapshot.new(_unwrap, :last) if snapshot_def.nil?
+        if snapshot_def.nil?
+          raise Nanoc::Core::Errors::NoSuchSnapshot.new(
+            _unwrap, :last
+          )
+        end
 
         snapshot_def.binary?
       end

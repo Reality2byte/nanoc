@@ -7,7 +7,11 @@ module Nanoc
     class Dependency
       include Nanoc::Core::ContractsSupport
 
-      C_OBJ_FROM = C::Or[Nanoc::Core::Item, Nanoc::Core::Layout, Nanoc::Core::Configuration, Nanoc::Core::IdentifiableCollection]
+      C_OBJ_FROM = C::Or[
+        Nanoc::Core::Item,
+        Nanoc::Core::Layout,
+        Nanoc::Core::Configuration,
+        Nanoc::Core::IdentifiableCollection]
       C_OBJ_TO   = Nanoc::Core::Item
 
       contract C::None => C::Maybe[C_OBJ_FROM]
@@ -19,7 +23,9 @@ module Nanoc
       contract C::None => Nanoc::Core::DependencyProps
       attr_reader :props
 
-      contract C::Maybe[C_OBJ_FROM], C::Maybe[C_OBJ_TO], Nanoc::Core::DependencyProps => C::Any
+      contract C::Maybe[C_OBJ_FROM],
+               C::Maybe[C_OBJ_TO],
+               Nanoc::Core::DependencyProps => C::Any
       def initialize(from, to, props)
         @from  = from
         @to    = to

@@ -25,7 +25,8 @@ module Nanoc
         raise NotImplementedError
       end
 
-      # Calls the given block once for each object, passing that object as a parameter.
+      # Calls the given block once for each object, passing that object as a
+      # parameter.
       #
       # @yieldparam [#identifier] object
       #
@@ -155,10 +156,13 @@ module Nanoc
           end
         when Regexp
           # Can only be a pattern match
-          object_from_pattern_match = @objects.find { |i| i.identifier.to_s =~ arg }
+          object_from_pattern_match = @objects.find do |i|
+            i.identifier.to_s =~ arg
+          end
         else
           raise ArgumentError,
-                "Unexpected argument #{arg.class} to []: Can only pass strings, identfiers, and regular expressions"
+                "Unexpected argument #{arg.class} to []: Can only pass " \
+                'strings, identfiers, and regular expressions'
         end
 
         unless object_from_exact_match
@@ -177,7 +181,10 @@ module Nanoc
               [arg]
             end
 
-          @context.dependency_tracker.bounce(_unwrap, raw_content: prop_attribute)
+          @context.dependency_tracker.bounce(
+            _unwrap,
+            raw_content: prop_attribute,
+          )
         end
 
         object = object_from_exact_match || object_from_pattern_match

@@ -68,7 +68,10 @@ module Nanoc
             action_sequences:,
             reps:,
           )
-          outdated_items = determine_outdatedness_stage(outdatedness_checker, reps).call
+          outdated_items = determine_outdatedness_stage(
+            outdatedness_checker,
+            reps,
+          ).call
 
           prev.merge(
             checksums:,
@@ -87,7 +90,10 @@ module Nanoc
         outdated_items = res.fetch(:outdated_items)
 
         forget_outdated_dependencies_stage.call(outdated_items)
-        store_pre_compilation_state_stage(action_sequences, reps).call(checksums)
+        store_pre_compilation_state_stage(
+          action_sequences,
+          reps,
+        ).call(checksums)
         prune_stage(reps).call
         compile_reps_stage(action_sequences, reps).call
         store_post_compilation_state_stage.call
