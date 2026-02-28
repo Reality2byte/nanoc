@@ -54,22 +54,25 @@ module Nanoc
 
       contract C_OBJ => C::IterOf[Reasons::Generic]
       def outdatedness_reasons_for(obj)
-        run
+        precalculate
 
         basic_reasons = @basic_outdatedness_statuses.fetch(obj).reasons
-        if !basic_reasons.empty?
-          basic_reasons
-        elsif outdated_due_to_dependencies?(obj)
-          [Reasons::DependenciesOutdated]
-        else
-          []
+        unless basic_reasons.empty?
+          return basic_reasons
         end
+
+        obj = obj.item if obj.is_a?(Nanoc::Core::ItemRep)
+        if @objs_outdated_due_to_dependencies.include?(obj)
+          return [Reasons::DependenciesOutdated]
+        end
+
+        []
       end
 
       private
 
-      def run
-        return if @ran
+      def precalculate
+        return if @precalculated
 
         @basic_outdatedness_statuses, basic_outdated_objs =
           calc_basic_outdatedness_statuses
@@ -80,7 +83,7 @@ module Nanoc
             basic_outdated_objs,
           )
 
-        @ran = true
+        @precalculated = true
       end
 
       def propagate_outdatedness(
@@ -115,8 +118,11 @@ module Nanoc
               coll = dep.from # or simply `obj`
               props = dep.props
 
-              if raw_content_prop_causes_outdatedness?(coll, props.raw_content) ||
-                 attributes_prop_causes_outdatedness?(coll, props.attributes)
+              if raw_content_prop_causes_outdatedness?(
+                coll, props.raw_content, basic_outdatedness_statuses
+              ) || attributes_prop_causes_outdatedness?(
+                coll, props.attributes
+              )
                 objs_outdated_due_to_dependencies << dep.to
                 pending << dep.to
               end
@@ -188,12 +194,6 @@ module Nanoc
         )
       end
 
-      contract C_OBJ => C::Bool
-      def outdated_due_to_dependencies?(obj)
-        obj = obj.item if obj.is_a?(Nanoc::Core::ItemRep)
-        @objs_outdated_due_to_dependencies.include?(obj)
-      end
-
       def attributes_unaffected?(status, dependency)
         reason = status.reasons.find do |r|
           r.is_a?(Nanoc::Core::OutdatednessReasons::AttributesModified)
@@ -204,11 +204,13 @@ module Nanoc
           !dependency.props.attribute_keys.intersect?(reason.attributes)
       end
 
-      def raw_content_prop_causes_outdatedness?(collection, raw_content_prop)
+      def raw_content_prop_causes_outdatedness?(
+        collection, raw_content_prop, basic_outdatedness_statuses
+      )
         return false unless raw_content_prop
 
         document_added_reason =
-          @basic_outdatedness_statuses
+          basic_outdatedness_statuses
           .fetch(collection)
           .reasons
           .grep(Nanoc::Core::OutdatednessReasons::DocumentAdded)
