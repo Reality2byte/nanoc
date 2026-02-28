@@ -154,14 +154,21 @@ describe Nanoc::Core::PostCompileItemRepView do
     subject { view.compiled_content }
 
     context 'binary' do
-      let(:snapshot_contents) do
-        temp_file = Tempfile.new('binary junk')
-        temp_file.write('binary data here')
-        temp_file.sync
+      around do |ex|
+        Tempfile.create('binary junk') do |temp_file|
+          temp_file.write('binary data here')
+          temp_file.flush
+          ex.metadata[:temp_file_path] = temp_file.path
+          ex.run
+        end
+      end
 
+      let(:snapshot_contents) do
         {
           last: Nanoc::Core::TextualContent.new('content-last'),
-          pre: Nanoc::Core::BinaryContent.new(temp_file.path),
+          pre: Nanoc::Core::BinaryContent.new(
+            RSpec.current_example.metadata[:temp_file_path],
+          ),
           donkey: Nanoc::Core::TextualContent.new('content-donkey'),
         }
       end
