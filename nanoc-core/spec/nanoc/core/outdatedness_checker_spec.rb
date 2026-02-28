@@ -14,15 +14,23 @@ describe Nanoc::Core::OutdatednessChecker do
     Nanoc::Core::Site.new(
       config: config_after,
       code_snippets: code_snippets_after,
-      data_source: Nanoc::Core::InMemoryDataSource.new(items_after_coll, layouts_after_coll),
+      data_source: Nanoc::Core::InMemoryDataSource.new(
+        items_after_coll, layouts_after_coll
+      ),
     )
   end
 
-  let(:config_before) { Nanoc::Core::Configuration.new(dir: Dir.getwd).with_defaults }
+  let(:config_before) do
+    Nanoc::Core::Configuration.new(dir: Dir.getwd).with_defaults
+  end
   let(:config_after) { config_before }
 
-  let(:code_snippet_a_before) { Nanoc::Core::CodeSnippet.new('aaa', 'lib/a.rb') }
-  let(:code_snippet_b_before) { Nanoc::Core::CodeSnippet.new('bbb', 'lib/b.rb') }
+  let(:code_snippet_a_before) do
+    Nanoc::Core::CodeSnippet.new('aaa', 'lib/a.rb')
+  end
+  let(:code_snippet_b_before) do
+    Nanoc::Core::CodeSnippet.new('bbb', 'lib/b.rb')
+  end
 
   let(:code_snippet_a_after) { code_snippet_a_before }
   let(:code_snippet_b_after) { code_snippet_b_before }
@@ -35,11 +43,17 @@ describe Nanoc::Core::OutdatednessChecker do
   let(:item_articles_before)      { Nanoc::Core::Item.new('Articles', {}, '/articles.html.erb') }
   let(:item_articles_rep_before)  { Nanoc::Core::ItemRep.new(item_articles_before, :default) }
   let(:item_article_a_before)     { Nanoc::Core::Item.new('Article A', {}, '/articles/2019-a.md') }
-  let(:item_article_a_rep_before) { Nanoc::Core::ItemRep.new(item_article_a_before, :default) }
+  let(:item_article_a_rep_before) do
+    Nanoc::Core::ItemRep.new(item_article_a_before, :default)
+  end
   let(:item_article_b_before)     { Nanoc::Core::Item.new('Article B', {}, '/articles/2022-b.md') }
-  let(:item_article_b_rep_before) { Nanoc::Core::ItemRep.new(item_article_b_before, :default) }
+  let(:item_article_b_rep_before) do
+    Nanoc::Core::ItemRep.new(item_article_b_before, :default)
+  end
   let(:item_article_c_before)     { Nanoc::Core::Item.new('Article C', {}, '/articles/2022-c.md') }
-  let(:item_article_c_rep_before) { Nanoc::Core::ItemRep.new(item_article_c_before, :default) }
+  let(:item_article_c_rep_before) do
+    Nanoc::Core::ItemRep.new(item_article_c_before, :default)
+  end
 
   let(:item_home_after)          { item_home_before }
   let(:item_home_rep_after)      { item_home_rep_before }
@@ -60,8 +74,16 @@ describe Nanoc::Core::OutdatednessChecker do
     [item_home_after, item_articles_after, item_article_a_after, item_article_b_after,
      item_article_c_after]
   end
-  let(:items_before_coll)  { Nanoc::Core::ItemCollection.new(config_before, items_before_array) }
-  let(:items_after_coll)   { Nanoc::Core::ItemCollection.new(config_after, items_after_array) }
+  let(:items_before_coll) do
+    Nanoc::Core::ItemCollection.new(
+      config_before, items_before_array
+    )
+  end
+  let(:items_after_coll) do
+    Nanoc::Core::ItemCollection.new(
+      config_after, items_after_array
+    )
+  end
 
   let(:reps) do
     Nanoc::Core::ItemRepRepo.new.tap do |rr|
@@ -73,16 +95,32 @@ describe Nanoc::Core::OutdatednessChecker do
     end
   end
 
-  let(:layout_default_before)       { Nanoc::Core::Layout.new('Default', { kind: 'default' }, '/default.html.erb') }
-  let(:layout_articles_before)      { Nanoc::Core::Layout.new('Articles', { kind: 'article' }, '/articles.html.erb') }
+  let(:layout_default_before) do
+    Nanoc::Core::Layout.new(
+      'Default', { kind: 'default' }, '/default.html.erb'
+    )
+  end
+  let(:layout_articles_before) do
+    Nanoc::Core::Layout.new(
+      'Articles', { kind: 'article' }, '/articles.html.erb'
+    )
+  end
 
   let(:layout_default_after)       { layout_default_before }
   let(:layout_articles_after)      { layout_articles_before }
 
   let(:layouts_before_array) { [layout_default_before, layout_articles_before] }
   let(:layouts_after_array)  { [layout_default_after, layout_articles_after] }
-  let(:layouts_before_coll)  { Nanoc::Core::LayoutCollection.new(config_before, layouts_before_array) }
-  let(:layouts_after_coll)   { Nanoc::Core::LayoutCollection.new(config_after, layouts_after_array) }
+  let(:layouts_before_coll)  do
+    Nanoc::Core::LayoutCollection.new(
+      config_before, layouts_before_array
+    )
+  end
+  let(:layouts_after_coll) do
+    Nanoc::Core::LayoutCollection.new(
+      config_after, layouts_after_array
+    )
+  end
 
   let(:outdatedness_checker) do
     described_class.new(
@@ -95,6 +133,8 @@ describe Nanoc::Core::OutdatednessChecker do
       reps:,
     )
   end
+
+  let(:oc) { outdatedness_checker }
 
   let(:checksum_store) do
     Nanoc::Core::ChecksumStore.new(
@@ -194,11 +234,11 @@ describe Nanoc::Core::OutdatednessChecker do
 
   context 'when nothing has changed' do
     it 'marks all items as NOT outdated' do
-      expect(outdatedness_checker.outdatedness_reasons_for(item_home_after)).to be_empty
-      expect(outdatedness_checker.outdatedness_reasons_for(item_articles_after)).to be_empty
-      expect(outdatedness_checker.outdatedness_reasons_for(item_article_a_after)).to be_empty
-      expect(outdatedness_checker.outdatedness_reasons_for(item_article_b_after)).to be_empty
-      expect(outdatedness_checker.outdatedness_reasons_for(item_article_c_after)).to be_empty
+      expect(oc.outdatedness_reasons_for(item_home_after)).to be_empty
+      expect(oc.outdatedness_reasons_for(item_articles_after)).to be_empty
+      expect(oc.outdatedness_reasons_for(item_article_a_after)).to be_empty
+      expect(oc.outdatedness_reasons_for(item_article_b_after)).to be_empty
+      expect(oc.outdatedness_reasons_for(item_article_c_after)).to be_empty
     end
   end
 
@@ -207,20 +247,23 @@ describe Nanoc::Core::OutdatednessChecker do
     let(:item_home_rep_after)      { Nanoc::Core::ItemRep.new(item_home_after, :default) }
 
     it 'marks home item as outdated' do
-      expect(outdatedness_checker.outdatedness_reasons_for(item_home_after)).to contain_exactly(Nanoc::Core::OutdatednessReasons::ContentModified)
+      expect(oc.outdatedness_reasons_for(item_home_after))
+        .to contain_exactly(Nanoc::Core::OutdatednessReasons::ContentModified)
     end
 
     it 'marks other items as NOT outdated' do
-      expect(outdatedness_checker.outdatedness_reasons_for(item_articles_after)).to be_empty
-      expect(outdatedness_checker.outdatedness_reasons_for(item_article_a_after)).to be_empty
-      expect(outdatedness_checker.outdatedness_reasons_for(item_article_b_after)).to be_empty
-      expect(outdatedness_checker.outdatedness_reasons_for(item_article_c_after)).to be_empty
+      expect(oc.outdatedness_reasons_for(item_articles_after)).to be_empty
+      expect(oc.outdatedness_reasons_for(item_article_a_after)).to be_empty
+      expect(oc.outdatedness_reasons_for(item_article_b_after)).to be_empty
+      expect(oc.outdatedness_reasons_for(item_article_c_after)).to be_empty
     end
   end
 
   context 'when article item has changed raw content' do
     let(:item_article_a_after)     { Nanoc::Core::Item.new('Article A UPDATED', {}, '/articles/2019-a.md') }
-    let(:item_article_a_rep_after) { Nanoc::Core::ItemRep.new(item_article_a_after, :default) }
+    let(:item_article_a_rep_after) do
+      Nanoc::Core::ItemRep.new(item_article_a_after, :default)
+    end
 
     context 'when articles item depends on raw content of articles' do
       let(:dependency_store) do
@@ -229,24 +272,32 @@ describe Nanoc::Core::OutdatednessChecker do
           layouts_before_coll,
           config_before,
         ).tap do |store|
-          store.record_dependency(item_articles_before, item_article_a_before, raw_content: true)
-          store.record_dependency(item_articles_before, item_article_b_before, raw_content: true)
-          store.record_dependency(item_articles_before, item_article_c_before, raw_content: true)
+          store.record_dependency(
+            item_articles_before, item_article_a_before, raw_content: true
+          )
+          store.record_dependency(
+            item_articles_before, item_article_b_before, raw_content: true
+          )
+          store.record_dependency(
+            item_articles_before, item_article_c_before, raw_content: true
+          )
         end
       end
 
       it 'marks article item as outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_a_after)).to contain_exactly(Nanoc::Core::OutdatednessReasons::ContentModified)
+        expect(oc.outdatedness_reasons_for(item_article_a_after))
+          .to contain_exactly(Nanoc::Core::OutdatednessReasons::ContentModified)
       end
 
       it 'marks articles item as outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_articles_after)).to contain_exactly(Nanoc::Core::OutdatednessReasons::DependenciesOutdated)
+        expect(oc.outdatedness_reasons_for(item_articles_after))
+          .to contain_exactly(Nanoc::Core::OutdatednessReasons::DependenciesOutdated)
       end
 
       it 'marks other items as NOT outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_home_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_b_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_c_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_home_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_b_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_c_after)).to be_empty
       end
     end
 
@@ -257,21 +308,28 @@ describe Nanoc::Core::OutdatednessChecker do
           layouts_before_coll,
           config_before,
         ).tap do |store|
-          store.record_dependency(item_articles_before, item_article_a_before, attributes: true)
-          store.record_dependency(item_articles_before, item_article_b_before, attributes: true)
-          store.record_dependency(item_articles_before, item_article_c_before, attributes: true)
+          store.record_dependency(
+            item_articles_before, item_article_a_before, attributes: true
+          )
+          store.record_dependency(
+            item_articles_before, item_article_b_before, attributes: true
+          )
+          store.record_dependency(
+            item_articles_before, item_article_c_before, attributes: true
+          )
         end
       end
 
       it 'marks article item as outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_a_after)).to contain_exactly(Nanoc::Core::OutdatednessReasons::ContentModified)
+        expect(oc.outdatedness_reasons_for(item_article_a_after))
+          .to contain_exactly(Nanoc::Core::OutdatednessReasons::ContentModified)
       end
 
       it 'marks other items as NOT outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_home_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_articles_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_b_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_c_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_home_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_articles_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_b_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_c_after)).to be_empty
       end
     end
 
@@ -301,17 +359,19 @@ describe Nanoc::Core::OutdatednessChecker do
       end
 
       it 'marks article item as outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_a_after)).to contain_exactly(Nanoc::Core::OutdatednessReasons::ContentModified)
+        expect(oc.outdatedness_reasons_for(item_article_a_after))
+          .to contain_exactly(Nanoc::Core::OutdatednessReasons::ContentModified)
       end
 
       it 'marks articles item as outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_articles_after)).to contain_exactly(Nanoc::Core::OutdatednessReasons::DependenciesOutdated)
+        expect(oc.outdatedness_reasons_for(item_articles_after))
+          .to contain_exactly(Nanoc::Core::OutdatednessReasons::DependenciesOutdated)
       end
 
       it 'marks other items as NOT outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_home_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_b_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_c_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_home_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_b_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_c_after)).to be_empty
       end
     end
 
@@ -322,28 +382,39 @@ describe Nanoc::Core::OutdatednessChecker do
           layouts_before_coll,
           config_before,
         ).tap do |store|
-          store.record_dependency(item_articles_before, item_article_a_before, path: true)
-          store.record_dependency(item_articles_before, item_article_b_before, path: true)
-          store.record_dependency(item_articles_before, item_article_c_before, path: true)
+          store.record_dependency(
+            item_articles_before, item_article_a_before, path: true
+          )
+          store.record_dependency(
+            item_articles_before, item_article_b_before, path: true
+          )
+          store.record_dependency(
+            item_articles_before, item_article_c_before, path: true
+          )
         end
       end
 
       it 'marks article item as outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_a_after)).to contain_exactly(Nanoc::Core::OutdatednessReasons::ContentModified)
+        expect(oc.outdatedness_reasons_for(item_article_a_after))
+          .to contain_exactly(Nanoc::Core::OutdatednessReasons::ContentModified)
       end
 
       it 'marks other items as NOT outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_home_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_articles_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_b_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_c_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_home_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_articles_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_b_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_c_after)).to be_empty
       end
     end
   end
 
   context 'when article item has changed attributes' do
-    let(:item_article_a_after)     { Nanoc::Core::Item.new('Article A', { title: 'UPDATED title' }, '/articles/2019-a.md') }
-    let(:item_article_a_rep_after) { Nanoc::Core::ItemRep.new(item_article_a_after, :default) }
+    let(:item_article_a_after) do
+      Nanoc::Core::Item.new('Article A', { title: 'UPDATED title' }, '/articles/2019-a.md')
+    end
+    let(:item_article_a_rep_after) do
+      Nanoc::Core::ItemRep.new(item_article_a_after, :default)
+    end
 
     context 'when articles item depends on raw content of articles' do
       let(:dependency_store) do
@@ -352,21 +423,28 @@ describe Nanoc::Core::OutdatednessChecker do
           layouts_before_coll,
           config_before,
         ).tap do |store|
-          store.record_dependency(item_articles_before, item_article_a_before, raw_content: true)
-          store.record_dependency(item_articles_before, item_article_b_before, raw_content: true)
-          store.record_dependency(item_articles_before, item_article_c_before, raw_content: true)
+          store.record_dependency(
+            item_articles_before, item_article_a_before, raw_content: true
+          )
+          store.record_dependency(
+            item_articles_before, item_article_b_before, raw_content: true
+          )
+          store.record_dependency(
+            item_articles_before, item_article_c_before, raw_content: true
+          )
         end
       end
 
       it 'marks article item as outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_a_after)).to contain_exactly(Nanoc::Core::OutdatednessReasons::AttributesModified)
+        expect(oc.outdatedness_reasons_for(item_article_a_after))
+          .to contain_exactly(Nanoc::Core::OutdatednessReasons::AttributesModified)
       end
 
       it 'marks other items as NOT outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_home_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_articles_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_b_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_c_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_home_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_articles_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_b_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_c_after)).to be_empty
       end
     end
 
@@ -377,24 +455,32 @@ describe Nanoc::Core::OutdatednessChecker do
           layouts_before_coll,
           config_before,
         ).tap do |store|
-          store.record_dependency(item_articles_before, item_article_a_before, attributes: true)
-          store.record_dependency(item_articles_before, item_article_b_before, attributes: true)
-          store.record_dependency(item_articles_before, item_article_c_before, attributes: true)
+          store.record_dependency(
+            item_articles_before, item_article_a_before, attributes: true
+          )
+          store.record_dependency(
+            item_articles_before, item_article_b_before, attributes: true
+          )
+          store.record_dependency(
+            item_articles_before, item_article_c_before, attributes: true
+          )
         end
       end
 
       it 'marks article item as outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_a_after)).to contain_exactly(Nanoc::Core::OutdatednessReasons::AttributesModified)
+        expect(oc.outdatedness_reasons_for(item_article_a_after))
+          .to contain_exactly(Nanoc::Core::OutdatednessReasons::AttributesModified)
       end
 
       it 'marks articles item as outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_articles_after)).to contain_exactly(Nanoc::Core::OutdatednessReasons::DependenciesOutdated)
+        expect(oc.outdatedness_reasons_for(item_articles_after))
+          .to contain_exactly(Nanoc::Core::OutdatednessReasons::DependenciesOutdated)
       end
 
       it 'marks other items as NOT outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_home_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_b_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_c_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_home_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_b_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_c_after)).to be_empty
       end
     end
 
@@ -405,24 +491,32 @@ describe Nanoc::Core::OutdatednessChecker do
           layouts_before_coll,
           config_before,
         ).tap do |store|
-          store.record_dependency(item_articles_before, item_article_a_before, attributes: [:title])
-          store.record_dependency(item_articles_before, item_article_b_before, attributes: [:title])
-          store.record_dependency(item_articles_before, item_article_c_before, attributes: [:title])
+          store.record_dependency(
+            item_articles_before, item_article_a_before, attributes: [:title]
+          )
+          store.record_dependency(
+            item_articles_before, item_article_b_before, attributes: [:title]
+          )
+          store.record_dependency(
+            item_articles_before, item_article_c_before, attributes: [:title]
+          )
         end
       end
 
       it 'marks article item as outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_a_after)).to contain_exactly(Nanoc::Core::OutdatednessReasons::AttributesModified)
+        expect(oc.outdatedness_reasons_for(item_article_a_after))
+          .to contain_exactly(Nanoc::Core::OutdatednessReasons::AttributesModified)
       end
 
       it 'marks articles item as outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_articles_after)).to contain_exactly(Nanoc::Core::OutdatednessReasons::DependenciesOutdated)
+        expect(oc.outdatedness_reasons_for(item_articles_after))
+          .to contain_exactly(Nanoc::Core::OutdatednessReasons::DependenciesOutdated)
       end
 
       it 'marks other items as NOT outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_home_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_b_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_c_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_home_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_b_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_c_after)).to be_empty
       end
     end
 
@@ -452,14 +546,15 @@ describe Nanoc::Core::OutdatednessChecker do
       end
 
       it 'marks article item as outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_a_after)).to contain_exactly(Nanoc::Core::OutdatednessReasons::AttributesModified)
+        expect(oc.outdatedness_reasons_for(item_article_a_after))
+          .to contain_exactly(Nanoc::Core::OutdatednessReasons::AttributesModified)
       end
 
       it 'marks other items as NOT outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_home_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_articles_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_b_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_c_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_home_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_articles_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_b_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_c_after)).to be_empty
       end
     end
 
@@ -489,17 +584,19 @@ describe Nanoc::Core::OutdatednessChecker do
       end
 
       it 'marks article item as outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_a_after)).to contain_exactly(Nanoc::Core::OutdatednessReasons::AttributesModified)
+        expect(oc.outdatedness_reasons_for(item_article_a_after))
+          .to contain_exactly(Nanoc::Core::OutdatednessReasons::AttributesModified)
       end
 
       it 'marks articles item as outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_articles_after)).to contain_exactly(Nanoc::Core::OutdatednessReasons::DependenciesOutdated)
+        expect(oc.outdatedness_reasons_for(item_articles_after))
+          .to contain_exactly(Nanoc::Core::OutdatednessReasons::DependenciesOutdated)
       end
 
       it 'marks other items as NOT outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_home_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_b_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_c_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_home_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_b_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_c_after)).to be_empty
       end
     end
 
@@ -510,27 +607,36 @@ describe Nanoc::Core::OutdatednessChecker do
           layouts_before_coll,
           config_before,
         ).tap do |store|
-          store.record_dependency(item_articles_before, item_article_a_before, path: true)
-          store.record_dependency(item_articles_before, item_article_b_before, path: true)
-          store.record_dependency(item_articles_before, item_article_c_before, path: true)
+          store.record_dependency(
+            item_articles_before, item_article_a_before, path: true
+          )
+          store.record_dependency(
+            item_articles_before, item_article_b_before, path: true
+          )
+          store.record_dependency(
+            item_articles_before, item_article_c_before, path: true
+          )
         end
       end
 
       it 'marks article item as outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_a_after)).to contain_exactly(Nanoc::Core::OutdatednessReasons::AttributesModified)
+        expect(oc.outdatedness_reasons_for(item_article_a_after))
+          .to contain_exactly(Nanoc::Core::OutdatednessReasons::AttributesModified)
       end
 
       it 'marks other items as NOT outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_home_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_articles_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_b_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_c_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_home_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_articles_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_b_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_c_after)).to be_empty
       end
     end
   end
 
   context 'when layout has changed raw content' do
-    let(:layout_default_after) { Nanoc::Core::Layout.new('Default UPDATED', { kind: 'default' }, '/default.html.erb') }
+    let(:layout_default_after) do
+      Nanoc::Core::Layout.new('Default UPDATED', { kind: 'default' }, '/default.html.erb')
+    end
 
     context 'when articles item depends on raw content of layout' do
       let(:dependency_store) do
@@ -539,19 +645,22 @@ describe Nanoc::Core::OutdatednessChecker do
           layouts_before_coll,
           config_before,
         ).tap do |store|
-          store.record_dependency(item_articles_before, layout_default_after, raw_content: true)
+          store.record_dependency(
+            item_articles_before, layout_default_after, raw_content: true
+          )
         end
       end
 
       it 'marks articles item as outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_articles_after)).to contain_exactly(Nanoc::Core::OutdatednessReasons::DependenciesOutdated)
+        expect(oc.outdatedness_reasons_for(item_articles_after))
+          .to contain_exactly(Nanoc::Core::OutdatednessReasons::DependenciesOutdated)
       end
 
       it 'marks other items as NOT outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_home_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_a_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_b_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_c_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_home_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_a_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_b_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_c_after)).to be_empty
       end
     end
 
@@ -562,16 +671,18 @@ describe Nanoc::Core::OutdatednessChecker do
           layouts_before_coll,
           config_before,
         ).tap do |store|
-          store.record_dependency(item_articles_before, layout_default_after, attributes: true)
+          store.record_dependency(
+            item_articles_before, layout_default_after, attributes: true
+          )
         end
       end
 
       it 'marks all items as NOT outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_home_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_articles_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_a_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_b_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_c_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_home_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_articles_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_a_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_b_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_c_after)).to be_empty
       end
     end
 
@@ -582,16 +693,18 @@ describe Nanoc::Core::OutdatednessChecker do
           layouts_before_coll,
           config_before,
         ).tap do |store|
-          store.record_dependency(item_articles_before, layout_default_after, attributes: [:title])
+          store.record_dependency(
+            item_articles_before, layout_default_after, attributes: [:title]
+          )
         end
       end
 
       it 'marks all items as NOT outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_home_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_articles_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_a_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_b_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_c_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_home_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_articles_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_a_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_b_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_c_after)).to be_empty
       end
     end
 
@@ -602,16 +715,18 @@ describe Nanoc::Core::OutdatednessChecker do
           layouts_before_coll,
           config_before,
         ).tap do |store|
-          store.record_dependency(item_articles_before, layout_default_after, attributes: [:author])
+          store.record_dependency(
+            item_articles_before, layout_default_after, attributes: [:author]
+          )
         end
       end
 
       it 'marks all items as NOT outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_home_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_articles_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_a_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_b_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_c_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_home_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_articles_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_a_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_b_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_c_after)).to be_empty
       end
     end
 
@@ -622,29 +737,37 @@ describe Nanoc::Core::OutdatednessChecker do
           layouts_before_coll,
           config_before,
         ).tap do |store|
-          store.record_dependency(item_home_before, item_articles_before, compiled_content: true)
-          store.record_dependency(item_articles_before, layout_default_after, raw_content: true)
+          store.record_dependency(
+            item_home_before, item_articles_before, compiled_content: true
+          )
+          store.record_dependency(
+            item_articles_before, layout_default_after, raw_content: true
+          )
         end
       end
 
       it 'marks home item as outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_home_after)).to contain_exactly(Nanoc::Core::OutdatednessReasons::DependenciesOutdated)
+        expect(oc.outdatedness_reasons_for(item_home_after))
+          .to contain_exactly(Nanoc::Core::OutdatednessReasons::DependenciesOutdated)
       end
 
       it 'marks articles item as outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_articles_after)).to contain_exactly(Nanoc::Core::OutdatednessReasons::DependenciesOutdated)
+        expect(oc.outdatedness_reasons_for(item_articles_after))
+          .to contain_exactly(Nanoc::Core::OutdatednessReasons::DependenciesOutdated)
       end
 
       it 'marks other items as NOT outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_a_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_b_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_c_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_a_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_b_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_c_after)).to be_empty
       end
     end
   end
 
   context 'when layout has changed attributes' do
-    let(:layout_default_after) { Nanoc::Core::Layout.new('Default', { title: 'Title UPDATED' }, '/default.html.erb') }
+    let(:layout_default_after) do
+      Nanoc::Core::Layout.new('Default', { title: 'Title UPDATED' }, '/default.html.erb')
+    end
 
     context 'when articles item depends on raw content of layout' do
       let(:dependency_store) do
@@ -653,16 +776,18 @@ describe Nanoc::Core::OutdatednessChecker do
           layouts_before_coll,
           config_before,
         ).tap do |store|
-          store.record_dependency(item_articles_before, layout_default_after, raw_content: true)
+          store.record_dependency(
+            item_articles_before, layout_default_after, raw_content: true
+          )
         end
       end
 
       it 'marks all items as NOT outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_home_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_articles_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_a_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_b_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_c_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_home_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_articles_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_a_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_b_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_c_after)).to be_empty
       end
     end
 
@@ -673,19 +798,22 @@ describe Nanoc::Core::OutdatednessChecker do
           layouts_before_coll,
           config_before,
         ).tap do |store|
-          store.record_dependency(item_articles_before, layout_default_after, attributes: true)
+          store.record_dependency(
+            item_articles_before, layout_default_after, attributes: true
+          )
         end
       end
 
       it 'marks articles item as outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_articles_after)).to contain_exactly(Nanoc::Core::OutdatednessReasons::DependenciesOutdated)
+        expect(oc.outdatedness_reasons_for(item_articles_after))
+          .to contain_exactly(Nanoc::Core::OutdatednessReasons::DependenciesOutdated)
       end
 
       it 'marks other items as NOT outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_home_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_a_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_b_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_c_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_home_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_a_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_b_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_c_after)).to be_empty
       end
     end
 
@@ -696,19 +824,22 @@ describe Nanoc::Core::OutdatednessChecker do
           layouts_before_coll,
           config_before,
         ).tap do |store|
-          store.record_dependency(item_articles_before, layout_default_after, attributes: [:title])
+          store.record_dependency(
+            item_articles_before, layout_default_after, attributes: [:title]
+          )
         end
       end
 
       it 'marks articles item as outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_articles_after)).to contain_exactly(Nanoc::Core::OutdatednessReasons::DependenciesOutdated)
+        expect(oc.outdatedness_reasons_for(item_articles_after))
+          .to contain_exactly(Nanoc::Core::OutdatednessReasons::DependenciesOutdated)
       end
 
       it 'marks other items as NOT outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_home_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_a_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_b_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_c_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_home_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_a_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_b_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_c_after)).to be_empty
       end
     end
 
@@ -719,23 +850,27 @@ describe Nanoc::Core::OutdatednessChecker do
           layouts_before_coll,
           config_before,
         ).tap do |store|
-          store.record_dependency(item_articles_before, layout_default_after, attributes: [:author])
+          store.record_dependency(
+            item_articles_before, layout_default_after, attributes: [:author]
+          )
         end
       end
 
       it 'marks other items as NOT outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_home_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_articles_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_a_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_b_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_c_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_home_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_articles_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_a_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_b_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_c_after)).to be_empty
       end
     end
   end
 
   context 'when article item has changed rules' do
     let(:item_article_a_after)     { Nanoc::Core::Item.new('Article A', {}, '/articles/2019-a.md') }
-    let(:item_article_a_rep_after) { Nanoc::Core::ItemRep.new(item_article_a_after, :default) }
+    let(:item_article_a_rep_after) do
+      Nanoc::Core::ItemRep.new(item_article_a_after, :default)
+    end
 
     let(:action_sequences_after) do
       action_sequences_before.merge(
@@ -752,21 +887,28 @@ describe Nanoc::Core::OutdatednessChecker do
           layouts_before_coll,
           config_before,
         ).tap do |store|
-          store.record_dependency(item_articles_before, item_article_a_before, raw_content: true)
-          store.record_dependency(item_articles_before, item_article_b_before, raw_content: true)
-          store.record_dependency(item_articles_before, item_article_c_before, raw_content: true)
+          store.record_dependency(
+            item_articles_before, item_article_a_before, raw_content: true
+          )
+          store.record_dependency(
+            item_articles_before, item_article_b_before, raw_content: true
+          )
+          store.record_dependency(
+            item_articles_before, item_article_c_before, raw_content: true
+          )
         end
       end
 
       it 'marks article item as outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_a_after)).to contain_exactly(Nanoc::Core::OutdatednessReasons::RulesModified)
+        expect(oc.outdatedness_reasons_for(item_article_a_after))
+          .to contain_exactly(Nanoc::Core::OutdatednessReasons::RulesModified)
       end
 
       it 'marks other items as NOT outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_home_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_articles_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_b_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_c_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_home_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_articles_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_b_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_c_after)).to be_empty
       end
     end
 
@@ -777,21 +919,28 @@ describe Nanoc::Core::OutdatednessChecker do
           layouts_before_coll,
           config_before,
         ).tap do |store|
-          store.record_dependency(item_articles_before, item_article_a_before, attributes: true)
-          store.record_dependency(item_articles_before, item_article_b_before, attributes: true)
-          store.record_dependency(item_articles_before, item_article_c_before, attributes: true)
+          store.record_dependency(
+            item_articles_before, item_article_a_before, attributes: true
+          )
+          store.record_dependency(
+            item_articles_before, item_article_b_before, attributes: true
+          )
+          store.record_dependency(
+            item_articles_before, item_article_c_before, attributes: true
+          )
         end
       end
 
       it 'marks article item as outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_a_after)).to contain_exactly(Nanoc::Core::OutdatednessReasons::RulesModified)
+        expect(oc.outdatedness_reasons_for(item_article_a_after))
+          .to contain_exactly(Nanoc::Core::OutdatednessReasons::RulesModified)
       end
 
       it 'marks other items as NOT outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_home_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_articles_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_b_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_c_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_home_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_articles_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_b_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_c_after)).to be_empty
       end
     end
 
@@ -821,17 +970,19 @@ describe Nanoc::Core::OutdatednessChecker do
       end
 
       it 'marks article item as outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_a_after)).to contain_exactly(Nanoc::Core::OutdatednessReasons::RulesModified)
+        expect(oc.outdatedness_reasons_for(item_article_a_after))
+          .to contain_exactly(Nanoc::Core::OutdatednessReasons::RulesModified)
       end
 
       it 'marks articles item as outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_articles_after)).to contain_exactly(Nanoc::Core::OutdatednessReasons::DependenciesOutdated)
+        expect(oc.outdatedness_reasons_for(item_articles_after))
+          .to contain_exactly(Nanoc::Core::OutdatednessReasons::DependenciesOutdated)
       end
 
       it 'marks other items as NOT outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_home_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_b_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_c_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_home_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_b_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_c_after)).to be_empty
       end
     end
 
@@ -842,14 +993,21 @@ describe Nanoc::Core::OutdatednessChecker do
           layouts_before_coll,
           config_before,
         ).tap do |store|
-          store.record_dependency(item_articles_before, item_article_a_before, path: true)
-          store.record_dependency(item_articles_before, item_article_b_before, path: true)
-          store.record_dependency(item_articles_before, item_article_c_before, path: true)
+          store.record_dependency(
+            item_articles_before, item_article_a_before, path: true
+          )
+          store.record_dependency(
+            item_articles_before, item_article_b_before, path: true
+          )
+          store.record_dependency(
+            item_articles_before, item_article_c_before, path: true
+          )
         end
       end
 
       it 'marks article item as outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_a_after)).to contain_exactly(Nanoc::Core::OutdatednessReasons::RulesModified)
+        expect(oc.outdatedness_reasons_for(item_article_a_after))
+          .to contain_exactly(Nanoc::Core::OutdatednessReasons::RulesModified)
       end
 
       it 'marks articles item as outdated' do
@@ -857,29 +1015,37 @@ describe Nanoc::Core::OutdatednessChecker do
         # articles item should not be considered as outdated. This is because
         # the `RulesModified` outdatedness reason has the property `path: true`.
 
-        expect(outdatedness_checker.outdatedness_reasons_for(item_articles_after)).to contain_exactly(Nanoc::Core::OutdatednessReasons::DependenciesOutdated)
+        expect(oc.outdatedness_reasons_for(item_articles_after))
+          .to contain_exactly(Nanoc::Core::OutdatednessReasons::DependenciesOutdated)
       end
 
       it 'marks other items as NOT outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_home_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_b_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_c_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_home_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_b_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_c_after)).to be_empty
 
         # FIXME: This is not optimal. Also see related test case above.
-        # expect(outdatedness_checker.outdatedness_reasons_for(item_articles_after)).to be_empty
+        # expect(oc.outdatedness_reasons_for(item_articles_after)).to be_empty
       end
     end
   end
 
   context 'when code snippets are changed' do
-    let(:code_snippet_b_after) { Nanoc::Core::CodeSnippet.new('bbb UPDATED', 'lib/b.rb') }
+    let(:code_snippet_b_after) do
+      Nanoc::Core::CodeSnippet.new('bbb UPDATED', 'lib/b.rb')
+    end
 
     it 'marks all items as outdated' do
-      expect(outdatedness_checker.outdatedness_reasons_for(item_home_after)).to contain_exactly(Nanoc::Core::OutdatednessReasons::CodeSnippetsModified)
-      expect(outdatedness_checker.outdatedness_reasons_for(item_articles_after)).to contain_exactly(Nanoc::Core::OutdatednessReasons::CodeSnippetsModified)
-      expect(outdatedness_checker.outdatedness_reasons_for(item_article_a_after)).to contain_exactly(Nanoc::Core::OutdatednessReasons::CodeSnippetsModified)
-      expect(outdatedness_checker.outdatedness_reasons_for(item_article_b_after)).to contain_exactly(Nanoc::Core::OutdatednessReasons::CodeSnippetsModified)
-      expect(outdatedness_checker.outdatedness_reasons_for(item_article_c_after)).to contain_exactly(Nanoc::Core::OutdatednessReasons::CodeSnippetsModified)
+      expect(oc.outdatedness_reasons_for(item_home_after))
+        .to contain_exactly(Nanoc::Core::OutdatednessReasons::CodeSnippetsModified)
+      expect(oc.outdatedness_reasons_for(item_articles_after))
+        .to contain_exactly(Nanoc::Core::OutdatednessReasons::CodeSnippetsModified)
+      expect(oc.outdatedness_reasons_for(item_article_a_after))
+        .to contain_exactly(Nanoc::Core::OutdatednessReasons::CodeSnippetsModified)
+      expect(oc.outdatedness_reasons_for(item_article_b_after))
+        .to contain_exactly(Nanoc::Core::OutdatednessReasons::CodeSnippetsModified)
+      expect(oc.outdatedness_reasons_for(item_article_c_after))
+        .to contain_exactly(Nanoc::Core::OutdatednessReasons::CodeSnippetsModified)
     end
   end
 
@@ -894,14 +1060,15 @@ describe Nanoc::Core::OutdatednessChecker do
     end
 
     it 'marks article item as outdated' do
-      expect(outdatedness_checker.outdatedness_reasons_for(item_article_a_after)).to contain_exactly(Nanoc::Core::OutdatednessReasons::UsesAlwaysOutdatedFilter)
+      expect(oc.outdatedness_reasons_for(item_article_a_after))
+        .to contain_exactly(Nanoc::Core::OutdatednessReasons::UsesAlwaysOutdatedFilter)
     end
 
     it 'marks other items as NOT outdated' do
-      expect(outdatedness_checker.outdatedness_reasons_for(item_home_after)).to be_empty
-      expect(outdatedness_checker.outdatedness_reasons_for(item_articles_after)).to be_empty
-      expect(outdatedness_checker.outdatedness_reasons_for(item_article_b_after)).to be_empty
-      expect(outdatedness_checker.outdatedness_reasons_for(item_article_c_after)).to be_empty
+      expect(oc.outdatedness_reasons_for(item_home_after)).to be_empty
+      expect(oc.outdatedness_reasons_for(item_articles_after)).to be_empty
+      expect(oc.outdatedness_reasons_for(item_article_b_after)).to be_empty
+      expect(oc.outdatedness_reasons_for(item_article_c_after)).to be_empty
     end
   end
 
@@ -913,27 +1080,30 @@ describe Nanoc::Core::OutdatednessChecker do
     end
 
     it 'marks article item as outdated' do
-      expect(outdatedness_checker.outdatedness_reasons_for(item_article_a_after)).to contain_exactly(Nanoc::Core::OutdatednessReasons::NotWritten)
+      expect(oc.outdatedness_reasons_for(item_article_a_after))
+        .to contain_exactly(Nanoc::Core::OutdatednessReasons::NotWritten)
     end
 
     it 'marks other items as NOT outdated' do
-      expect(outdatedness_checker.outdatedness_reasons_for(item_home_after)).to be_empty
-      expect(outdatedness_checker.outdatedness_reasons_for(item_articles_after)).to be_empty
-      expect(outdatedness_checker.outdatedness_reasons_for(item_article_b_after)).to be_empty
-      expect(outdatedness_checker.outdatedness_reasons_for(item_article_c_after)).to be_empty
+      expect(oc.outdatedness_reasons_for(item_home_after)).to be_empty
+      expect(oc.outdatedness_reasons_for(item_articles_after)).to be_empty
+      expect(oc.outdatedness_reasons_for(item_article_b_after)).to be_empty
+      expect(oc.outdatedness_reasons_for(item_article_c_after)).to be_empty
     end
   end
 
   context 'when config has changed' do
-    let(:config_after) { Nanoc::Core::Configuration.new(dir: Dir.getwd, hash: { name: 'Name UPDATED' }).with_defaults }
+    let(:config_after) do
+      Nanoc::Core::Configuration.new(dir: Dir.getwd, hash: { name: 'Name UPDATED' }).with_defaults
+    end
 
     context 'when there are no dependencies on the config' do
       it 'marks all items as NOT outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_home_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_articles_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_a_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_b_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_c_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_home_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_articles_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_a_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_b_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_c_after)).to be_empty
       end
     end
 
@@ -944,19 +1114,22 @@ describe Nanoc::Core::OutdatednessChecker do
           layouts_before_coll,
           config_before,
         ).tap do |store|
-          store.record_dependency(item_articles_before, config_before, attributes: true)
+          store.record_dependency(
+            item_articles_before, config_before, attributes: true
+          )
         end
       end
 
       it 'marks articles item as outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_articles_after)).to contain_exactly(Nanoc::Core::OutdatednessReasons::DependenciesOutdated)
+        expect(oc.outdatedness_reasons_for(item_articles_after))
+          .to contain_exactly(Nanoc::Core::OutdatednessReasons::DependenciesOutdated)
       end
 
       it 'marks other items as NOT outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_home_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_a_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_b_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_c_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_home_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_a_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_b_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_c_after)).to be_empty
       end
     end
 
@@ -967,19 +1140,22 @@ describe Nanoc::Core::OutdatednessChecker do
           layouts_before_coll,
           config_before,
         ).tap do |store|
-          store.record_dependency(item_articles_before, config_before, attributes: [:name])
+          store.record_dependency(
+            item_articles_before, config_before, attributes: [:name]
+          )
         end
       end
 
       it 'marks articles item as outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_articles_after)).to contain_exactly(Nanoc::Core::OutdatednessReasons::DependenciesOutdated)
+        expect(oc.outdatedness_reasons_for(item_articles_after))
+          .to contain_exactly(Nanoc::Core::OutdatednessReasons::DependenciesOutdated)
       end
 
       it 'marks other items as NOT outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_home_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_a_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_b_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_c_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_home_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_a_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_b_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_c_after)).to be_empty
       end
     end
 
@@ -990,23 +1166,27 @@ describe Nanoc::Core::OutdatednessChecker do
           layouts_before_coll,
           config_before,
         ).tap do |store|
-          store.record_dependency(item_articles_before, config_before, attributes: [:author])
+          store.record_dependency(
+            item_articles_before, config_before, attributes: [:author]
+          )
         end
       end
 
       it 'marks other items as NOT outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_home_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_articles_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_a_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_b_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_c_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_home_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_articles_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_a_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_b_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_c_after)).to be_empty
       end
     end
   end
 
   context 'when an item is added to the site' do
     let(:item_article_d_after)     { Nanoc::Core::Item.new('Article D', { kind: 'article' }, '/articles/2022-d.md') }
-    let(:item_article_d_rep_after) { Nanoc::Core::ItemRep.new(item_article_d_after, :default) }
+    let(:item_article_d_rep_after) do
+      Nanoc::Core::ItemRep.new(item_article_d_after, :default)
+    end
 
     let(:items_after_array) { super() + [item_article_d_after] }
 
@@ -1041,18 +1221,18 @@ describe Nanoc::Core::OutdatednessChecker do
       end
 
       it 'marks all items as NOT outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_home_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_articles_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_a_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_b_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_c_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_home_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_articles_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_a_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_b_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_c_after)).to be_empty
       end
 
       it 'marks new item as outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_d_after)).not_to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_d_after)).not_to be_empty
 
         # FIXME: It should be DocumentAdded (though it’s not a big issue)
-        # expect(outdatedness_checker.outdatedness_reasons_for(item_article_d_after)).to match_array([
+        # expect(oc.outdatedness_reasons_for(item_article_d_after)).to match_array([
         #   Nanoc::Core::OutdatednessReasons::DocumentAdded,
         # ])
       end
@@ -1083,23 +1263,24 @@ describe Nanoc::Core::OutdatednessChecker do
       end
 
       it 'marks articles item as outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_articles_after)).to contain_exactly(Nanoc::Core::OutdatednessReasons::DependenciesOutdated)
+        expect(oc.outdatedness_reasons_for(item_articles_after))
+          .to contain_exactly(Nanoc::Core::OutdatednessReasons::DependenciesOutdated)
       end
 
       it 'marks new item as outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_d_after)).not_to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_d_after)).not_to be_empty
 
         # FIXME: It should be DocumentAdded:
-        # expect(outdatedness_checker.outdatedness_reasons_for(item_article_d_after)).to match_array([
+        # expect(oc.outdatedness_reasons_for(item_article_d_after)).to match_array([
         #   Nanoc::Core::OutdatednessReasons::DocumentAdded,
         # ])
       end
 
       it 'marks other items as NOT outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_home_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_a_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_b_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_c_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_home_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_a_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_b_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_c_after)).to be_empty
       end
     end
 
@@ -1124,20 +1305,20 @@ describe Nanoc::Core::OutdatednessChecker do
       end
 
       it 'marks new item as outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_d_after)).not_to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_d_after)).not_to be_empty
 
         # FIXME: It should be DocumentAdded:
-        # expect(outdatedness_checker.outdatedness_reasons_for(item_article_d_after)).to match_array([
+        # expect(oc.outdatedness_reasons_for(item_article_d_after)).to match_array([
         #   Nanoc::Core::OutdatednessReasons::DocumentAdded,
         # ])
       end
 
       it 'marks other items as NOT outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_home_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_articles_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_a_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_b_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_c_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_home_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_articles_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_a_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_b_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_c_after)).to be_empty
       end
     end
 
@@ -1162,23 +1343,24 @@ describe Nanoc::Core::OutdatednessChecker do
       end
 
       it 'marks articles item as outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_articles_after)).to contain_exactly(Nanoc::Core::OutdatednessReasons::DependenciesOutdated)
+        expect(oc.outdatedness_reasons_for(item_articles_after))
+          .to contain_exactly(Nanoc::Core::OutdatednessReasons::DependenciesOutdated)
       end
 
       it 'marks new item as outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_d_after)).not_to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_d_after)).not_to be_empty
 
         # FIXME: It should be DocumentAdded:
-        # expect(outdatedness_checker.outdatedness_reasons_for(item_article_d_after)).to match_array([
+        # expect(oc.outdatedness_reasons_for(item_article_d_after)).to match_array([
         #   Nanoc::Core::OutdatednessReasons::DocumentAdded,
         # ])
       end
 
       it 'marks other items as NOT outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_home_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_a_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_b_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_c_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_home_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_a_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_b_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_c_after)).to be_empty
       end
     end
 
@@ -1203,23 +1385,24 @@ describe Nanoc::Core::OutdatednessChecker do
       end
 
       it 'marks articles item as outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_articles_after)).to contain_exactly(Nanoc::Core::OutdatednessReasons::DependenciesOutdated)
+        expect(oc.outdatedness_reasons_for(item_articles_after))
+          .to contain_exactly(Nanoc::Core::OutdatednessReasons::DependenciesOutdated)
       end
 
       it 'marks new item as outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_d_after)).not_to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_d_after)).not_to be_empty
 
         # FIXME: It should be DocumentAdded:
-        # expect(outdatedness_checker.outdatedness_reasons_for(item_article_d_after)).to match_array([
+        # expect(oc.outdatedness_reasons_for(item_article_d_after)).to match_array([
         #   Nanoc::Core::OutdatednessReasons::DocumentAdded,
         # ])
       end
 
       it 'marks other items as NOT outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_home_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_a_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_b_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_c_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_home_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_a_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_b_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_c_after)).to be_empty
       end
     end
 
@@ -1244,29 +1427,32 @@ describe Nanoc::Core::OutdatednessChecker do
       end
 
       it 'marks articles item as outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_articles_after)).to contain_exactly(Nanoc::Core::OutdatednessReasons::DependenciesOutdated)
+        expect(oc.outdatedness_reasons_for(item_articles_after))
+          .to contain_exactly(Nanoc::Core::OutdatednessReasons::DependenciesOutdated)
       end
 
       it 'marks new item as outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_d_after)).not_to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_d_after)).not_to be_empty
 
         # FIXME: It should be DocumentAdded:
-        # expect(outdatedness_checker.outdatedness_reasons_for(item_article_d_after)).to match_array([
+        # expect(oc.outdatedness_reasons_for(item_article_d_after)).to match_array([
         #   Nanoc::Core::OutdatednessReasons::DocumentAdded,
         # ])
       end
 
       it 'marks other items as NOT outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_home_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_a_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_b_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_c_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_home_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_a_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_b_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_c_after)).to be_empty
       end
     end
   end
 
   context 'when a layout is added to the site' do
-    let(:layout_new_after) { Nanoc::Core::Layout.new('Layout', { kind: 'article' }, '/articles/2022-d.md') }
+    let(:layout_new_after) do
+      Nanoc::Core::Layout.new('Layout', { kind: 'article' }, '/articles/2022-d.md')
+    end
 
     let(:layouts_after_array) { super() + [layout_new_after] }
 
@@ -1295,11 +1481,11 @@ describe Nanoc::Core::OutdatednessChecker do
       end
 
       it 'marks all items as NOT outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_home_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_articles_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_a_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_b_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_c_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_home_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_articles_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_a_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_b_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_c_after)).to be_empty
       end
     end
 
@@ -1324,14 +1510,15 @@ describe Nanoc::Core::OutdatednessChecker do
       end
 
       it 'marks articles item as outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_articles_after)).to contain_exactly(Nanoc::Core::OutdatednessReasons::DependenciesOutdated)
+        expect(oc.outdatedness_reasons_for(item_articles_after))
+          .to contain_exactly(Nanoc::Core::OutdatednessReasons::DependenciesOutdated)
       end
 
       it 'marks other items as NOT outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_home_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_a_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_b_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_c_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_home_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_a_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_b_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_c_after)).to be_empty
       end
     end
 
@@ -1356,11 +1543,11 @@ describe Nanoc::Core::OutdatednessChecker do
       end
 
       it 'marks all items as NOT outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_home_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_articles_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_a_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_b_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_c_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_home_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_articles_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_a_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_b_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_c_after)).to be_empty
       end
     end
 
@@ -1385,14 +1572,15 @@ describe Nanoc::Core::OutdatednessChecker do
       end
 
       it 'marks articles item as outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_articles_after)).to contain_exactly(Nanoc::Core::OutdatednessReasons::DependenciesOutdated)
+        expect(oc.outdatedness_reasons_for(item_articles_after))
+          .to contain_exactly(Nanoc::Core::OutdatednessReasons::DependenciesOutdated)
       end
 
       it 'marks other items as NOT outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_home_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_a_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_b_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_c_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_home_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_a_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_b_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_c_after)).to be_empty
       end
     end
 
@@ -1417,14 +1605,15 @@ describe Nanoc::Core::OutdatednessChecker do
       end
 
       it 'marks articles item as outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_articles_after)).to contain_exactly(Nanoc::Core::OutdatednessReasons::DependenciesOutdated)
+        expect(oc.outdatedness_reasons_for(item_articles_after))
+          .to contain_exactly(Nanoc::Core::OutdatednessReasons::DependenciesOutdated)
       end
 
       it 'marks other items as NOT outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_home_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_a_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_b_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_c_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_home_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_a_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_b_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_c_after)).to be_empty
       end
     end
 
@@ -1449,14 +1638,15 @@ describe Nanoc::Core::OutdatednessChecker do
       end
 
       it 'marks articles item as outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_articles_after)).to contain_exactly(Nanoc::Core::OutdatednessReasons::DependenciesOutdated)
+        expect(oc.outdatedness_reasons_for(item_articles_after))
+          .to contain_exactly(Nanoc::Core::OutdatednessReasons::DependenciesOutdated)
       end
 
       it 'marks other items as NOT outdated' do
-        expect(outdatedness_checker.outdatedness_reasons_for(item_home_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_a_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_b_after)).to be_empty
-        expect(outdatedness_checker.outdatedness_reasons_for(item_article_c_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_home_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_a_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_b_after)).to be_empty
+        expect(oc.outdatedness_reasons_for(item_article_c_after)).to be_empty
       end
     end
   end
