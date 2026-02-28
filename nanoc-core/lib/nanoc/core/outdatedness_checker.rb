@@ -103,7 +103,10 @@ module Nanoc
 
           deps = dependency_store.dependencies_outdated_because_of(obj)
           deps.each do |dep|
-            next if basic_outdatedness_statuses[dep.to].reasons.size.positive?
+            # NOTE: dep.from == obj
+
+            status = basic_outdatedness_statuses[dep.to]
+            next if status && status.reasons.size.positive?
             next if objs_outdated_due_to_dependencies.include?(dep.to)
 
             case dep.from # from = what causes outdatedness

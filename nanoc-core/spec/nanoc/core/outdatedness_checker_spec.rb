@@ -1182,6 +1182,47 @@ describe Nanoc::Core::OutdatednessChecker do
     end
   end
 
+  context 'when two dependent items are removed from the site' do
+    # This creates an uncommon nil-onto-nil dependency.
+
+    let(:items_after_array) do
+      super().reject { _1 == item_article_b_after || _1 == item_article_c_after }
+    end
+
+    let(:reps) do
+      Nanoc::Core::ItemRepRepo.new.tap do |rr|
+        super().reject { _1.item == item_article_b_after || _1.item == item_article_c_after }.each do |r|
+          rr << r
+        end
+      end
+    end
+
+    before do
+      # Store old dependency store
+      old_dependency_store = Nanoc::Core::DependencyStore.new(
+        items_before_coll,
+        layouts_before_coll,
+        config_before,
+      )
+
+      old_dependency_store.record_dependency(
+        item_article_b_before, item_article_c_before
+      )
+      old_dependency_store.store
+
+      # Reload
+      dependency_store.items = items_after_coll
+      dependency_store.layouts = layouts_after_coll
+      dependency_store.load
+    end
+
+    it 'marks other items as NOT outdated' do
+      expect(oc.outdatedness_reasons_for(item_home_after)).to be_empty
+      expect(oc.outdatedness_reasons_for(item_articles_after)).to be_empty
+      expect(oc.outdatedness_reasons_for(item_article_a_after)).to be_empty
+    end
+  end
+
   context 'when an item is added to the site' do
     let(:item_article_d_after)     { Nanoc::Core::Item.new('Article D', { kind: 'article' }, '/articles/2022-d.md') }
     let(:item_article_d_rep_after) do

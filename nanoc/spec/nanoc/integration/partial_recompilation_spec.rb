@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 describe 'Partial recompilation', :site, :stdio do
-  before do
+  example do
     File.write('content/foo.md', "---\ntitle: hello\n---\n\nfoo")
     File.write('content/bar.md', '<%= @items["/foo.*"].compiled_content %><% raise "boom" %>')
 
@@ -15,9 +15,7 @@ describe 'Partial recompilation', :site, :stdio do
         write '/bar.html'
       end
     EOS
-  end
 
-  example do
     expect(File.file?('output/foo.html')).not_to be
     expect(File.file?('output/bar.html')).not_to be
 
@@ -46,5 +44,48 @@ describe 'Partial recompilation', :site, :stdio do
       .to(output(%r{^item /foo\.md, rep default:\n  is not outdated}).to_stdout)
     expect { Nanoc::CLI.run(['show-data', '--no-color']) }
       .to(output(%r{^item /bar\.md, rep default:\n  is outdated:}).to_stdout)
+  end
+
+  it 'supports moving/renaming files' do
+    File.write('content/aaa.md', "---\ntitle: hello\n---\n\naaa")
+    File.write('content/bbb.md', 'aaa=<%= @items["/aaa.*"].compiled_content %>')
+
+    File.write('Rules', <<~EOS)
+      compile '/*' do
+        filter :erb
+        write ext: 'html'
+      end
+    EOS
+
+    expect(File.file?('output/aaa.html')).not_to be
+    expect(File.file?('output/bbb.html')).not_to be
+
+    Nanoc::CLI.run(['compile', '--verbose'])
+
+    expect(File.file?('output/aaa.html')).to be
+    expect(File.file?('output/bbb.html')).to be
+    expect(File.file?('output/ccc.html')).not_to be
+    expect(File.read('output/aaa.html')).to eq('aaa')
+    expect(File.read('output/bbb.html')).to eq('aaa=aaa')
+
+    FileUtils.mv('content/bbb.md', 'content/ccc.md')
+    Nanoc::CLI.run(['compile', '--verbose'])
+    Nanoc::CLI.run(['prune', '--yes'])
+
+    expect(File.file?('output/aaa.html')).to be
+    expect(File.file?('output/bbb.html')).not_to be
+    expect(File.file?('output/ccc.html')).to be
+    expect(File.read('output/aaa.html')).to eq('aaa')
+    expect(File.read('output/ccc.html')).to eq('aaa=aaa')
+
+    FileUtils.mv('content/ccc.md', 'content/bbb.md')
+    Nanoc::CLI.run(['compile', '--verbose'])
+    Nanoc::CLI.run(['prune', '--yes'])
+
+    expect(File.file?('output/aaa.html')).to be
+    expect(File.file?('output/bbb.html')).to be
+    expect(File.file?('output/ccc.html')).not_to be
+    expect(File.read('output/aaa.html')).to eq('aaa')
+    expect(File.read('output/bbb.html')).to eq('aaa=aaa')
   end
 end
