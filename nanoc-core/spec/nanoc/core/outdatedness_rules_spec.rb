@@ -681,19 +681,28 @@ describe Nanoc::Core::OutdatednessRules do
         Nanoc::Core::DependencyStore.new(items_after, layouts, config).tap(&:load)
       end
 
-      context 'when used on old item' do
-        let(:obj) { Nanoc::Core::ItemRep.new(old_item, :default) }
+      let(:obj) { items_before }
+
+      context 'when items added' do
+        let(:items_after) do
+          Nanoc::Core::ItemCollection.new(config, [old_item, new_item])
+        end
 
         example do
-          expect(subject).to be_nil
+          expect(subject).to be_a(Nanoc::Core::OutdatednessReasons::DocumentAdded)
+          expect(subject.identifiers).to eq(
+            [
+              Nanoc::Core::Identifier.new('/new.md'),
+            ],
+          )
         end
       end
 
-      context 'when used on new item' do
-        let(:obj) { Nanoc::Core::ItemRep.new(new_item, :default) }
+      context 'when no items added' do
+        let(:items_after) { items_before }
 
         example do
-          expect(subject).to eq(Nanoc::Core::OutdatednessReasons::DocumentAdded)
+          expect(subject).to be_nil
         end
       end
     end
@@ -705,10 +714,6 @@ describe Nanoc::Core::OutdatednessRules do
         Nanoc::Core::LayoutCollection.new(config, [old_layout])
       end
 
-      let(:layouts_after) do
-        Nanoc::Core::LayoutCollection.new(config, [old_layout, new_layout])
-      end
-
       let(:old_layout) { Nanoc::Core::Layout.new('stuff', {}, '/old.md') }
       let(:new_layout) { Nanoc::Core::Layout.new('new', {}, '/new.md') }
 
@@ -717,19 +722,28 @@ describe Nanoc::Core::OutdatednessRules do
         Nanoc::Core::DependencyStore.new(items, layouts_after, config).tap(&:load)
       end
 
-      context 'when used on old layout' do
-        let(:obj) { old_layout }
+      let(:obj) { layouts_before }
+
+      context 'when layouts added' do
+        let(:layouts_after) do
+          Nanoc::Core::LayoutCollection.new(config, [old_layout, new_layout])
+        end
 
         example do
-          expect(subject).to be_nil
+          expect(subject).to be_a(Nanoc::Core::OutdatednessReasons::DocumentAdded)
+          expect(subject.identifiers).to eq(
+            [
+              Nanoc::Core::Identifier.new('/new.md'),
+            ],
+          )
         end
       end
 
-      context 'when used on new layout' do
-        let(:obj) { new_layout }
+      context 'when no layouts added' do
+        let(:layouts_after) { layouts_before }
 
         example do
-          expect(subject).to eq(Nanoc::Core::OutdatednessReasons::DocumentAdded)
+          expect(subject).to be_nil
         end
       end
     end

@@ -1268,12 +1268,12 @@ describe Nanoc::Core::OutdatednessChecker do
       end
 
       it 'marks new item as outdated' do
-        expect(oc.outdatedness_reasons_for(item_article_d_after)).not_to be_empty
-
-        # FIXME: It should be DocumentAdded:
-        # expect(oc.outdatedness_reasons_for(item_article_d_after)).to match_array([
-        #   Nanoc::Core::OutdatednessReasons::DocumentAdded,
-        # ])
+        expect(oc.outdatedness_reasons_for(item_article_d_after))
+          .to contain_exactly(
+            Nanoc::Core::OutdatednessReasons::RulesModified,
+            Nanoc::Core::OutdatednessReasons::ContentModified,
+            Nanoc::Core::OutdatednessReasons::AttributesModified,
+          )
       end
 
       it 'marks other items as NOT outdated' do
@@ -1305,12 +1305,12 @@ describe Nanoc::Core::OutdatednessChecker do
       end
 
       it 'marks new item as outdated' do
-        expect(oc.outdatedness_reasons_for(item_article_d_after)).not_to be_empty
-
-        # FIXME: It should be DocumentAdded:
-        # expect(oc.outdatedness_reasons_for(item_article_d_after)).to match_array([
-        #   Nanoc::Core::OutdatednessReasons::DocumentAdded,
-        # ])
+        expect(oc.outdatedness_reasons_for(item_article_d_after))
+          .to contain_exactly(
+            Nanoc::Core::OutdatednessReasons::RulesModified,
+            Nanoc::Core::OutdatednessReasons::ContentModified,
+            Nanoc::Core::OutdatednessReasons::AttributesModified,
+          )
       end
 
       it 'marks other items as NOT outdated' do
@@ -1348,12 +1348,12 @@ describe Nanoc::Core::OutdatednessChecker do
       end
 
       it 'marks new item as outdated' do
-        expect(oc.outdatedness_reasons_for(item_article_d_after)).not_to be_empty
-
-        # FIXME: It should be DocumentAdded:
-        # expect(oc.outdatedness_reasons_for(item_article_d_after)).to match_array([
-        #   Nanoc::Core::OutdatednessReasons::DocumentAdded,
-        # ])
+        expect(oc.outdatedness_reasons_for(item_article_d_after))
+          .to contain_exactly(
+            Nanoc::Core::OutdatednessReasons::RulesModified,
+            Nanoc::Core::OutdatednessReasons::ContentModified,
+            Nanoc::Core::OutdatednessReasons::AttributesModified,
+          )
       end
 
       it 'marks other items as NOT outdated' do
@@ -1390,12 +1390,12 @@ describe Nanoc::Core::OutdatednessChecker do
       end
 
       it 'marks new item as outdated' do
-        expect(oc.outdatedness_reasons_for(item_article_d_after)).not_to be_empty
-
-        # FIXME: It should be DocumentAdded:
-        # expect(oc.outdatedness_reasons_for(item_article_d_after)).to match_array([
-        #   Nanoc::Core::OutdatednessReasons::DocumentAdded,
-        # ])
+        expect(oc.outdatedness_reasons_for(item_article_d_after))
+          .to contain_exactly(
+            Nanoc::Core::OutdatednessReasons::RulesModified,
+            Nanoc::Core::OutdatednessReasons::ContentModified,
+            Nanoc::Core::OutdatednessReasons::AttributesModified,
+          )
       end
 
       it 'marks other items as NOT outdated' do
@@ -1432,12 +1432,12 @@ describe Nanoc::Core::OutdatednessChecker do
       end
 
       it 'marks new item as outdated' do
-        expect(oc.outdatedness_reasons_for(item_article_d_after)).not_to be_empty
-
-        # FIXME: It should be DocumentAdded:
-        # expect(oc.outdatedness_reasons_for(item_article_d_after)).to match_array([
-        #   Nanoc::Core::OutdatednessReasons::DocumentAdded,
-        # ])
+        expect(oc.outdatedness_reasons_for(item_article_d_after))
+          .to contain_exactly(
+            Nanoc::Core::OutdatednessReasons::RulesModified,
+            Nanoc::Core::OutdatednessReasons::ContentModified,
+            Nanoc::Core::OutdatednessReasons::AttributesModified,
+          )
       end
 
       it 'marks other items as NOT outdated' do

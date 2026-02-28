@@ -56,10 +56,20 @@ module Nanoc
         Nanoc::Core::DependencyProps.new(compiled_content: true, path: true),
       )
 
-      DocumentAdded = Generic.new(
-        'The item or layout is newly added to the site.',
-        Nanoc::Core::DependencyProps.new,
-      )
+      class DocumentAdded < Generic
+        attr_reader :identifiers
+
+        def initialize(identifiers:)
+          super(
+            'Items or layouts were newly added to the site.',
+            Nanoc::Core::DependencyProps.new(
+              raw_content: true, compiled_content: true,
+            ),
+          )
+
+          @identifiers = identifiers
+        end
+      end
 
       ContentModified = Generic.new(
         'The content of this item has been modified since the last time ' \

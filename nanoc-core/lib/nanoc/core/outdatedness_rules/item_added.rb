@@ -6,12 +6,15 @@ module Nanoc
       class ItemAdded < Nanoc::Core::OutdatednessRule
         affects_props :raw_content
 
-        contract Nanoc::Core::ItemRep,
+        contract Nanoc::Core::ItemCollection,
                  C::Named['Nanoc::Core::BasicOutdatednessChecker'] =>
                  C::Maybe[Nanoc::Core::OutdatednessReasons::Generic]
-        def apply(obj, basic_outdatedness_checker)
-          if basic_outdatedness_checker.dependency_store.new_items.include?(obj.item)
-            Nanoc::Core::OutdatednessReasons::DocumentAdded
+        def apply(_obj, basic_outdatedness_checker)
+          new_items = basic_outdatedness_checker.dependency_store.new_items
+          if new_items.size.positive?
+            Nanoc::Core::OutdatednessReasons::DocumentAdded.new(
+              identifiers: new_items.map(&:identifier),
+            )
           end
         end
       end

@@ -16,7 +16,6 @@ module Nanoc
 
       RULES_FOR_ITEM_REP =
         [
-          Rules::ItemAdded,
           Rules::RulesModified,
           Rules::ContentModified,
           Rules::AttributesModified,
@@ -27,7 +26,6 @@ module Nanoc
 
       RULES_FOR_LAYOUT =
         [
-          Rules::LayoutAdded,
           Rules::RulesModified,
           Rules::ContentModified,
           Rules::AttributesModified,
@@ -37,6 +35,16 @@ module Nanoc
       RULES_FOR_CONFIG =
         [
           Rules::AttributesModified,
+        ].freeze
+
+      RULES_FOR_ITEM_COLLECTION =
+        [
+          Rules::ItemAdded,
+        ].freeze
+
+      RULES_FOR_LAYOUT_COLLECTION =
+        [
+          Rules::LayoutAdded,
         ].freeze
 
       C_OBJ = C::Or[
@@ -94,10 +102,10 @@ module Nanoc
           apply_rules(RULES_FOR_LAYOUT, obj)
         when Nanoc::Core::Configuration
           apply_rules(RULES_FOR_CONFIG, obj)
-        when Nanoc::Core::ItemCollection, Nanoc::Core::LayoutCollection
-          # Collections are never outdated. Objects inside them might be,
-          # however.
-          apply_rules([], obj)
+        when Nanoc::Core::ItemCollection
+          apply_rules(RULES_FOR_ITEM_COLLECTION, obj)
+        when Nanoc::Core::LayoutCollection
+          apply_rules(RULES_FOR_LAYOUT_COLLECTION, obj)
         else
           raise Nanoc::Core::Errors::InternalInconsistency,
                 "do not know how to check outdatedness of #{obj.inspect}"
