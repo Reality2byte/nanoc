@@ -47,6 +47,7 @@ module Nanoc
         end
 
         @to_graph = {}
+        @from_graph = {}
 
         @edge_props = {}
 
@@ -84,6 +85,9 @@ module Nanoc
         @to_graph[to] ||= Set.new
         @to_graph[to] << from
 
+        @from_graph[from] ||= Set.new
+        @from_graph[from] << to
+
         if props
           @edge_props[[from, to]] = props
         end
@@ -113,6 +117,7 @@ module Nanoc
 
         @to_graph[to].each do |from|
           @edge_props.delete([from, to])
+          @from_graph.delete(from)
         end
         @to_graph.delete(to)
 
@@ -129,6 +134,10 @@ module Nanoc
       # @return [Array] Direct predecessors of the given vertex
       def direct_predecessors_of(to)
         @to_graph.fetch(to, EMPTY_SET)
+      end
+
+      def direct_successors_of(from)
+        @from_graph.fetch(from, EMPTY_SET)
       end
 
       # Returns the predecessors of the given vertex, i.e. the vertices x for

@@ -29,6 +29,7 @@ module Nanoc
 
       C_OBJ_SRC =
         C::Or[
+          nil,
           Nanoc::Core::Item,
           Nanoc::Core::Layout,
           Nanoc::Core::Configuration,
@@ -83,6 +84,19 @@ module Nanoc
         end
       end
 
+      contract C_OBJ_SRC => C::ArrayOf[Nanoc::Core::Dependency]
+      def dependencies_outdated_because_of(object)
+        objects_outdated_because_of(object).map do |other_object|
+          props = props_for(object, other_object)
+
+          Nanoc::Core::Dependency.new(
+            object,
+            other_object,
+            props,
+          )
+        end
+      end
+
       def items=(items)
         @items = items
         rebuild_refs2objs
@@ -120,6 +134,10 @@ module Nanoc
       #   the given object
       def objects_causing_outdatedness_of(object)
         refs2objs(@graph.direct_predecessors_of(obj2ref(object)))
+      end
+
+      def objects_outdated_because_of(object)
+        refs2objs(@graph.direct_successors_of(obj2ref(object)))
       end
 
       contract C::Maybe[C_OBJ_SRC],

@@ -47,6 +47,15 @@ module Nanoc
           path: C::Optional[C::Bool],
         ]
 
+      def self.format_bit_pattern(pat)
+        (+'').tap do |s|
+          s << (pat.nobits?(BIT_PATTERN_RAW_CONTENT) ? '_' : 'r')
+          s << (pat.nobits?(BIT_PATTERN_ATTRIBUTES) ? '_' : 'a')
+          s << (pat.nobits?(BIT_PATTERN_COMPILED_CONTENT) ? '_' : 'c')
+          s << (pat.nobits?(BIT_PATTERN_PATH) ? '_' : 'p')
+        end
+      end
+
       contract C_ARGS => C::Any
       def initialize(
         raw_content: false, attributes: false,

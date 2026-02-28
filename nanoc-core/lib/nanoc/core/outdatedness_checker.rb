@@ -49,11 +49,14 @@ module Nanoc
         @reps = reps
 
         @objects_outdated_due_to_dependencies = {}
+        @ran = false
       end
 
       contract C_OBJ => C::IterOf[Reasons::Generic]
       def outdatedness_reasons_for(obj)
-        basic_reasons = basic_outdatedness_statuses.fetch(obj).reasons
+        run
+
+        basic_reasons = @basic_outdatedness_statuses.fetch(obj).reasons
         if !basic_reasons.empty?
           basic_reasons
         elsif outdated_due_to_dependencies?(obj)
@@ -65,21 +68,111 @@ module Nanoc
 
       private
 
-      def basic_outdatedness_statuses
-        @_basic_outdatedness_statuses ||= {}.tap do |tmp|
-          collections = [
-            [@site.config, @site.layouts, @site.items],
-            @site.layouts,
-            @site.items,
-            @reps,
-          ]
+      def run
+        return if @ran
 
-          collections.each do |collection|
-            collection.each do |obj|
-              tmp[obj] = basic.outdatedness_status_for(obj)
+        @basic_outdatedness_statuses, basic_outdated_objs =
+          calc_basic_outdatedness_statuses
+
+        @objs_outdated_due_to_dependencies =
+          propagate_outdatedness(
+            @basic_outdatedness_statuses,
+            basic_outdated_objs,
+          )
+
+        @ran = true
+      end
+
+      def propagate_outdatedness(
+        basic_outdatedness_statuses,
+        basic_outdated_objs
+      )
+        objs_outdated_due_to_dependencies = Set.new
+
+        seen = Set.new
+        pending = [nil] + basic_outdated_objs.to_a
+        until pending.empty?
+          obj = pending.shift
+          obj = obj.item if obj.is_a?(Nanoc::Core::ItemRep)
+          next if seen.include?(obj)
+
+          seen << obj
+
+          deps = dependency_store.dependencies_outdated_because_of(obj)
+          deps.each do |dep|
+            next if basic_outdatedness_statuses[dep.to].reasons.size.positive?
+            next if objs_outdated_due_to_dependencies.include?(dep.to)
+
+            case dep.from # from = what causes outdatedness
+
+            when nil
+              # Dependency from a removed object
+              objs_outdated_due_to_dependencies << dep.to
+              pending << dep.to
+
+            when Nanoc::Core::ItemCollection,
+              Nanoc::Core::LayoutCollection
+              coll = dep.from # or simply `obj`
+              props = dep.props
+
+              if raw_content_prop_causes_outdatedness?(coll, props.raw_content) ||
+                 attributes_prop_causes_outdatedness?(coll, props.attributes)
+                objs_outdated_due_to_dependencies << dep.to
+                pending << dep.to
+              end
+
+            when Nanoc::Core::Item,
+              Nanoc::Core::Layout,
+              Nanoc::Core::Configuration
+              status = basic_outdatedness_statuses[dep.from]
+
+              active = status.props.active & dep.props.active
+              if attributes_unaffected?(status, dep)
+                active &= ~DependencyProps::BIT_PATTERN_ATTRIBUTES
+              end
+
+              if active != 0x00 || (
+                dep.props.compiled_content? &&
+                objs_outdated_due_to_dependencies.include?(dep.from)
+              )
+                objs_outdated_due_to_dependencies << dep.to
+                pending << dep.to
+              end
+
+            else
+              raise Nanoc::Core::Errors::InternalInconsistency,
+                    "unexpected object type: #{dep.from.inspect}"
             end
           end
         end
+
+        objs_outdated_due_to_dependencies
+      end
+
+      def calc_basic_outdatedness_statuses
+        basic_outdatedness_statuses = {}
+        basic_outdated_objs = Set.new
+
+        collections = [
+          [@site.config, @site.layouts, @site.items],
+          @site.layouts,
+          @site.items,
+          @reps,
+        ]
+
+        collections.each do |collection|
+          collection.each do |obj|
+            status = basic.outdatedness_status_for(obj)
+
+            basic_outdatedness_statuses[obj] = status
+
+            unless status.reasons.empty?
+              basic_outdated_objs << obj
+            end
+          end
+        end
+
+        [basic_outdatedness_statuses, basic_outdated_objs.freeze]
       end
 
       contract C::None => BasicOutdatednessChecker
@@ -95,62 +188,10 @@ module Nanoc
         )
       end
 
-      contract C_OBJ, Immutable::Set => C::Bool
-      def outdated_due_to_dependencies?(obj, processed = Immutable::Set.new)
-        # Convert from rep to item if necessary
+      contract C_OBJ => C::Bool
+      def outdated_due_to_dependencies?(obj)
         obj = obj.item if obj.is_a?(Nanoc::Core::ItemRep)
-
-        # Only items can have dependencies
-        return false unless obj.is_a?(Nanoc::Core::Item)
-
-        # Get from cache
-        if @objects_outdated_due_to_dependencies.key?(obj)
-          return @objects_outdated_due_to_dependencies[obj]
-        end
-
-        # Check processed
-        # Don’t return true; the false will be or’ed into a true if there
-        # really is a dependency that is causing outdatedness.
-        return false if processed.include?(obj)
-
-        # Calculate
-        is_outdated =
-          dependency_store
-          .dependencies_causing_outdatedness_of(obj)
-          .any? do |dep|
-            dependency_causes_outdatedness?(dep) ||
-              (dep.props.compiled_content? &&
-                outdated_due_to_dependencies?(dep.from, processed.merge([obj])))
-          end
-
-        # Cache
-        @objects_outdated_due_to_dependencies[obj] = is_outdated
-
-        # Done
-        is_outdated
-      end
-
-      contract Nanoc::Core::Dependency => C::Bool
-      def dependency_causes_outdatedness?(dependency)
-        case dependency.from
-        when nil
-          true
-        when Nanoc::Core::ItemCollection, Nanoc::Core::LayoutCollection
-          coll = dependency.from
-          props = dependency.props
-
-          raw_content_prop_causes_outdatedness?(coll, props.raw_content) ||
-            attributes_prop_causes_outdatedness?(coll, props.attributes)
-        else
-          status = basic_outdatedness_statuses.fetch(dependency.from)
-
-          active = status.props.active & dependency.props.active
-          if attributes_unaffected?(status, dependency)
-            active &= ~DependencyProps::BIT_PATTERN_ATTRIBUTES
-          end
-
-          active != 0x00
-        end
+        @objs_outdated_due_to_dependencies.include?(obj)
       end
 
       def attributes_unaffected?(status, dependency)
@@ -167,7 +208,7 @@ module Nanoc
         return false unless raw_content_prop
 
         document_added_reason =
-          basic_outdatedness_statuses
+          @basic_outdatedness_statuses
           .fetch(collection)
           .reasons
           .grep(Nanoc::Core::OutdatednessReasons::DocumentAdded)
@@ -195,6 +236,7 @@ module Nanoc
             Nanoc::Core::Errors::InternalInconsistency,
             "Unexpected type of raw_content: #{raw_content_prop.inspect}",
           )
+
         end
       end
 
