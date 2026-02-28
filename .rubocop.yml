@@ -8,7 +8,7 @@ AllCops:
   TargetRubyVersion: 3.2
 
 # Try to keep it at or under 80, but up to 120 is fine too.
-LineLength:
+Layout/LineLength:
   Max: 120
 
 plugins:
