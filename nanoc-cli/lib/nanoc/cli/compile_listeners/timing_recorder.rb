@@ -39,7 +39,7 @@ module Nanoc::CLI::CompileListeners
       private
 
       def sort_rows(rows)
-        rows.sort_by { |r| r.first.downcase }
+        rows.sort_by(&:last).reverse
       end
 
       def row_to_s(row, column_lengths)
