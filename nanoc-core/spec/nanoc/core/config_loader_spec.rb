@@ -179,10 +179,10 @@ describe Nanoc::Core::ConfigLoader do
 
     context 'parent config file is set' do
       let(:config) do
-        Nanoc::Core::Configuration.new(dir: Dir.getwd,
-                                       hash: {
-                                         parent_config_file: 'foo.yaml', foo: 'bar'
-                                       })
+        Nanoc::Core::Configuration.new(
+          dir: Dir.getwd,
+          hash: { parent_config_file: 'foo.yaml', foo: 'bar' },
+        )
       end
 
       context 'parent config file is not present' do

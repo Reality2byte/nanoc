@@ -98,8 +98,10 @@ describe Nanoc::Core::CompilationItemView do
         end
 
         let(:parent_item) do
-          Nanoc::Core::Item.new('parent', {},
-                                Nanoc::Core::Identifier.new('/parent/', type: :legacy))
+          Nanoc::Core::Item.new(
+            'parent', {},
+            Nanoc::Core::Identifier.new('/parent/', type: :legacy)
+          )
         end
 
         it 'returns a view for the parent' do
@@ -199,8 +201,13 @@ describe Nanoc::Core::CompilationItemView do
       end
 
       let(:children) do
-        [Nanoc::Core::Item.new('child', {},
-                               Nanoc::Core::Identifier.new('/me/child/', type: :legacy))]
+        [
+          Nanoc::Core::Item.new(
+            'child',
+            {},
+            Nanoc::Core::Identifier.new('/me/child/', type: :legacy),
+          ),
+        ]
       end
 
       it 'returns views for the children' do

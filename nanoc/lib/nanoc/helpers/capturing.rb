@@ -39,8 +39,11 @@ module Nanoc::Helpers
               ''
             end
           else
-            raise ArgumentError, 'expected :existing_behavior param to #content_for to be one of ' \
-                                 ":overwrite, :append, or :error, but #{existing_behavior.inspect} was given"
+            raise(
+              ArgumentError,
+              'expected :existing_behavior param to #content_for to be one of ' \
+              ":overwrite, :append, or :error, but #{existing_behavior.inspect} was given",
+            )
           end
 
         # Store
@@ -118,8 +121,11 @@ module Nanoc::Helpers
           when 2
             args[1]
           else
-            raise ArgumentError, 'expected 1 or 2 argument (the name ' \
-                                 "of the capture, and optionally params) but got #{args.size} instead"
+            raise(
+              ArgumentError,
+              'expected 1 or 2 argument (the name ' \
+              "of the capture, and optionally params) but got #{args.size} instead",
+            )
           end
 
         SetContent.new(name, params, @item).run(&)
@@ -133,16 +139,22 @@ module Nanoc::Helpers
           when 3
             args[1]
           else
-            raise ArgumentError, 'expected 2 or 3 arguments (the name ' \
-                                 "of the capture, optionally params, and the content) but got #{args.size} instead"
+            raise(
+              ArgumentError,
+              'expected 2 or 3 arguments (the name ' \
+              "of the capture, optionally params, and the content) but got #{args.size} instead",
+            )
           end
 
         _erbout = +'' # rubocop:disable Lint/UnderscorePrefixedVariableName
         SetContent.new(name, params, @item).run { _erbout << content }
       else # Get content
         if args.size != 2
-          raise ArgumentError, 'expected 2 arguments (the item ' \
-                               "and the name of the capture) but got #{args.size} instead"
+          raise(
+            ArgumentError,
+            'expected 2 arguments (the item ' \
+            "and the name of the capture) but got #{args.size} instead",
+          )
         end
         requested_item = args[0]
         name = args[1]

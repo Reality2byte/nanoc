@@ -137,8 +137,10 @@ module Nanoc
       #   outdated if the destination is outdated
       #
       # @return [void]
-      def record_dependency(src, dst, raw_content: false, attributes: false,
-                            compiled_content: false, path: false)
+      def record_dependency(
+        src, dst, raw_content: false, attributes: false,
+        compiled_content: false, path: false
+      )
         return if src == dst
 
         add_vertex_for(src)

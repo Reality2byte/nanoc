@@ -180,8 +180,12 @@ describe Nanoc::Core::ConfigView do
       res = []
       view.each { |k, v| res << [k, v] }
 
-      expect(res).to eql([[:output_dir, 'ootpoot/'], [:amount, 9000], [:animal, 'donkey'],
-                          [:foo, { bar: :baz }]])
+      expect(res).to eql(
+        [
+          [:output_dir, 'ootpoot/'], [:amount, 9000], [:animal, 'donkey'],
+          [:foo, { bar: :baz }]
+        ],
+      )
     end
   end
 

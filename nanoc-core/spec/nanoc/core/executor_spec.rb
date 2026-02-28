@@ -79,11 +79,19 @@ describe Nanoc::Core::Executor do
 
       before do
         expect(Nanoc::Core::NotificationCenter)
-          .to receive(:post).with(:filtering_started, rep,
-                                  :simple_erb_uy2wbp6dcf4hlc4gbluauh07zuz2wvei)
+          .to receive(:post)
+          .with(
+            :filtering_started,
+            rep,
+            :simple_erb_uy2wbp6dcf4hlc4gbluauh07zuz2wvei,
+          )
         expect(Nanoc::Core::NotificationCenter)
-          .to receive(:post).with(:filtering_ended, rep,
-                                  :simple_erb_uy2wbp6dcf4hlc4gbluauh07zuz2wvei)
+          .to receive(:post)
+          .with(
+            :filtering_ended,
+            rep,
+            :simple_erb_uy2wbp6dcf4hlc4gbluauh07zuz2wvei,
+          )
 
         compiled_content_repo.set_current(rep, content)
       end
