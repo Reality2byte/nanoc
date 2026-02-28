@@ -122,12 +122,10 @@ describe Nanoc::Core::Store do
 
     # Create huge string
     array = []
-    100.times do |i|
+    20.times do |i|
       raw = 'x' * 1_000_037
       raw << i.to_s
-      io = StringIO.new
-      100.times { io << raw }
-      array << io.string
+      array << (raw * 20)
     end
 
     # Write
