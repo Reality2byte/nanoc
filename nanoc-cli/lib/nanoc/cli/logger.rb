@@ -41,10 +41,13 @@ module Nanoc
       # @return [void]
       def file(level, action, name, duration = nil)
         colorizer = Nanoc::CLI::ANSIStringColorizer.new($stdout)
-        colored_action = colorizer.c(action.to_s, *ACTION_COLORS[action.to_sym])
+        colored_action = colorizer.c(
+          format('%9s', action.to_s),
+          *ACTION_COLORS[action.to_sym],
+        )
 
         message = format(
-          '%12s  %s%s',
+          '  %s  %s%s',
           colored_action,
           duration.nil? ? '' : format('[%2.2fs]  ', duration),
           name,
