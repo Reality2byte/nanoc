@@ -27,15 +27,15 @@ module Nanoc
           path: C::Optional[C::Bool],
         ]
 
-      C_OBJ_SRC = Nanoc::Core::Item
-
-      C_OBJ_DST =
+      C_OBJ_SRC =
         C::Or[
           Nanoc::Core::Item,
           Nanoc::Core::Layout,
           Nanoc::Core::Configuration,
           Nanoc::Core::IdentifiableCollection,
         ]
+
+      C_OBJ_DST = Nanoc::Core::Item
 
       attr_reader :items
       attr_reader :layouts
@@ -70,7 +70,7 @@ module Nanoc
         add_vertex_for(@layouts)
       end
 
-      contract C_OBJ_SRC => C::ArrayOf[Nanoc::Core::Dependency]
+      contract C_OBJ_DST => C::ArrayOf[Nanoc::Core::Dependency]
       def dependencies_causing_outdatedness_of(object)
         objects_causing_outdatedness_of(object).map do |other_object|
           props = props_for(other_object, object)
@@ -126,15 +126,15 @@ module Nanoc
                C::Maybe[C_OBJ_DST],
                C_KEYWORD_PROPS => C::Any
       # Records a dependency from `src` to `dst` in the dependency graph. When
-      # `dst` is oudated, `src` will also become outdated.
+      # `src` is oudated, `dst` will also become outdated.
       #
       # @param [Nanoc::Core::Item, Nanoc::Core::Layout] src The source of the
-      #   dependency, i.e. the object that will become outdated if dst is
+      #   dependency, i.e. the object that will cause dst to become
       #   outdated
       #
       # @param [Nanoc::Core::Item, Nanoc::Core::Layout] dst The destination of
-      #   the dependency, i.e. the object that will cause the source to become
-      #   outdated if the destination is outdated
+      #   the dependency, i.e. the object that will become outdated if src is
+      #   outdated
       #
       # @return [void]
       def record_dependency(
@@ -154,13 +154,13 @@ module Nanoc
           attributes = attributes.to_a
         end
 
-        existing_props = @graph.props_for(dst_ref, src_ref)
+        existing_props = @graph.props_for(src_ref, dst_ref)
         new_props = Nanoc::Core::DependencyProps.new(
           raw_content:, attributes:, compiled_content:, path:,
         )
         props = existing_props ? existing_props.merge(new_props) : new_props
 
-        @graph.add_edge(dst_ref, src_ref, props:)
+        @graph.add_edge(src_ref, dst_ref, props:)
       end
 
       def add_vertex_for(obj)

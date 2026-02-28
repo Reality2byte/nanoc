@@ -54,8 +54,8 @@ module Nanoc
         Nanoc::Core::NotificationCenter.post(:dependency_created, @root, obj)
 
         @dependency_store.record_dependency(
-          @root,
           obj,
+          @root,
           raw_content:,
           attributes:,
           compiled_content:,

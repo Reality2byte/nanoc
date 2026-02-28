@@ -313,8 +313,8 @@ describe Nanoc::Core::ItemRepSelector::ItemRepPriorityQueue do
   context 'when there is a dependency on non-enqueued items' do
     before do
       dependency_store.record_dependency(
-        reps[3].item,
         reps[6].item,
+        reps[3].item,
         compiled_content: true,
       )
     end
@@ -357,14 +357,14 @@ describe Nanoc::Core::ItemRepSelector::ItemRepPriorityQueue do
   context 'when there is a dependency on enqueued and non-enqueued items' do
     before do
       dependency_store.record_dependency(
-        reps[3].item,
         reps[6].item,
+        reps[3].item,
         compiled_content: true,
       )
 
       dependency_store.record_dependency(
-        reps[3].item,
         reps[2].item,
+        reps[3].item,
         compiled_content: true,
       )
     end

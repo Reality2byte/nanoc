@@ -65,7 +65,7 @@ describe Nanoc::CLI::Commands::ShowData, :stdio do
 
     context 'dependency (with raw_content prop) from about to dog' do
       before do
-        dependency_store.record_dependency(item_dog, item_about, raw_content: true)
+        dependency_store.record_dependency(item_about, item_dog, raw_content: true)
       end
 
       it 'outputs dependencies for /dog.md' do
@@ -77,7 +77,7 @@ describe Nanoc::CLI::Commands::ShowData, :stdio do
 
     context 'dependency (with attributes prop) from about to dog' do
       before do
-        dependency_store.record_dependency(item_dog, item_about, attributes: true)
+        dependency_store.record_dependency(item_about, item_dog, attributes: true)
       end
 
       it 'outputs dependencies for /dog.md' do
@@ -89,7 +89,7 @@ describe Nanoc::CLI::Commands::ShowData, :stdio do
 
     context 'dependency (with attributes prop) from config to dog' do
       before do
-        dependency_store.record_dependency(item_dog, config, attributes: true)
+        dependency_store.record_dependency(config, item_dog, attributes: true)
       end
 
       it 'outputs dependencies for /dog.md' do
@@ -101,7 +101,7 @@ describe Nanoc::CLI::Commands::ShowData, :stdio do
 
     context 'dependency (with compiled_content prop) from about to dog' do
       before do
-        dependency_store.record_dependency(item_dog, item_about, compiled_content: true)
+        dependency_store.record_dependency(item_about, item_dog, compiled_content: true)
       end
 
       it 'outputs dependencies for /dog.md' do
@@ -113,7 +113,7 @@ describe Nanoc::CLI::Commands::ShowData, :stdio do
 
     context 'dependency (with path prop) from about to dog' do
       before do
-        dependency_store.record_dependency(item_dog, item_about, path: true)
+        dependency_store.record_dependency(item_about, item_dog, path: true)
       end
 
       it 'outputs dependencies for /dog.md' do
@@ -125,7 +125,7 @@ describe Nanoc::CLI::Commands::ShowData, :stdio do
 
     context 'dependency (with multiple props) from about to dog' do
       before do
-        dependency_store.record_dependency(item_dog, item_about, attributes: true, raw_content: true)
+        dependency_store.record_dependency(item_about, item_dog, attributes: true, raw_content: true)
       end
 
       it 'outputs dependencies for /dog.md' do
@@ -137,7 +137,7 @@ describe Nanoc::CLI::Commands::ShowData, :stdio do
 
     context 'dependency onto all items' do
       before do
-        dependency_store.record_dependency(item_dog, items, raw_content: true)
+        dependency_store.record_dependency(items, item_dog, raw_content: true)
       end
 
       it 'outputs dependencies for /dog.md' do
@@ -149,7 +149,7 @@ describe Nanoc::CLI::Commands::ShowData, :stdio do
 
     context 'dependency onto one specific item' do
       before do
-        dependency_store.record_dependency(item_dog, items, raw_content: ['/about.*'])
+        dependency_store.record_dependency(items, item_dog, raw_content: ['/about.*'])
       end
 
       it 'outputs dependencies for /dog.md' do
@@ -161,8 +161,8 @@ describe Nanoc::CLI::Commands::ShowData, :stdio do
 
     context 'dependency onto multiple specific items' do
       before do
-        dependency_store.record_dependency(item_dog, items, raw_content: ['/about.*'])
-        dependency_store.record_dependency(item_dog, items, raw_content: ['/giraffe.*'])
+        dependency_store.record_dependency(items, item_dog, raw_content: ['/about.*'])
+        dependency_store.record_dependency(items, item_dog, raw_content: ['/giraffe.*'])
       end
 
       it 'outputs dependencies for /dog.md' do
@@ -177,7 +177,7 @@ describe Nanoc::CLI::Commands::ShowData, :stdio do
 
     context 'dependency onto one specific layout' do
       before do
-        dependency_store.record_dependency(item_dog, layouts, raw_content: ['/about.*'])
+        dependency_store.record_dependency(layouts, item_dog, raw_content: ['/about.*'])
       end
 
       it 'outputs dependencies for /dog.md' do
@@ -189,8 +189,8 @@ describe Nanoc::CLI::Commands::ShowData, :stdio do
 
     context 'dependency onto multiple specific layouts' do
       before do
-        dependency_store.record_dependency(item_dog, layouts, raw_content: ['/about.*'])
-        dependency_store.record_dependency(item_dog, layouts, raw_content: ['/giraffe.*'])
+        dependency_store.record_dependency(layouts, item_dog, raw_content: ['/about.*'])
+        dependency_store.record_dependency(layouts, item_dog, raw_content: ['/giraffe.*'])
       end
 
       it 'outputs dependencies for /dog.md' do

@@ -34,7 +34,7 @@ describe Nanoc::Core::DependencyStore do
     context 'one dependency' do
       context 'dependency on config, no props' do
         before do
-          store.record_dependency(item_a, config)
+          store.record_dependency(config, item_a)
         end
 
         it 'returns one dependency' do
@@ -56,7 +56,7 @@ describe Nanoc::Core::DependencyStore do
 
       context 'dependency on config, generic attributes prop' do
         before do
-          store.record_dependency(item_a, config, attributes: true)
+          store.record_dependency(config, item_a, attributes: true)
         end
 
         it 'returns false for all unspecified props' do
@@ -74,7 +74,7 @@ describe Nanoc::Core::DependencyStore do
 
       context 'dependency on config, specific attributes prop' do
         before do
-          store.record_dependency(item_a, config, attributes: [:donkey])
+          store.record_dependency(config, item_a, attributes: [:donkey])
         end
 
         it 'returns false for all unspecified props' do
@@ -93,7 +93,7 @@ describe Nanoc::Core::DependencyStore do
 
       context 'dependency on items, generic prop' do
         before do
-          store.record_dependency(item_a, items)
+          store.record_dependency(items, item_a)
         end
 
         it 'creates one dependency' do
@@ -104,7 +104,7 @@ describe Nanoc::Core::DependencyStore do
 
       context 'no props' do
         before do
-          store.record_dependency(item_a, item_b)
+          store.record_dependency(item_b, item_a)
         end
 
         it 'returns one dependency' do
@@ -126,7 +126,7 @@ describe Nanoc::Core::DependencyStore do
 
       context 'dependency on item that will be removed' do
         before do
-          store.record_dependency(item_a, item_b)
+          store.record_dependency(item_b, item_a)
           store.items = Nanoc::Core::ItemCollection.new(config, [item_a])
         end
 
@@ -140,7 +140,7 @@ describe Nanoc::Core::DependencyStore do
 
       context 'one prop' do
         before do
-          store.record_dependency(item_a, item_b, compiled_content: true)
+          store.record_dependency(item_b, item_a, compiled_content: true)
         end
 
         it 'returns false for all unspecified props' do
@@ -158,8 +158,8 @@ describe Nanoc::Core::DependencyStore do
 
       context 'two props' do
         before do
-          store.record_dependency(item_a, item_b, compiled_content: true)
-          store.record_dependency(item_a, item_b, attributes: true)
+          store.record_dependency(item_b, item_a, compiled_content: true)
+          store.record_dependency(item_b, item_a, attributes: true)
         end
 
         it 'returns false for all unspecified props' do
@@ -178,8 +178,8 @@ describe Nanoc::Core::DependencyStore do
 
     context 'two dependency in a chain' do
       before do
-        store.record_dependency(item_a, item_b)
-        store.record_dependency(item_b, item_c)
+        store.record_dependency(item_b, item_a)
+        store.record_dependency(item_c, item_b)
       end
 
       it 'returns one dependency for object A' do
@@ -202,8 +202,8 @@ describe Nanoc::Core::DependencyStore do
 
   describe 'reloading - item a -> b' do
     before do
-      store.record_dependency(item_a, item_b, compiled_content: true)
-      store.record_dependency(item_a, item_b, attributes: true)
+      store.record_dependency(item_b, item_a, compiled_content: true)
+      store.record_dependency(item_b, item_a, attributes: true)
 
       store.store
     end
@@ -297,7 +297,7 @@ describe Nanoc::Core::DependencyStore do
 
   describe 'reloading - item a -> config' do
     before do
-      store.record_dependency(item_a, config, attributes: [:donkey])
+      store.record_dependency(config, item_a, attributes: [:donkey])
 
       store.store
       store.load
@@ -330,7 +330,7 @@ describe Nanoc::Core::DependencyStore do
 
   shared_examples 'records dependencies' do
     context 'no props' do
-      subject { store.record_dependency(source_obj, item_b) }
+      subject { store.record_dependency(item_b, source_obj) }
 
       it 'records a dependency' do
         expect { subject }
@@ -347,7 +347,7 @@ describe Nanoc::Core::DependencyStore do
       end
 
       context 'dependency on self' do
-        subject { store.record_dependency(source_obj, item_a) }
+        subject { store.record_dependency(item_a, source_obj) }
 
         it 'does not create dependency on self' do
           expect { subject }
@@ -357,8 +357,8 @@ describe Nanoc::Core::DependencyStore do
 
       context 'two dependencies' do
         subject do
-          store.record_dependency(source_obj, item_b)
-          store.record_dependency(source_obj, item_b)
+          store.record_dependency(item_b, source_obj)
+          store.record_dependency(item_b, source_obj)
         end
 
         it 'does not create duplicate dependencies' do
@@ -370,7 +370,7 @@ describe Nanoc::Core::DependencyStore do
       end
 
       context 'dependency to nil' do
-        subject { store.record_dependency(source_obj, nil) }
+        subject { store.record_dependency(nil, source_obj) }
 
         it 'creates a dependency to nil' do
           expect { subject }
@@ -381,7 +381,7 @@ describe Nanoc::Core::DependencyStore do
       end
 
       context 'dependency from nil' do
-        subject { store.record_dependency(nil, item_b) }
+        subject { store.record_dependency(item_b, nil) }
 
         it 'does not create a dependency from nil' do
           expect { subject }
@@ -391,7 +391,7 @@ describe Nanoc::Core::DependencyStore do
     end
 
     context 'compiled content prop' do
-      subject { store.record_dependency(source_obj, target_obj, compiled_content: true) }
+      subject { store.record_dependency(target_obj, source_obj, compiled_content: true) }
 
       it 'records a dependency' do
         expect { subject }
@@ -417,7 +417,7 @@ describe Nanoc::Core::DependencyStore do
     end
 
     context 'attribute prop (true)' do
-      subject { store.record_dependency(source_obj, target_obj, attributes: true) }
+      subject { store.record_dependency(target_obj, source_obj, attributes: true) }
 
       it 'records a dependency' do
         expect { subject }
@@ -444,7 +444,7 @@ describe Nanoc::Core::DependencyStore do
     end
 
     context 'attribute prop (symbol)' do
-      subject { store.record_dependency(source_obj, target_obj, attributes: [:giraffe]) }
+      subject { store.record_dependency(target_obj, source_obj, attributes: [:giraffe]) }
 
       it 'records a dependency' do
         expect { subject }
@@ -501,12 +501,12 @@ describe Nanoc::Core::DependencyStore do
     subject { store.forget_dependencies_for(item_b) }
 
     before do
-      store.record_dependency(item_a, item_b)
-      store.record_dependency(item_a, item_c)
       store.record_dependency(item_b, item_a)
-      store.record_dependency(item_b, item_c)
       store.record_dependency(item_c, item_a)
+      store.record_dependency(item_a, item_b)
       store.record_dependency(item_c, item_b)
+      store.record_dependency(item_a, item_c)
+      store.record_dependency(item_b, item_c)
     end
 
     it 'removes dependencies from item_a' do
