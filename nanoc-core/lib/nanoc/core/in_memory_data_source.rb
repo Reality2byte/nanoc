@@ -8,7 +8,9 @@ module Nanoc
       attr_reader :items
       attr_reader :layouts
 
-      contract Nanoc::Core::ItemCollection, Nanoc::Core::LayoutCollection, C::Maybe[Nanoc::Core::DataSource] => C::Any
+      contract Nanoc::Core::ItemCollection,
+               Nanoc::Core::LayoutCollection,
+               C::Maybe[Nanoc::Core::DataSource] => C::Any
       def initialize(items, layouts, orig_data_source = nil)
         super({}, '/', '/', {})
 

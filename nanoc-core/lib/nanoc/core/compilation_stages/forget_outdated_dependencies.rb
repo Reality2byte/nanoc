@@ -14,7 +14,9 @@ module Nanoc
 
         contract C::IterOf[Nanoc::Core::Item] => C::Any
         def run(outdated_items)
-          outdated_items.each { |i| @dependency_store.forget_dependencies_for(i) }
+          outdated_items.each do |i|
+            @dependency_store.forget_dependencies_for(i)
+          end
         end
       end
     end

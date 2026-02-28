@@ -7,7 +7,9 @@ module Nanoc
         affects_props :raw_content, :attributes, :compiled_content, :path
 
         def apply(obj, basic_outdatedness_checker)
-          if obj.raw_paths.values.flatten.compact.any? { |fn| !exist?(fn, basic_outdatedness_checker) }
+          if obj.raw_paths.values.flatten.compact.any? do |fn|
+            !exist?(fn, basic_outdatedness_checker)
+          end
             Nanoc::Core::OutdatednessReasons::NotWritten
           end
         end
@@ -24,7 +26,10 @@ module Nanoc
 
           @all ||= {}
           @all[basic_outdatedness_checker] ||= Set.new(
-            Dir.glob("#{site_root(basic_outdatedness_checker)}/**/*", File::FNM_DOTMATCH),
+            Dir.glob(
+              "#{site_root(basic_outdatedness_checker)}/**/*",
+              File::FNM_DOTMATCH,
+            ),
           )
         end
 

@@ -36,19 +36,24 @@ module Nanoc
         @contents[rep]
       end
 
-      contract Nanoc::Core::ItemRep, C::HashOf[Symbol => Nanoc::Core::Content] => C::Any
+      contract Nanoc::Core::ItemRep,
+               C::HashOf[Symbol => Nanoc::Core::Content] =>
+               C::Any
       def set_all(rep, contents_per_snapshot)
         @contents[rep] = contents_per_snapshot
       end
 
-      contract C::KeywordArgs[rep: Nanoc::Core::ItemRep, snapshot: C::Optional[C::Maybe[Symbol]]] => Nanoc::Core::Content
+      contract C::KeywordArgs[
+        rep: Nanoc::Core::ItemRep,
+        snapshot: C::Optional[C::Maybe[Symbol]]] => Nanoc::Core::Content
       def raw_compiled_content(rep:, snapshot: nil)
         # Get name of last pre-layout snapshot
         has_pre = rep.snapshot_defs.any? { |sd| sd.name == :pre }
         snapshot_name = snapshot || (has_pre ? :pre : :last)
 
         # Check existance of snapshot
-        snapshot_def = rep.snapshot_defs.reverse.find { |sd| sd.name == snapshot_name }
+        snapshot_def =
+          rep.snapshot_defs.reverse.find { |sd| sd.name == snapshot_name }
         unless snapshot_def
           raise Nanoc::Core::Errors::NoSuchSnapshot.new(rep, snapshot_name)
         end
@@ -61,12 +66,15 @@ module Nanoc
         raise Nanoc::Core::Errors::UnmetDependency.new(rep, snapshot_name)
       end
 
-      contract C::KeywordArgs[rep: Nanoc::Core::ItemRep, snapshot: C::Optional[C::Maybe[Symbol]]] => String
+      contract C::KeywordArgs[
+        rep: Nanoc::Core::ItemRep,
+        snapshot: C::Optional[C::Maybe[Symbol]]] => String
       def compiled_content(rep:, snapshot: nil)
         snapshot_content = raw_compiled_content(rep:, snapshot:)
 
         if snapshot_content.binary?
-          raise Nanoc::Core::Errors::CannotGetCompiledContentOfBinaryItem.new(rep)
+          raise Nanoc::Core::Errors::CannotGetCompiledContentOfBinaryItem
+            .new(rep)
         end
 
         snapshot_content.string

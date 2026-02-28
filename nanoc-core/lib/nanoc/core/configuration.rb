@@ -17,9 +17,9 @@ module Nanoc
       }.freeze
 
       # The default configuration for a site. A site's configuration overrides
-      # these options: when a {Nanoc::Core::Site} is created with a configuration
-      # that lacks some options, the default value will be taken from
-      # `DEFAULT_CONFIG`.
+      # these options: when a {Nanoc::Core::Site} is created with a
+      # configuration that lacks some options, the default value will be taken
+      # from `DEFAULT_CONFIG`.
       DEFAULT_CONFIG = {
         text_extensions: [
           'adoc', 'asciidoc', 'atom', 'css', 'erb', 'haml', 'htm', 'html', 'js',
@@ -49,7 +49,9 @@ module Nanoc
       NANOC_ENV = 'NANOC_ENV'
       NANOC_ENV_DEFAULT = 'default'
 
-      contract C::KeywordArgs[hash: C::Optional[Hash], env_name: C::Maybe[String], dir: C::AbsolutePathString] => C::Any
+      contract C::KeywordArgs[
+        hash: C::Optional[Hash], env_name: C::Maybe[String],
+        dir: C::AbsolutePathString] => C::Any
       def initialize(dir:, hash: {}, env_name: nil)
         @env_name = env_name
         @wrapped = hash.__nanoc_symbolize_keys_recursively
@@ -75,7 +77,8 @@ module Nanoc
         env_name = @env_name || ENV.fetch(NANOC_ENV, NANOC_ENV_DEFAULT)
 
         # Load given environment configuration
-        env_config = @wrapped[ENVIRONMENTS_CONFIG_KEY].fetch(env_name.to_sym, {})
+        env_config =
+          @wrapped[ENVIRONMENTS_CONFIG_KEY].fetch(env_name.to_sym, {})
 
         self.class.new(hash: @wrapped, dir: @dir, env_name:).merge(env_config)
       end
@@ -106,7 +109,9 @@ module Nanoc
         @wrapped.dig(*keys)
       end
 
-      contract C::Any, C::Maybe[C::Any], C::Maybe[C::Func[C::None => C::Any]] => C::Any
+      contract C::Any,
+               C::Maybe[C::Any],
+               C::Maybe[C::Func[C::None => C::Any]] => C::Any
       def fetch(key, fallback = Nanoc::Core::UNDEFINED, &)
         @wrapped.fetch(key) do
           if !Nanoc::Core::UNDEFINED.equal?(fallback)
@@ -126,12 +131,20 @@ module Nanoc
 
       contract C::Or[Hash, self] => self
       def merge(hash)
-        self.class.new(hash: merge_recursively(@wrapped, hash.to_h), dir: @dir, env_name: @env_name)
+        self.class.new(
+          hash: merge_recursively(@wrapped, hash.to_h),
+          dir: @dir,
+          env_name: @env_name,
+        )
       end
 
       contract C::Any => self
       def without(key)
-        self.class.new(hash: @wrapped.reject { |k, _v| k == key }, dir: @dir, env_name: @env_name)
+        self.class.new(
+          hash: @wrapped.reject { |k, _v| k == key },
+          dir: @dir,
+          env_name: @env_name,
+        )
       end
 
       contract C::Any => self
@@ -166,7 +179,8 @@ module Nanoc
       contract C::None => C::IterOf[C::AbsolutePathString]
       def output_dirs
         envs = @wrapped.fetch(ENVIRONMENTS_CONFIG_KEY, {})
-        res = [output_dir] + envs.values.map { |v| make_absolute(v[:output_dir]) }
+        res = [output_dir] +
+              envs.values.map { |v| make_absolute(v[:output_dir]) }
         res.uniq.compact
       end
 
@@ -193,7 +207,9 @@ module Nanoc
 
       contract C::Any => C::Bool
       def eql?(other)
-        other.is_a?(self.class) && @dir == other.dir && @env_name == other.env_name
+        other.is_a?(self.class) &&
+          @dir == other.dir &&
+          @env_name == other.env_name
       end
 
       private

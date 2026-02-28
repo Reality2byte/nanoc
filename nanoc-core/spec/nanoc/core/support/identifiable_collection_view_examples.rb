@@ -116,7 +116,8 @@ shared_examples 'an identifiable collection view' do
     end
 
     it 'creates dependency' do
-      expect(dependency_tracker).to receive(:bounce).with(wrapped, raw_content: true)
+      expect(dependency_tracker)
+        .to receive(:bounce).with(wrapped, raw_content: true)
       view.each do |_i|
         # do nothing
       end
@@ -151,7 +152,8 @@ shared_examples 'an identifiable collection view' do
     end
 
     it 'creates dependency' do
-      expect(dependency_tracker).to receive(:bounce).with(wrapped, raw_content: true)
+      expect(dependency_tracker)
+        .to receive(:bounce).with(wrapped, raw_content: true)
       subject
     end
 
@@ -185,7 +187,8 @@ shared_examples 'an identifiable collection view' do
       it { is_expected.to equal(nil) }
 
       it 'creates dependency' do
-        expect(dependency_tracker).to receive(:bounce).with(wrapped, raw_content: ['/donkey.*'])
+        expect(dependency_tracker)
+          .to receive(:bounce).with(wrapped, raw_content: ['/donkey.*'])
         subject
       end
     end
@@ -226,10 +229,16 @@ shared_examples 'an identifiable collection view' do
       let(:arg) { '/home.*' }
 
       context 'globs not enabled' do
-        let(:config) { Nanoc::Core::Configuration.new(dir: Dir.getwd, hash: { string_pattern_type: 'legacy' }).with_defaults }
+        let(:config) do
+          Nanoc::Core::Configuration.new(
+            dir: Dir.getwd,
+            hash: { string_pattern_type: 'legacy' },
+          ).with_defaults
+        end
 
         it 'creates dependency' do
-          expect(dependency_tracker).to receive(:bounce).with(wrapped, raw_content: ['/home.*'])
+          expect(dependency_tracker)
+            .to receive(:bounce).with(wrapped, raw_content: ['/home.*'])
           subject
         end
 
@@ -240,7 +249,8 @@ shared_examples 'an identifiable collection view' do
 
       context 'globs enabled' do
         it 'creates dependency' do
-          expect(dependency_tracker).to receive(:bounce).with(wrapped, raw_content: ['/home.*'])
+          expect(dependency_tracker)
+            .to receive(:bounce).with(wrapped, raw_content: ['/home.*'])
           subject
         end
 
@@ -282,7 +292,8 @@ shared_examples 'an identifiable collection view' do
       subject { view.find_all('/*.css') }
 
       it 'creates dependency' do
-        expect(dependency_tracker).to receive(:bounce).with(wrapped, raw_content: ['/*.css'])
+        expect(dependency_tracker)
+          .to receive(:bounce).with(wrapped, raw_content: ['/*.css'])
         subject
       end
 
@@ -299,7 +310,8 @@ shared_examples 'an identifiable collection view' do
       subject { view.find_all(/\.css\z/) }
 
       it 'creates dependency' do
-        expect(dependency_tracker).to receive(:bounce).with(wrapped, raw_content: [/\.css\z/])
+        expect(dependency_tracker)
+          .to receive(:bounce).with(wrapped, raw_content: [/\.css\z/])
         subject
       end
 
@@ -321,7 +333,8 @@ shared_examples 'an identifiable collection view' do
       end
 
       it 'creates dependency' do
-        expect(dependency_tracker).to receive(:bounce).with(wrapped, raw_content: true)
+        expect(dependency_tracker)
+          .to receive(:bounce).with(wrapped, raw_content: true)
         subject
       end
 
@@ -372,7 +385,8 @@ shared_examples 'an identifiable collection view' do
       subject { view.where(kind: 'note') }
 
       it 'creates dependency' do
-        expect(dependency_tracker).to receive(:bounce).with(wrapped, attributes: { kind: 'note' })
+        expect(dependency_tracker)
+          .to receive(:bounce).with(wrapped, attributes: { kind: 'note' })
         subject
       end
 
@@ -391,7 +405,12 @@ shared_examples 'an identifiable collection view' do
       subject { view.where(kind: 'note', year: 2020) }
 
       it 'creates dependency' do
-        expect(dependency_tracker).to receive(:bounce).with(wrapped, attributes: { kind: 'note', year: 2020 })
+        expect(dependency_tracker)
+          .to receive(:bounce)
+          .with(
+            wrapped,
+            attributes: { kind: 'note', year: 2020 },
+          )
         subject
       end
 

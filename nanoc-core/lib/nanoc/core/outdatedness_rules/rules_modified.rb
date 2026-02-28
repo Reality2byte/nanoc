@@ -7,14 +7,16 @@ module Nanoc
         affects_props :compiled_content, :path
 
         def apply(obj, basic_outdatedness_checker)
+          boc = basic_outdatedness_checker
+
           # Check rules of obj itself
-          if rules_modified?(obj, basic_outdatedness_checker)
+          if rules_modified?(obj, boc)
             return Nanoc::Core::OutdatednessReasons::RulesModified
           end
 
           # Check rules of layouts used by obj
-          layouts = layouts_touched_by(obj, basic_outdatedness_checker)
-          if layouts.any? { |layout| rules_modified?(layout, basic_outdatedness_checker) }
+          layouts = layouts_touched_by(obj, boc)
+          if layouts.any? { |l| rules_modified?(l, boc) }
             return Nanoc::Core::OutdatednessReasons::RulesModified
           end
 
@@ -24,8 +26,13 @@ module Nanoc
         private
 
         def rules_modified?(obj, basic_outdatedness_checker)
-          seq_old = basic_outdatedness_checker.action_sequence_store[obj]
-          seq_new = basic_outdatedness_checker.action_sequence_for(obj).serialize
+          seq_old =
+            basic_outdatedness_checker
+            .action_sequence_store[obj]
+          seq_new =
+            basic_outdatedness_checker
+            .action_sequence_for(obj)
+            .serialize
 
           !seq_old.eql?(seq_new)
         end
@@ -38,7 +45,8 @@ module Nanoc
 
           layout_actions.map do |layout_action|
             layout_pattern = layout_action[1]
-            layouts.object_with_identifier(layout_pattern) || layouts.object_matching_glob(layout_pattern)
+            layouts.object_with_identifier(layout_pattern) ||
+              layouts.object_matching_glob(layout_pattern)
           end.compact
         end
       end

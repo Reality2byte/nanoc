@@ -98,7 +98,8 @@ describe Nanoc::Core::CompilationItemView do
         end
 
         let(:parent_item) do
-          Nanoc::Core::Item.new('parent', {}, Nanoc::Core::Identifier.new('/parent/', type: :legacy))
+          Nanoc::Core::Item.new('parent', {},
+                                Nanoc::Core::Identifier.new('/parent/', type: :legacy))
         end
 
         it 'returns a view for the parent' do
@@ -198,7 +199,8 @@ describe Nanoc::Core::CompilationItemView do
       end
 
       let(:children) do
-        [Nanoc::Core::Item.new('child', {}, Nanoc::Core::Identifier.new('/me/child/', type: :legacy))]
+        [Nanoc::Core::Item.new('child', {},
+                               Nanoc::Core::Identifier.new('/me/child/', type: :legacy))]
       end
 
       it 'returns views for the children' do
@@ -277,7 +279,9 @@ describe Nanoc::Core::CompilationItemView do
       it { is_expected.to eq('Pre Hallo') }
 
       it 'creates a dependency' do
-        expect { subject }.to change { dependency_store.objects_causing_outdatedness_of(base_item) }.from([]).to([item])
+        expect { subject }.to change {
+          dependency_store.objects_causing_outdatedness_of(base_item)
+        }.from([]).to([item])
       end
 
       context 'requesting explicit snapshot' do
@@ -297,7 +301,9 @@ describe Nanoc::Core::CompilationItemView do
       let(:params) { { rep: :default } }
 
       it 'creates a dependency' do
-        expect { subject }.to change { dependency_store.objects_causing_outdatedness_of(base_item) }.from([]).to([item])
+        expect { subject }.to change {
+          dependency_store.objects_causing_outdatedness_of(base_item)
+        }.from([]).to([item])
       end
 
       it { is_expected.to eq('Pre Hallo') }
@@ -346,7 +352,9 @@ describe Nanoc::Core::CompilationItemView do
       let(:params) { {} }
 
       it 'creates a dependency' do
-        expect { subject }.to change { dependency_store.objects_causing_outdatedness_of(base_item) }.from([]).to([item])
+        expect { subject }.to change {
+          dependency_store.objects_causing_outdatedness_of(base_item)
+        }.from([]).to([item])
       end
 
       it { is_expected.to eq('/about/') }
@@ -362,7 +370,9 @@ describe Nanoc::Core::CompilationItemView do
       let(:params) { { rep: :default } }
 
       it 'creates a dependency' do
-        expect { subject }.to change { dependency_store.objects_causing_outdatedness_of(base_item) }.from([]).to([item])
+        expect { subject }.to change {
+          dependency_store.objects_causing_outdatedness_of(base_item)
+        }.from([]).to([item])
       end
 
       it { is_expected.to eq('/about/') }
@@ -402,7 +412,9 @@ describe Nanoc::Core::CompilationItemView do
       it { is_expected.to be_nil }
 
       it 'creates a dependency' do
-        expect { subject }.to change { dependency_store.objects_causing_outdatedness_of(base_item) }.from([]).to([item])
+        expect { subject }.to change {
+          dependency_store.objects_causing_outdatedness_of(base_item)
+        }.from([]).to([item])
       end
 
       it 'creates a dependency with the right props' do
@@ -424,7 +436,9 @@ describe Nanoc::Core::CompilationItemView do
       it { is_expected.to eql('/tmp/lol.txt') }
 
       it 'creates a dependency' do
-        expect { subject }.to change { dependency_store.objects_causing_outdatedness_of(base_item) }.from([]).to([item])
+        expect { subject }.to change {
+          dependency_store.objects_causing_outdatedness_of(base_item)
+        }.from([]).to([item])
       end
 
       it 'creates a dependency with the right props' do
@@ -446,7 +460,9 @@ describe Nanoc::Core::CompilationItemView do
       it { is_expected.to eql('/tmp/lol.txt') }
 
       it 'creates a dependency' do
-        expect { subject }.to change { dependency_store.objects_causing_outdatedness_of(base_item) }.from([]).to([item])
+        expect { subject }.to change {
+          dependency_store.objects_causing_outdatedness_of(base_item)
+        }.from([]).to([item])
       end
 
       it 'creates a dependency with the right props' do

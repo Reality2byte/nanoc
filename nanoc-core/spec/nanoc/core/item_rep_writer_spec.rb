@@ -2,7 +2,9 @@
 
 describe Nanoc::Core::ItemRepWriter do
   describe '#write' do
-    subject { described_class.new.write(item_rep, compiled_content_repo, snapshot_name, written_paths) }
+    subject do
+      described_class.new.write(item_rep, compiled_content_repo, snapshot_name, written_paths)
+    end
 
     let(:raw_path) { "#{Dir.getwd}/output/blah.dat" }
 

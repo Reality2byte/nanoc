@@ -11,12 +11,19 @@ module Nanoc
 
       contract C::KeywordArgs[config: Nanoc::Core::Configuration] => C::Any
       def initialize(config:)
-        super(Nanoc::Core::Store.tmp_path_for(config:, store_name: 'binary_content'), 3)
+        super(
+          Nanoc::Core::Store.tmp_path_for(
+            config:,
+            store_name: 'binary_content',
+          ),
+          3,
+        )
 
         @cache = {}
       end
 
-      contract Nanoc::Core::ItemRep => C::Maybe[C::HashOf[Symbol => Nanoc::Core::Content]]
+      contract Nanoc::Core::ItemRep =>
+      C::Maybe[C::HashOf[Symbol => Nanoc::Core::Content]]
       # Returns the cached compiled content for the given item representation.
       #
       # This cached compiled content is a hash where the keys are the snapshot
@@ -38,7 +45,9 @@ module Nanoc
         item_cache.key?(rep.name)
       end
 
-      contract Nanoc::Core::ItemRep, C::HashOf[Symbol => Nanoc::Core::BinaryContent] => C::HashOf[Symbol => Nanoc::Core::Content]
+      contract Nanoc::Core::ItemRep,
+               C::HashOf[Symbol => Nanoc::Core::BinaryContent] =>
+               C::HashOf[Symbol => Nanoc::Core::Content]
       # Sets the compiled content for the given representation.
       #
       # This cached compiled content is a hash where the keys are the snapshot
@@ -50,9 +59,11 @@ module Nanoc
 
         content.each do |snapshot, binary_content|
           # Check
-          if Nanoc::Core::ContractsSupport.enabled? && !File.file?(binary_content.filename)
+          if Nanoc::Core::ContractsSupport.enabled? &&
+             !File.file?(binary_content.filename)
             raise Nanoc::Core::Errors::InternalInconsistency,
-                  "Binary content at #{binary_content.filename.inspect} does not exist, but is expected to."
+                  "Binary content at #{binary_content.filename.inspect} " \
+                  'does not exist, but is expected to.'
           end
 
           filename = build_filename(rep, snapshot)
@@ -104,7 +115,8 @@ module Nanoc
       end
 
       def string_to_path_component(string)
-        "#{string.gsub(/[^a-zA-Z0-9]+/, '_')}-#{Digest::SHA1.hexdigest(string)[0..9]}"
+        "#{string.gsub(/[^a-zA-Z0-9]+/, '_')}-" \
+          "#{Digest::SHA1.hexdigest(string)[0..9]}"
       end
 
       def dirname_for_item_identifier(item_identifier)
@@ -140,7 +152,10 @@ module Nanoc
           begin
             res = Clonefile.always(from, to)
             return if res
-          rescue Clonefile::UnsupportedPlatform, Errno::ENOTSUP, Errno::EXDEV, Errno::EINVAL
+          rescue Clonefile::UnsupportedPlatform,
+                 Errno::ENOTSUP,
+                 Errno::EXDEV,
+                 Errno::EINVAL
           end
         end
 

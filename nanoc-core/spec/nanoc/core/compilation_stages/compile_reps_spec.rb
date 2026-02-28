@@ -82,7 +82,10 @@ describe Nanoc::Core::CompilationStages::CompileReps do
   let(:memory) do
     actions =
       [
-        Nanoc::Core::ProcessingActions::Filter.new(:simple_erb_vcn3np2ayqmv6ayqp8su2crbusonmgwh, {}),
+        Nanoc::Core::ProcessingActions::Filter.new(
+          :simple_erb_vcn3np2ayqmv6ayqp8su2crbusonmgwh,
+          {},
+        ),
         Nanoc::Core::ProcessingActions::Snapshot.new([:last], []),
       ]
 

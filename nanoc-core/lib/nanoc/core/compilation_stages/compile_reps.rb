@@ -30,7 +30,8 @@ module Nanoc
           outdated_reps = @reps.select { |r| @outdatedness_store.include?(r) }
 
           # If a focus is specified, only compile reps that match this focus.
-          # (If no focus is specified, `@focus` will be `nil`, not an empty array.)
+          # (If no focus is specified, `@focus` will be `nil`, not an empty
+          # array.)
           if @focus
             focus_patterns = @focus.map { |f| Nanoc::Core::Pattern.from(f) }
 
@@ -98,9 +99,13 @@ module Nanoc
         end
 
         def recalculate_rep(rep)
-          dependency_tracker = Nanoc::Core::DependencyTracker.new(@dependency_store, root: rep.item)
+          dependency_tracker = Nanoc::Core::DependencyTracker.new(
+            @dependency_store, root: rep.item
+          )
 
-          executor = Nanoc::Core::Executor.new(rep, @compilation_context, dependency_tracker)
+          executor = Nanoc::Core::Executor.new(
+            rep, @compilation_context, dependency_tracker
+          )
 
           # Set initial content, if not already present
           compiled_content_repo = @compilation_context.compiled_content_repo
@@ -122,7 +127,8 @@ module Nanoc
                 executor.snapshot(snapshot_name)
               end
             else
-              raise Nanoc::Core::Errors::InternalInconsistency, "unknown action #{action.inspect}"
+              raise Nanoc::Core::Errors::InternalInconsistency,
+                    "unknown action #{action.inspect}"
             end
 
             actions.shift

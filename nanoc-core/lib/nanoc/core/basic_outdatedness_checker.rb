@@ -99,7 +99,8 @@ module Nanoc
           # however.
           apply_rules([], obj)
         else
-          raise Nanoc::Core::Errors::InternalInconsistency, "do not know how to check outdatedness of #{obj.inspect}"
+          raise Nanoc::Core::Errors::InternalInconsistency,
+                "do not know how to check outdatedness of #{obj.inspect}"
         end
       end
 
@@ -109,7 +110,10 @@ module Nanoc
 
       private
 
-      contract C::ArrayOf[Class], C_OBJ_MAYBE_REP, Nanoc::Core::OutdatednessStatus => C::Maybe[Nanoc::Core::OutdatednessStatus]
+      contract C::ArrayOf[Class],
+               C_OBJ_MAYBE_REP,
+               Nanoc::Core::OutdatednessStatus =>
+               C::Maybe[Nanoc::Core::OutdatednessStatus]
       def apply_rules(rules, obj, status = Nanoc::Core::OutdatednessStatus.new)
         @_apply_rules[obj] ||=
           rules.inject(status) do |acc, rule|
@@ -126,7 +130,8 @@ module Nanoc
           end
       end
 
-      contract C::ArrayOf[Class], C::ArrayOf[C_OBJ_MAYBE_REP] => C::Maybe[Nanoc::Core::OutdatednessStatus]
+      contract C::ArrayOf[Class], C::ArrayOf[C_OBJ_MAYBE_REP] =>
+      C::Maybe[Nanoc::Core::OutdatednessStatus]
       def apply_rules_multi(rules, objs)
         objs.inject(Nanoc::Core::OutdatednessStatus.new) do |acc, elem|
           apply_rules(rules, elem, acc)

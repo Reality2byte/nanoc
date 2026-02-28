@@ -13,7 +13,10 @@ module Nanoc
 
         def run
           if @config[:prune][:auto_prune]
-            Nanoc::Core::Pruner.new(@config, @reps, exclude: prune_config_exclude).run
+            Nanoc::Core::Pruner.new(
+              @config, @reps,
+              exclude: prune_config_exclude
+            ).run
           end
         end
 

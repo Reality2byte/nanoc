@@ -18,7 +18,8 @@ module Nanoc
 
       class CyclicalConfigFileError < ::Nanoc::Core::Error
         def initialize(filename)
-          super("The parent configuration file at #{filename} includes one of its descendants")
+          super("The parent configuration file at #{filename} includes one " \
+                'of its descendants')
         end
       end
 
@@ -68,7 +69,10 @@ module Nanoc
         return config if parent_path.nil?
 
         # Get absolute path
-        parent_path = File.absolute_path(parent_path, File.dirname(processed_paths.last))
+        parent_path = File.absolute_path(
+          parent_path,
+          File.dirname(processed_paths.last),
+        )
         unless File.file?(parent_path)
           raise NoParentConfigFileFoundError.new(parent_path)
         end
@@ -79,8 +83,14 @@ module Nanoc
         end
 
         # Load
-        parent_config = Nanoc::Core::Configuration.new(hash: load_file(parent_path), dir: config.dir)
-        full_parent_config = apply_parent_config(parent_config, processed_paths + [parent_path])
+        parent_config = Nanoc::Core::Configuration.new(
+          hash: load_file(parent_path),
+          dir: config.dir,
+        )
+        full_parent_config = apply_parent_config(
+          parent_config,
+          processed_paths + [parent_path],
+        )
         full_parent_config.merge(config.without(:parent_config_file))
       end
     end

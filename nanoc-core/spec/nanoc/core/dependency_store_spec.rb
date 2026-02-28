@@ -341,7 +341,9 @@ describe Nanoc::Core::DependencyStore do
 
       it 'ignores all other objects' do
         subject
-        expect(other_items).to all(satisfy { |o| store.dependencies_causing_outdatedness_of(o).empty? })
+        expect(other_items).to all(satisfy { |o|
+          store.dependencies_causing_outdatedness_of(o).empty?
+        })
       end
 
       context 'dependency on self' do
@@ -408,7 +410,9 @@ describe Nanoc::Core::DependencyStore do
 
       it 'ignores all other objects' do
         subject
-        expect(other_items).to all(satisfy { |o| store.dependencies_causing_outdatedness_of(o).empty? })
+        expect(other_items).to all(satisfy { |o|
+          store.dependencies_causing_outdatedness_of(o).empty?
+        })
       end
     end
 
@@ -433,7 +437,9 @@ describe Nanoc::Core::DependencyStore do
 
       it 'ignores all other objects' do
         subject
-        expect(other_items).to all(satisfy { |o| store.dependencies_causing_outdatedness_of(o).empty? })
+        expect(other_items).to all(satisfy { |o|
+          store.dependencies_causing_outdatedness_of(o).empty?
+        })
       end
     end
 
@@ -458,7 +464,9 @@ describe Nanoc::Core::DependencyStore do
 
       it 'ignores all other objects' do
         subject
-        expect(other_items).to all(satisfy { |o| store.dependencies_causing_outdatedness_of(o).empty? })
+        expect(other_items).to all(satisfy { |o|
+          store.dependencies_causing_outdatedness_of(o).empty?
+        })
       end
     end
   end

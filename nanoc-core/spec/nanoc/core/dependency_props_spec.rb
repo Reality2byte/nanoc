@@ -85,7 +85,9 @@ describe Nanoc::Core::DependencyProps do
     end
 
     context 'all active' do
-      let(:props) { described_class.new(raw_content: true, attributes: true, compiled_content: true, path: true) }
+      let(:props) do
+        described_class.new(raw_content: true, attributes: true, compiled_content: true, path: true)
+      end
 
       it { is_expected.to be(true) }
     end
@@ -129,7 +131,9 @@ describe Nanoc::Core::DependencyProps do
     end
 
     context 'all active' do
-      let(:props) { described_class.new(raw_content: true, attributes: true, compiled_content: true, path: true) }
+      let(:props) do
+        described_class.new(raw_content: true, attributes: true, compiled_content: true, path: true)
+      end
 
       it { is_expected.to be(true) }
     end
@@ -427,31 +431,57 @@ describe Nanoc::Core::DependencyProps do
     end
 
     context 'all active' do
-      let(:props) { described_class.new(raw_content: true, attributes: true, compiled_content: true, path: true) }
+      let(:props) do
+        described_class.new(raw_content: true, attributes: true, compiled_content: true, path: true)
+      end
 
       it { is_expected.to eql(Set.new([:raw_content, :attributes, :compiled_content, :path])) }
     end
   end
 
   describe '#to_h' do
-    subject { props.to_h }
+    subject(:to_h) { props.to_h }
 
     context 'nothing' do
       let(:props) { described_class.new }
 
-      it { is_expected.to eql(raw_content: false, attributes: false, compiled_content: false, path: false) }
+      it {
+        expect(to_h)
+          .to eql(
+            raw_content: false,
+            attributes: false,
+            compiled_content: false,
+            path: false,
+          )
+      }
     end
 
     context 'some' do
       let(:props) { described_class.new(attributes: true, compiled_content: true) }
 
-      it { is_expected.to eql(raw_content: false, attributes: true, compiled_content: true, path: false) }
+      it {
+        expect(to_h)
+          .to eql(
+            raw_content: false,
+            attributes: true,
+            compiled_content: true,
+            path: false,
+          )
+      }
     end
 
     context 'all' do
       let(:props) { props_all }
 
-      it { is_expected.to eql(raw_content: true, attributes: true, compiled_content: true, path: true) }
+      it {
+        expect(to_h)
+          .to eql(
+            raw_content: true,
+            attributes: true,
+            compiled_content: true,
+            path: true,
+          )
+      }
     end
   end
 end

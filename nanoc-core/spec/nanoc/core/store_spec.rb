@@ -52,7 +52,9 @@ describe Nanoc::Core::Store do
         end
 
         context 'output dir in other env is specified' do
-          let(:config_hash) { { environments: { production: { output_dir: 'output-production' } } } }
+          let(:config_hash) do
+            { environments: { production: { output_dir: 'output-production' } } }
+          end
 
           it { is_expected.to eql(Dir.getwd + "/tmp/nanoc/#{hash_output}/giraffes") }
         end
@@ -80,7 +82,9 @@ describe Nanoc::Core::Store do
         end
 
         context 'output dir in other env is specified' do
-          let(:config_hash) { { environments: { production: { output_dir: 'output-production' } } } }
+          let(:config_hash) do
+            { environments: { production: { output_dir: 'output-production' } } }
+          end
 
           it { is_expected.to eql(Dir.getwd + "/tmp/nanoc/#{hash_output}/giraffes") }
         end

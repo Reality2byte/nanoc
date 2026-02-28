@@ -11,7 +11,9 @@ module Nanoc
 
         contract Nanoc::Core::ItemRep, Symbol => C::Any
         def initialize(rep, snapshot)
-          super("Attempted to create a snapshot with a duplicate name #{snapshot.inspect} for the item rep #{rep}")
+          super(
+            'Attempted to create a snapshot with a duplicate name ' \
+            "#{snapshot.inspect} for the item rep #{rep}")
         end
       end
 
@@ -27,19 +29,25 @@ module Nanoc
 
       contract Symbol, Hash => self
       def add_filter(filter_name, params)
-        @actions << Nanoc::Core::ProcessingActions::Filter.new(filter_name, params)
+        @actions << Nanoc::Core::ProcessingActions::Filter.new(
+          filter_name, params
+        )
         self
       end
 
       contract String, C::Maybe[Hash] => self
       def add_layout(layout_identifier, params)
-        @actions << Nanoc::Core::ProcessingActions::Layout.new(layout_identifier, params)
+        @actions << Nanoc::Core::ProcessingActions::Layout.new(
+          layout_identifier, params
+        )
         self
       end
 
       def add_snapshot(snapshot_name, path, rep)
         will_add_snapshot(snapshot_name, rep)
-        @actions << Nanoc::Core::ProcessingActions::Snapshot.new([snapshot_name], path ? [path] : [])
+        @actions << Nanoc::Core::ProcessingActions::Snapshot.new(
+          [snapshot_name], path ? [path] : []
+        )
         self
       end
 

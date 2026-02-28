@@ -53,10 +53,12 @@ describe Nanoc::Core::OutdatednessChecker do
   let(:item_article_c_rep_after) { item_article_c_rep_before }
 
   let(:items_before_array) do
-    [item_home_before, item_articles_before, item_article_a_before, item_article_b_before, item_article_c_before]
+    [item_home_before, item_articles_before, item_article_a_before, item_article_b_before,
+     item_article_c_before]
   end
   let(:items_after_array) do
-    [item_home_after, item_articles_after, item_article_a_after, item_article_b_after, item_article_c_after]
+    [item_home_after, item_articles_after, item_article_a_after, item_article_b_after,
+     item_article_c_after]
   end
   let(:items_before_coll)  { Nanoc::Core::ItemCollection.new(config_before, items_before_array) }
   let(:items_after_coll)   { Nanoc::Core::ItemCollection.new(config_after, items_after_array) }
@@ -280,9 +282,12 @@ describe Nanoc::Core::OutdatednessChecker do
           layouts_before_coll,
           config_before,
         ).tap do |store|
-          store.record_dependency(item_articles_before, item_article_a_before, compiled_content: true)
-          store.record_dependency(item_articles_before, item_article_b_before, compiled_content: true)
-          store.record_dependency(item_articles_before, item_article_c_before, compiled_content: true)
+          store.record_dependency(item_articles_before, item_article_a_before,
+                                  compiled_content: true)
+          store.record_dependency(item_articles_before, item_article_b_before,
+                                  compiled_content: true)
+          store.record_dependency(item_articles_before, item_article_c_before,
+                                  compiled_content: true)
         end
       end
 
@@ -419,9 +424,12 @@ describe Nanoc::Core::OutdatednessChecker do
           layouts_before_coll,
           config_before,
         ).tap do |store|
-          store.record_dependency(item_articles_before, item_article_a_before, attributes: [:updated_on])
-          store.record_dependency(item_articles_before, item_article_b_before, attributes: [:updated_on])
-          store.record_dependency(item_articles_before, item_article_c_before, attributes: [:updated_on])
+          store.record_dependency(item_articles_before, item_article_a_before,
+                                  attributes: [:updated_on])
+          store.record_dependency(item_articles_before, item_article_b_before,
+                                  attributes: [:updated_on])
+          store.record_dependency(item_articles_before, item_article_c_before,
+                                  attributes: [:updated_on])
         end
       end
 
@@ -444,9 +452,12 @@ describe Nanoc::Core::OutdatednessChecker do
           layouts_before_coll,
           config_before,
         ).tap do |store|
-          store.record_dependency(item_articles_before, item_article_a_before, compiled_content: true)
-          store.record_dependency(item_articles_before, item_article_b_before, compiled_content: true)
-          store.record_dependency(item_articles_before, item_article_c_before, compiled_content: true)
+          store.record_dependency(item_articles_before, item_article_a_before,
+                                  compiled_content: true)
+          store.record_dependency(item_articles_before, item_article_b_before,
+                                  compiled_content: true)
+          store.record_dependency(item_articles_before, item_article_c_before,
+                                  compiled_content: true)
         end
       end
 
@@ -764,9 +775,12 @@ describe Nanoc::Core::OutdatednessChecker do
           layouts_before_coll,
           config_before,
         ).tap do |store|
-          store.record_dependency(item_articles_before, item_article_a_before, compiled_content: true)
-          store.record_dependency(item_articles_before, item_article_b_before, compiled_content: true)
-          store.record_dependency(item_articles_before, item_article_c_before, compiled_content: true)
+          store.record_dependency(item_articles_before, item_article_a_before,
+                                  compiled_content: true)
+          store.record_dependency(item_articles_before, item_article_b_before,
+                                  compiled_content: true)
+          store.record_dependency(item_articles_before, item_article_c_before,
+                                  compiled_content: true)
         end
       end
 
@@ -1020,7 +1034,8 @@ describe Nanoc::Core::OutdatednessChecker do
           layouts_before_coll,
           config_before,
         )
-        old_dependency_store.record_dependency(item_articles_before, items_before_coll, attributes: { kind: 'article' })
+        old_dependency_store.record_dependency(item_articles_before, items_before_coll,
+                                               attributes: { kind: 'article' })
         old_dependency_store.store
 
         # Reload
@@ -1094,7 +1109,8 @@ describe Nanoc::Core::OutdatednessChecker do
           layouts_before_coll,
           config_before,
         )
-        old_dependency_store.record_dependency(item_articles_before, items_before_coll, raw_content: true)
+        old_dependency_store.record_dependency(item_articles_before, items_before_coll,
+                                               raw_content: true)
         old_dependency_store.store
 
         # Reload
@@ -1132,7 +1148,8 @@ describe Nanoc::Core::OutdatednessChecker do
           layouts_before_coll,
           config_before,
         )
-        old_dependency_store.record_dependency(item_articles_before, items_before_coll, raw_content: ['/articles/*.md'])
+        old_dependency_store.record_dependency(item_articles_before, items_before_coll,
+                                               raw_content: ['/articles/*.md'])
         old_dependency_store.store
 
         # Reload
@@ -1278,7 +1295,8 @@ describe Nanoc::Core::OutdatednessChecker do
           layouts_before_coll,
           config_before,
         )
-        old_dependency_store.record_dependency(item_articles_before, layouts_before_coll, attributes: { kind: 'note' })
+        old_dependency_store.record_dependency(item_articles_before, layouts_before_coll,
+                                               attributes: { kind: 'note' })
         old_dependency_store.store
 
         # Reload
@@ -1304,7 +1322,8 @@ describe Nanoc::Core::OutdatednessChecker do
           layouts_before_coll,
           config_before,
         )
-        old_dependency_store.record_dependency(item_articles_before, layouts_before_coll, raw_content: true)
+        old_dependency_store.record_dependency(item_articles_before, layouts_before_coll,
+                                               raw_content: true)
         old_dependency_store.store
 
         # Reload

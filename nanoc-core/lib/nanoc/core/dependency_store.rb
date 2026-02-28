@@ -40,9 +40,14 @@ module Nanoc
       attr_reader :items
       attr_reader :layouts
 
-      contract Nanoc::Core::ItemCollection, Nanoc::Core::LayoutCollection, Nanoc::Core::Configuration => C::Any
+      contract Nanoc::Core::ItemCollection,
+               Nanoc::Core::LayoutCollection,
+               Nanoc::Core::Configuration => C::Any
       def initialize(items, layouts, config)
-        super(Nanoc::Core::Store.tmp_path_for(config:, store_name: 'dependencies'), 6)
+        super(
+          Nanoc::Core::Store.tmp_path_for(config:, store_name: 'dependencies'),
+          6,
+        )
 
         @config = config
         @items = items
@@ -51,7 +56,9 @@ module Nanoc
         rebuild_refs2objs
 
         @new_objects = []
-        @graph = Nanoc::Core::DirectedGraph.new([nil] + objs2refs(@items) + objs2refs(@layouts))
+        @graph = Nanoc::Core::DirectedGraph.new(
+          [nil] + objs2refs(@items) + objs2refs(@layouts),
+        )
       end
 
       def rebuild_refs2objs
@@ -115,19 +122,23 @@ module Nanoc
         refs2objs(@graph.direct_predecessors_of(obj2ref(object)))
       end
 
-      contract C::Maybe[C_OBJ_SRC], C::Maybe[C_OBJ_DST], C_KEYWORD_PROPS => C::Any
+      contract C::Maybe[C_OBJ_SRC],
+               C::Maybe[C_OBJ_DST],
+               C_KEYWORD_PROPS => C::Any
       # Records a dependency from `src` to `dst` in the dependency graph. When
       # `dst` is oudated, `src` will also become outdated.
       #
-      # @param [Nanoc::Core::Item, Nanoc::Core::Layout] src The source of the dependency,
-      #   i.e. the object that will become outdated if dst is outdated
+      # @param [Nanoc::Core::Item, Nanoc::Core::Layout] src The source of the
+      #   dependency, i.e. the object that will become outdated if dst is
+      #   outdated
       #
-      # @param [Nanoc::Core::Item, Nanoc::Core::Layout] dst The destination of the
-      #   dependency, i.e. the object that will cause the source to become
+      # @param [Nanoc::Core::Item, Nanoc::Core::Layout] dst The destination of
+      #   the dependency, i.e. the object that will cause the source to become
       #   outdated if the destination is outdated
       #
       # @return [void]
-      def record_dependency(src, dst, raw_content: false, attributes: false, compiled_content: false, path: false)
+      def record_dependency(src, dst, raw_content: false, attributes: false,
+                            compiled_content: false, path: false)
         return if src == dst
 
         add_vertex_for(src)
@@ -142,7 +153,9 @@ module Nanoc
         end
 
         existing_props = @graph.props_for(dst_ref, src_ref)
-        new_props = Nanoc::Core::DependencyProps.new(raw_content:, attributes:, compiled_content:, path:)
+        new_props = Nanoc::Core::DependencyProps.new(
+          raw_content:, attributes:, compiled_content:, path:,
+        )
         props = existing_props ? existing_props.merge(new_props) : new_props
 
         @graph.add_edge(dst_ref, src_ref, props:)
@@ -157,8 +170,8 @@ module Nanoc
       # will stick around and new dependencies will appear twice. This function
       # removes all incoming edges for the given vertex.
       #
-      # @param [Nanoc::Core::Item, Nanoc::Core::Layout] object The object for which to
-      #   forget all dependencies
+      # @param [Nanoc::Core::Item, Nanoc::Core::Layout] object The object for
+      #   which to forget all dependencies
       #
       # @return [void]
       def forget_dependencies_for(object)

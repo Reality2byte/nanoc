@@ -17,7 +17,13 @@ module Nanoc
 
       Reasons = Nanoc::Core::OutdatednessReasons
 
-      C_OBJ = C::Or[Nanoc::Core::Item, Nanoc::Core::ItemRep, Nanoc::Core::Configuration, Nanoc::Core::Layout, Nanoc::Core::ItemCollection]
+      C_OBJ = C::Or[
+        Nanoc::Core::Item,
+        Nanoc::Core::ItemRep,
+        Nanoc::Core::Configuration,
+        Nanoc::Core::Layout,
+        Nanoc::Core::ItemCollection,
+      ]
       C_ITEM_OR_REP = C::Or[Nanoc::Core::Item, Nanoc::Core::ItemRep]
       C_ACTION_SEQUENCES = C::HashOf[C_OBJ => Nanoc::Core::ActionSequence]
 
@@ -102,11 +108,14 @@ module Nanoc
         return false if processed.include?(obj)
 
         # Calculate
-        is_outdated = dependency_store.dependencies_causing_outdatedness_of(obj).any? do |dep|
-          dependency_causes_outdatedness?(dep) ||
-            (dep.props.compiled_content? &&
-              outdated_due_to_dependencies?(dep.from, processed.merge([obj])))
-        end
+        is_outdated =
+          dependency_store
+          .dependencies_causing_outdatedness_of(obj)
+          .any? do |dep|
+            dependency_causes_outdatedness?(dep) ||
+              (dep.props.compiled_content? &&
+                outdated_due_to_dependencies?(dep.from, processed.merge([obj])))
+          end
 
         # Cache
         @objects_outdated_due_to_dependencies[obj] = is_outdated
@@ -122,21 +131,31 @@ module Nanoc
           true
         when Nanoc::Core::ItemCollection, Nanoc::Core::LayoutCollection
           all_objects = dependency.from
+          props = dependency.props
 
-          raw_content_prop_causes_outdatedness?(all_objects, dependency.props.raw_content) ||
-            attributes_prop_causes_outdatedness?(all_objects, dependency.props.attributes)
+          raw_content_prop_causes_outdatedness?(
+            all_objects, props.raw_content
+          ) ||
+            attributes_prop_causes_outdatedness?(
+              all_objects, props.attributes
+            )
         else
           status = basic_outdatedness_statuses.fetch(dependency.from)
 
           active = status.props.active & dependency.props.active
-          active.delete(:attributes) if attributes_unaffected?(status, dependency)
+          if attributes_unaffected?(status, dependency)
+            active.delete(:attributes)
+          end
 
           !active.empty?
         end
       end
 
       def attributes_unaffected?(status, dependency)
-        reason = status.reasons.find { |r| r.is_a?(Nanoc::Core::OutdatednessReasons::AttributesModified) }
+        reason = status.reasons.find do |r|
+          r.is_a?(Nanoc::Core::OutdatednessReasons::AttributesModified)
+        end
+
         reason &&
           !dependency.props.attribute_keys.empty? &&
           !dependency.props.attribute_keys.intersect?(reason.attributes)
@@ -173,7 +192,9 @@ module Nanoc
         # outdatedness.
         matching_objects.any? do |obj|
           status = basic_outdatedness_statuses.fetch(obj)
-          status.reasons.any? { |r| r == Nanoc::Core::OutdatednessReasons::DocumentAdded }
+          status.reasons.any? do |r|
+            r == Nanoc::Core::OutdatednessReasons::DocumentAdded
+          end
         end
       end
 
@@ -196,7 +217,9 @@ module Nanoc
           )
         end
 
-        dep_checksums = pairs.transform_values { |value| Nanoc::Core::Checksummer.calc(value) }
+        dep_checksums = pairs.transform_values do |value|
+          Nanoc::Core::Checksummer.calc(value)
+        end
 
         objects.any? do |object|
           # Find old and new attribute checksums for the object

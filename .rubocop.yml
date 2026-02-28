@@ -7,6 +7,10 @@ inherit_from:
 AllCops:
   TargetRubyVersion: 3.2
 
+# Try to keep it at or under 80, but up to 120 is fine too.
+LineLength:
+  Max: 120
+
 plugins:
   - rubocop-minitest
   - rubocop-rake
@@ -99,8 +103,8 @@ Style/HashTransformValues:
 
 # ----- CONFIGURED (exceptions for tests) -----
 
-# This breaks RSpec on occasion, e.g. `expect { subject }.not_to change { foo }`,
-# and generally does not provide useful warnings
+# This breaks RSpec on occasion, e.g. `expect { subject }.not_to change { foo
+# }`, and generally does not provide useful warnings
 Lint/AmbiguousBlockAssociation:
   Exclude:
     - "*/spec/**/*.rb"
@@ -111,8 +115,8 @@ Style/RescueModifier:
   Exclude:
     - "*/spec/**/*.rb"
 
-# A common pattern in tests is to define anonymous classes in which methods are defined, which trips
-# up Rubocop’s nested method definition cop.
+# A common pattern in tests is to define anonymous classes in which methods are
+# defined, which trips up Rubocop’s nested method definition cop.
 Lint/NestedMethodDefinition:
   Exclude:
     - "*/test/**/*.rb"
@@ -152,7 +156,8 @@ RSpec/LeakyLocalVariable:
 
 # ----- DISABLED (security) -----
 
-# Nanoc runs offline in a trusted environment, and these security checks are false positives.
+# Nanoc runs offline in a trusted environment, and these security checks are
+# false positives.
 
 Security/YAMLLoad:
   Enabled: false
@@ -259,7 +264,8 @@ RSpec/PredicateMatcher:
 Style/MapIntoArray:
   Enabled: false
 
-# This incorrectly identifies some methods that return true/false as being predicate methods.
+# This incorrectly identifies some methods that return true/false as being
+# predicate methods.
 Naming/PredicateMethod:
   Enabled: false
 

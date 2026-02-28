@@ -18,7 +18,10 @@ module Nanoc
         compilation_context: Nanoc::Core::CompilationContext,
         compiled_content_repo: Nanoc::Core::CompiledContentRepo,
       ] => C::Any
-      def initialize(reps:, items:, dependency_tracker:, compilation_context:, compiled_content_repo:)
+      def initialize(
+        reps:, items:, dependency_tracker:, compilation_context:,
+        compiled_content_repo:
+      )
         @reps = reps
         @items = items
         @dependency_tracker = dependency_tracker
@@ -26,7 +29,8 @@ module Nanoc
         @compiled_content_repo = compiled_content_repo
       end
 
-      contract Nanoc::Core::ItemRep, C::KeywordArgs[site: Nanoc::Core::Site] => Hash
+      contract Nanoc::Core::ItemRep,
+               C::KeywordArgs[site: Nanoc::Core::Site] => Hash
       def assigns_for(rep, site:)
         last_content = @compiled_content_repo.get_current(rep)
         content_or_filename_assigns =

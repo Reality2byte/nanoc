@@ -104,7 +104,8 @@ describe Nanoc::Core::CompiledContentRepo do
       context 'snapshot def exists' do
         context 'content is missing' do
           before do
-            rep.snapshot_defs = [Nanoc::Core::SnapshotDef.new(expected_snapshot_name, binary: false)]
+            rep.snapshot_defs = [Nanoc::Core::SnapshotDef.new(expected_snapshot_name,
+                                                              binary: false)]
             repo.set_all(rep, {})
           end
 
@@ -115,7 +116,8 @@ describe Nanoc::Core::CompiledContentRepo do
 
         context 'content is present' do
           before do
-            rep.snapshot_defs = [Nanoc::Core::SnapshotDef.new(expected_snapshot_name, binary: false)]
+            rep.snapshot_defs = [Nanoc::Core::SnapshotDef.new(expected_snapshot_name,
+                                                              binary: false)]
             repo.set_all(rep, expected_snapshot_name => content)
           end
 

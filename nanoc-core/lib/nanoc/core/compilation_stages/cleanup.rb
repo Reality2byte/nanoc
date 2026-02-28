@@ -24,7 +24,10 @@ module Nanoc
         end
 
         def cleanup_unused_stores
-          used_paths = @output_dirs.map { |d| Nanoc::Core::Store.tmp_path_prefix(d) }
+          used_paths = @output_dirs.map do |d|
+            Nanoc::Core::Store.tmp_path_prefix(d)
+          end
+
           all_paths = Dir.glob('tmp/nanoc/*')
           (all_paths - used_paths).each do |obsolete_path|
             FileUtils.rm_rf(obsolete_path)
@@ -32,7 +35,8 @@ module Nanoc
         end
 
         def cleanup_old_stores
-          ['checksums', 'compiled_content', 'dependencies', 'outdatedness', 'action_sequence'].each do |fn|
+          ['checksums', 'compiled_content', 'dependencies', 'outdatedness',
+           'action_sequence'].each do |fn|
             full_fn = File.join('tmp', fn)
             if File.file?(full_fn)
               FileUtils.rm_f(full_fn)

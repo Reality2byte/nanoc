@@ -6,7 +6,9 @@ module Nanoc
       class BuildReps < Nanoc::Core::CompilationStage
         include Nanoc::Core::ContractsSupport
 
-        contract C::KeywordArgs[site: Nanoc::Core::Site, action_provider: Nanoc::Core::ActionProvider] => C::Any
+        contract C::KeywordArgs[
+          site: Nanoc::Core::Site,
+          action_provider: Nanoc::Core::ActionProvider] => C::Any
         def initialize(site:, action_provider:)
           super()
 
@@ -24,7 +26,8 @@ module Nanoc
           action_sequences = builder.run
 
           @site.layouts.each do |layout|
-            action_sequences[layout] = @action_provider.action_sequence_for(layout)
+            action_sequences[layout] =
+              @action_provider.action_sequence_for(layout)
           end
 
           {

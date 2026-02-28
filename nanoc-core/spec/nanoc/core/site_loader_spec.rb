@@ -202,7 +202,8 @@ describe Nanoc::Core::SiteLoader do
 
     context 'comment # -*- encoding: x -*- specified' do
       example do
-        File.write('lib/asdf.rb', "# -*- encoding: iso-8859-1 -*-\n\nBRØKEN", encoding: 'iso-8859-1')
+        File.write('lib/asdf.rb', "# -*- encoding: iso-8859-1 -*-\n\nBRØKEN",
+                   encoding: 'iso-8859-1')
         expect(subject.size).to eq(1)
         expect(subject.first.data).to eq('BRØKEN')
       end

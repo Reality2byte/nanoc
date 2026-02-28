@@ -2,8 +2,8 @@
 
 module Nanoc
   module Core
-    # Nanoc::Core::Filter is responsible for filtering items. It is the superclass
-    # for all textual filters.
+    # Nanoc::Core::Filter is responsible for filtering items. It is the
+    # superclass for all textual filters.
     #
     # A filter instance should only be used once. Filters should not be reused
     # since they store state.
@@ -136,8 +136,8 @@ module Nanoc
           @always_outdated || false
         end
 
-        # Marks this filter as always causing the item rep to be outdated. This is useful for filters
-        # that cannot do dependency tracking properly.
+        # Marks this filter as always causing the item rep to be outdated. This
+        # is useful for filters that cannot do dependency tracking properly.
         #
         # @return [void]
         def always_outdated
@@ -146,11 +146,14 @@ module Nanoc
 
         # @overload requires(*requires)
         #   Sets the required libraries for this filter.
-        #   @param [Array<String>] requires A list of library names that are required
+        #   @param [Array<String>] requires A list of library names that are
+        #     required
         #   @return [void]
+        #
         # @overload requires
         #   Returns the required libraries for this filter.
-        #   @return [Enumerable<String>] This filter’s list of library names that are required
+        #   @return [Enumerable<String>] This filter’s list of library names
+        #     that are required
         def requires(*requires)
           if requires.empty?
             @requires || []
@@ -209,17 +212,24 @@ module Nanoc
       #   value is undefined; if the filter outputs textual content, the return
       #   value will be the filtered content.
       def run(content_or_filename, params = {}) # rubocop:disable Lint/UnusedMethodArgument
-        raise NotImplementedError.new('Nanoc::Core::Filter subclasses must implement #run')
+        raise NotImplementedError.new(
+          'Nanoc::Core::Filter subclasses must implement #run',
+        )
       end
 
       def verify(res)
         if self.class.to_binary?
           unless File.file?(output_filename)
-            raise Nanoc::Core::Filter::OutputNotWrittenError.new(self.class.identifier, output_filename)
+            raise Nanoc::Core::Filter::OutputNotWrittenError.new(
+              self.class.identifier,
+              output_filename,
+            )
           end
         elsif self.class.to_text?
           unless res
-            raise Nanoc::Core::Filter::FilterReturnedNilError.new(self.class.identifier)
+            raise Nanoc::Core::Filter::FilterReturnedNilError.new(
+              self.class.identifier,
+            )
           end
         end
       end

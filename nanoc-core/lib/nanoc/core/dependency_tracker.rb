@@ -44,7 +44,13 @@ module Nanoc
       end
 
       contract C_OBJ, C_ARGS => C::Any
-      def bounce(obj, raw_content: false, attributes: false, compiled_content: false, path: false)
+      def bounce(
+        obj,
+        raw_content: false,
+        attributes: false,
+        compiled_content: false,
+        path: false
+      )
         Nanoc::Core::NotificationCenter.post(:dependency_created, @root, obj)
 
         @dependency_store.record_dependency(
@@ -65,7 +71,13 @@ module Nanoc
         end
 
         contract C_OBJ, C_ARGS => C::Any
-        def bounce(_obj, raw_content: false, attributes: false, compiled_content: false, path: false)
+        def bounce(
+          _obj,
+          raw_content: false,
+          attributes: false,
+          compiled_content: false,
+          path: false
+        )
           # do nothing
         end
       end

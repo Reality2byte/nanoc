@@ -28,32 +28,45 @@ module Nanoc
       end
 
       CodeSnippetsModified = Generic.new(
-        'The code snippets have been modified since the last time the site was compiled.',
-        Nanoc::Core::DependencyProps.new(raw_content: true, attributes: true, compiled_content: true, path: true),
+        'The code snippets have been modified since the last time the site ' \
+        'was compiled.',
+        Nanoc::Core::DependencyProps.new(
+          raw_content: true, attributes: true,
+          compiled_content: true, path: true
+        ),
       )
 
       DependenciesOutdated = Generic.new(
-        'This item uses content or attributes that have changed since the last time the site was compiled.',
+        'This item uses content or attributes that have changed since the ' \
+        'last time the site was compiled.',
       )
 
       NotWritten = Generic.new(
-        'This item representation has not yet been written to the output directory (but it does have a path).',
-        Nanoc::Core::DependencyProps.new(raw_content: true, attributes: true, compiled_content: true, path: true),
+        'This item representation has not yet been written to the output ' \
+        'directory (but it does have a path).',
+        Nanoc::Core::DependencyProps.new(
+          raw_content: true, attributes: true,
+          compiled_content: true, path: true
+        ),
       )
 
       RulesModified = Generic.new(
-        'The rules file has been modified since the last time the site was compiled.',
+        'The rules file has been modified since the last time the site was ' \
+        'compiled.',
         Nanoc::Core::DependencyProps.new(compiled_content: true, path: true),
       )
 
       DocumentAdded = Generic.new(
         'The item or layout is newly added to the site.',
-        Nanoc::Core::DependencyProps.new, # NOTE: empty props, because they’re not relevant
+        Nanoc::Core::DependencyProps.new,
       )
 
       ContentModified = Generic.new(
-        'The content of this item has been modified since the last time the site was compiled.',
-        Nanoc::Core::DependencyProps.new(raw_content: true, compiled_content: true),
+        'The content of this item has been modified since the last time ' \
+        'the site was compiled.',
+        Nanoc::Core::DependencyProps.new(
+          raw_content: true, compiled_content: true,
+        ),
       )
 
       class AttributesModified < Generic
@@ -61,8 +74,11 @@ module Nanoc
 
         def initialize(attributes)
           super(
-            'The attributes of this item have been modified since the last time the site was compiled.',
-            Nanoc::Core::DependencyProps.new(attributes: true, compiled_content: true),
+            'The attributes of this item have been modified since the last ' \
+            'time the site was compiled.',
+            Nanoc::Core::DependencyProps.new(
+              attributes: true, compiled_content: true,
+            ),
           )
 
           @attributes = attributes
@@ -72,7 +88,9 @@ module Nanoc
       UsesAlwaysOutdatedFilter = Generic.new(
         'This item rep uses one or more filters that cannot track ' \
         'dependencies, and will thus always be considered as outdated.',
-        Nanoc::Core::DependencyProps.new(raw_content: true, attributes: true, compiled_content: true),
+        Nanoc::Core::DependencyProps.new(
+          raw_content: true, attributes: true, compiled_content: true,
+        ),
       )
     end
   end

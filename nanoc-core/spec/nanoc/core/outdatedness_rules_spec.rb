@@ -594,7 +594,9 @@ describe Nanoc::Core::OutdatednessRules do
             before { checksum_store.add(stored_obj) }
 
             context 'but checksum data afterwards' do
-              let(:new_obj) { klass.new('a', {}, '/foo.md', attributes_checksum_data: 'cs-data-new') }
+              let(:new_obj) do
+                klass.new('a', {}, '/foo.md', attributes_checksum_data: 'cs-data-new')
+              end
 
               it { is_expected.to eql([false, false]) }
             end

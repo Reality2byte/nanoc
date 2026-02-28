@@ -167,7 +167,9 @@ shared_examples 'an item rep view' do
       let(:snapshot_name) { :last }
 
       it 'creates a dependency' do
-        expect { subject }.to change { dependency_store.objects_causing_outdatedness_of(base_item) }.from([]).to([item])
+        expect { subject }.to change {
+          dependency_store.objects_causing_outdatedness_of(base_item)
+        }.from([]).to([item])
       end
 
       it 'creates a dependency with the right props' do
@@ -188,7 +190,9 @@ shared_examples 'an item rep view' do
       let(:snapshot_name) { :donkey }
 
       it 'creates a dependency' do
-        expect { subject }.to change { dependency_store.objects_causing_outdatedness_of(base_item) }.from([]).to([item])
+        expect { subject }.to change {
+          dependency_store.objects_causing_outdatedness_of(base_item)
+        }.from([]).to([item])
       end
 
       it 'creates a dependency with the right props' do
@@ -224,7 +228,9 @@ shared_examples 'an item rep view' do
     end
 
     it 'creates a dependency' do
-      expect { subject }.to change { dependency_store.objects_causing_outdatedness_of(base_item) }.from([]).to([item])
+      expect { subject }.to change {
+        dependency_store.objects_causing_outdatedness_of(base_item)
+      }.from([]).to([item])
     end
 
     it 'creates a dependency with the right props' do

@@ -4,7 +4,8 @@ module Nanoc
   module Core
     module CompilationStages
       class Preprocess < Nanoc::Core::CompilationStage
-        def initialize(action_provider:, site:, dependency_store:, checksum_store:)
+        def initialize(action_provider:, site:, dependency_store:,
+                       checksum_store:)
           super()
 
           @action_provider = action_provider
@@ -17,12 +18,18 @@ module Nanoc
           return if @site.preprocessed?
 
           if @action_provider.need_preprocessing?
-            @site.data_source = Nanoc::Core::InMemoryDataSource.new(@site.items, @site.layouts, @site.data_source)
+            @site.data_source = Nanoc::Core::InMemoryDataSource.new(
+              @site.items, @site.layouts, @site.data_source
+            )
             @action_provider.preprocess(@site)
 
             @dependency_store.items = @site.items
             @dependency_store.layouts = @site.layouts
-            @checksum_store.objects = @site.items.to_a + @site.layouts.to_a + @site.code_snippets + [@site.config]
+            @checksum_store.objects =
+              @site.items.to_a +
+              @site.layouts.to_a +
+              @site.code_snippets +
+              [@site.config]
           end
 
           @site.mark_as_preprocessed

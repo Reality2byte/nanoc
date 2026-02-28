@@ -306,7 +306,9 @@ describe Nanoc::Core::Configuration do
   context 'with environments defined' do
     subject { config }
 
-    let(:hash) { { foo: 'bar', environments: { test: { foo: 'test-bar' }, default: { foo: 'default-bar' } } } }
+    let(:hash) do
+      { foo: 'bar', environments: { test: { foo: 'test-bar' }, default: { foo: 'default-bar' } } }
+    end
     let(:config) { described_class.new(hash:, dir: Dir.getwd, env_name:).with_environment }
 
     context 'with existing environment' do

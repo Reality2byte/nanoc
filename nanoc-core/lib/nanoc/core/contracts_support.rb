@@ -68,7 +68,8 @@ module Nanoc
           end
 
           def valid?(val)
-            val.respond_to?(:each) && val.all? { |v| Contract.valid?(v, @contract) }
+            val.respond_to?(:each) &&
+              val.all? { |v| Contract.valid?(v, @contract) }
           end
 
           def inspect
@@ -101,13 +102,20 @@ module Nanoc
             false
           end
 
-        @_contracts_support__should_enable = contracts_loadable && !ENV.key?('DISABLE_CONTRACTS')
+        @_contracts_support__should_enable =
+          contracts_loadable && !ENV.key?('DISABLE_CONTRACTS')
 
         if @_contracts_support__should_enable
           # FIXME: ugly
-          ::Contracts.const_set('Named', EnabledContracts::Named)
-          ::Contracts.const_set('IterOf', EnabledContracts::IterOf)
-          ::Contracts.const_set('AbsolutePathString', EnabledContracts::AbsolutePathString)
+          ::Contracts.const_set(
+            'Named', EnabledContracts::Named
+          )
+          ::Contracts.const_set(
+            'IterOf', EnabledContracts::IterOf
+          )
+          ::Contracts.const_set(
+            'AbsolutePathString', EnabledContracts::AbsolutePathString
+          )
 
           warn_about_performance
         end
