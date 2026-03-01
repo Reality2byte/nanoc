@@ -51,7 +51,7 @@ module Nanoc
 
           selector.each do |rep|
             handle_errors_while(rep) do
-              compile_rep(rep)
+              compile_rep(rep, outdated_reps:)
             end
           end
 
@@ -75,8 +75,15 @@ module Nanoc
           raise Nanoc::Core::Errors::CompilationError.new(e, item_rep)
         end
 
-        def compile_rep(rep)
+        def compile_rep(rep, outdated_reps:)
           Nanoc::Core::NotificationCenter.post(:compilation_started, rep)
+
+          outdated = outdated_reps.include?(rep)
+          if !outdated && @compiled_content_cache.full_cache_available?(rep)
+            Nanoc::Core::NotificationCenter.post(:cached_content_used, rep)
+            @compiled_content_repo.set_all(rep, @compiled_content_cache[rep])
+            rep.compiled = true
+          end
 
           unless rep.compiled?
             recalculate_rep(rep)
@@ -89,6 +96,7 @@ module Nanoc
           # notification happens before the :rep_write_enqueued one.
           Nanoc::Core::NotificationCenter.post(:rep_write_enqueued, rep)
           @writer.write_all(rep, @compiled_content_repo)
+          # TODO: skip write if not outdated
 
           @outdatedness_store.remove(rep)
 

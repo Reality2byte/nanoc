@@ -219,4 +219,35 @@ describe Nanoc::Core::CompilationStages::CompileReps do
       end
     end
   end
+
+  describe '#compile_rep' do
+    subject { stage.send(:compile_rep, rep, outdated_reps:) }
+
+    before do
+      compiled_content_cache[rep] = { last: Nanoc::Core::TextualContent.new('cached rep content') }
+      compiled_content_cache[other_rep] = { last: Nanoc::Core::TextualContent.new('cached other_rep content') }
+    end
+
+    context 'when outdated' do
+      let(:outdated_reps) { Set.new(reps.to_a) }
+
+      it 'recalculates rep' do
+        expect { subject }
+          .to change { compiled_content_repo.get(rep, :last) }
+          .from(nil)
+          .to(some_textual_content('3'))
+      end
+    end
+
+    context 'when not outdated' do
+      let(:outdated_reps) { Set.new() }
+
+      it 'uses cached content' do
+        expect { subject }
+          .to change { compiled_content_repo.get(rep, :last) }
+          .from(nil)
+          .to(some_textual_content('cached rep content'))
+      end
+    end
+  end
 end

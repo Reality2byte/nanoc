@@ -86,7 +86,9 @@ describe Nanoc::Core::Compiler do
   end
 
   describe '#compile_rep' do
-    subject { stage.send(:compile_rep, rep) }
+    subject do
+      stage.send(:compile_rep, rep, outdated_reps:)
+    end
 
     let(:stage) { compiler.send(:compile_reps_stage, action_sequences, reps) }
 
@@ -100,6 +102,8 @@ describe Nanoc::Core::Compiler do
         end
       end
     end
+
+    let(:outdated_reps) { Set.new(reps.to_a) }
 
     it 'generates expected output' do
       reps = Nanoc::Core::ItemRepRepo.new
@@ -129,10 +133,10 @@ describe Nanoc::Core::Compiler do
         reps = Nanoc::Core::ItemRepRepo.new
         expect(compiler.compilation_context(reps:).compiled_content_repo.get_current(rep)).to be_nil
 
-        expect { stage.send(:compile_rep, rep) }
+        expect { stage.send(:compile_rep, rep, outdated_reps:) }
           .to raise_error(Nanoc::Core::Errors::UnmetDependency)
-        stage.send(:compile_rep, other_rep)
-        stage.send(:compile_rep, rep)
+        stage.send(:compile_rep, other_rep, outdated_reps:)
+        stage.send(:compile_rep, rep, outdated_reps:)
 
         expect(
           compiler.compilation_context(reps:).compiled_content_repo.get_current(rep).string,
@@ -172,10 +176,10 @@ describe Nanoc::Core::Compiler do
         expect(Nanoc::Core::NotificationCenter).to receive(:post)
           .with(:compilation_ended, rep).ordered
 
-        expect { stage.send(:compile_rep, rep) }
+        expect { stage.send(:compile_rep, rep, outdated_reps:) }
           .to raise_error(Nanoc::Core::Errors::UnmetDependency)
-        stage.send(:compile_rep, other_rep)
-        stage.send(:compile_rep, rep)
+        stage.send(:compile_rep, other_rep, outdated_reps:)
+        stage.send(:compile_rep, rep, outdated_reps:)
       end
     end
   end
