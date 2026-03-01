@@ -115,7 +115,7 @@ describe Nanoc::Core::CompilationStages::CompileReps do
       [Nanoc::Core::SnapshotDef.new(:last, binary: false)]
     end
 
-    context 'rep not in outdatedness store' do
+    context 'when rep not in outdatedness store' do
       before do
         # Needed for consistency
         compiled_content_cache[rep] = { last: Nanoc::Core::TextualContent.new('asdf') }
@@ -128,7 +128,7 @@ describe Nanoc::Core::CompilationStages::CompileReps do
       end
     end
 
-    context 'rep in outdatedness store' do
+    context 'when rep in outdatedness store' do
       before do
         outdatedness_store.add(rep)
 
@@ -191,7 +191,7 @@ describe Nanoc::Core::CompilationStages::CompileReps do
         end
       end
 
-      context 'exception' do
+      context 'when exception' do
         let(:item) { Nanoc::Core::Item.new('<%= \'invalid_ruby %>', {}, '/hi.md') }
 
         it 'wraps exception' do

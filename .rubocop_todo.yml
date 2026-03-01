@@ -58,7 +58,6 @@ RSpec/ContextWording:
     - 'nanoc-core/spec/nanoc/core/checksummer_spec.rb'
     - 'nanoc-core/spec/nanoc/core/compilation_stage_spec.rb'
     - 'nanoc-core/spec/nanoc/core/compilation_stages/cleanup_spec.rb'
-    - 'nanoc-core/spec/nanoc/core/compilation_stages/compile_reps_spec.rb'
     - 'nanoc-core/spec/nanoc/core/compilation_stages/determine_outdatedness_spec.rb'
     - 'nanoc-core/spec/nanoc/core/compilation_stages/preprocess_spec.rb'
     - 'nanoc-core/spec/nanoc/core/compiled_content_cache_spec.rb'
