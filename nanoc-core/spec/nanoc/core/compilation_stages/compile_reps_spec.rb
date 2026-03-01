@@ -51,10 +51,22 @@ describe Nanoc::Core::CompilationStages::CompileReps do
   let(:outdatedness_store) { Nanoc::Core::OutdatednessStore.new(config:) }
   let(:dependency_store) { Nanoc::Core::DependencyStore.new(items, layouts, config) }
 
-  let(:rep) { Nanoc::Core::ItemRep.new(item, :default) }
+  let(:rep) do
+    Nanoc::Core::ItemRep.new(item, :default).tap do |rep|
+      rep.paths = { last: ['/rep.txt'] }
+      rep.raw_paths = { last: ["#{Dir.getwd}/output/rep.txt"] }
+    end
+  end
+
   let(:item) { Nanoc::Core::Item.new('<%= 1 + 2 %>', {}, '/hi.md') }
 
-  let(:other_rep) { Nanoc::Core::ItemRep.new(other_item, :default) }
+  let(:other_rep) do
+    Nanoc::Core::ItemRep.new(other_item, :default).tap do |other_rep|
+      other_rep.paths = { last: ['/other_rep.txt'] }
+      other_rep.raw_paths = { last: ["#{Dir.getwd}/output/other_rep.txt"] }
+    end
+  end
+
   let(:other_item) { Nanoc::Core::Item.new('other content', {}, '/other.md') }
 
   let(:site) do
@@ -86,7 +98,7 @@ describe Nanoc::Core::CompilationStages::CompileReps do
           :simple_erb_vcn3np2ayqmv6ayqp8su2crbusonmgwh,
           {},
         ),
-        Nanoc::Core::ProcessingActions::Snapshot.new([:last], []),
+        Nanoc::Core::ProcessingActions::Snapshot.new([:last], ['/blah.txt']),
       ]
 
     Nanoc::Core::ActionSequence.new(actions:)
@@ -237,16 +249,29 @@ describe Nanoc::Core::CompilationStages::CompileReps do
           .from(nil)
           .to(some_textual_content('3'))
       end
+
+      it 'writes rep' do
+        expect { subject }
+          .to change { File.file?('output/rep.txt') }
+          .from(false)
+          .to(true)
+      end
     end
 
     context 'when not outdated' do
-      let(:outdated_reps) { Set.new() }
+      let(:outdated_reps) { Set.new }
 
       it 'uses cached content' do
         expect { subject }
           .to change { compiled_content_repo.get(rep, :last) }
           .from(nil)
           .to(some_textual_content('cached rep content'))
+      end
+
+      it 'does not write rep' do
+        expect { subject }
+          .not_to change { File.file?('output/rep.txt') }
+          .from(false)
       end
     end
   end

@@ -91,12 +91,13 @@ module Nanoc
             rep.compiled = true
           end
 
-          # Caution: Notification must be posted before enqueueing the rep,
-          # or we risk a race condition where the :rep_write_ended
-          # notification happens before the :rep_write_enqueued one.
-          Nanoc::Core::NotificationCenter.post(:rep_write_enqueued, rep)
-          @writer.write_all(rep, @compiled_content_repo)
-          # TODO: skip write if not outdated
+          if outdated
+            # Caution: Notification must be posted before enqueueing the rep,
+            # or we risk a race condition where the :rep_write_ended
+            # notification happens before the :rep_write_enqueued one.
+            Nanoc::Core::NotificationCenter.post(:rep_write_enqueued, rep)
+            @writer.write_all(rep, @compiled_content_repo)
+          end
 
           @outdatedness_store.remove(rep)
 
